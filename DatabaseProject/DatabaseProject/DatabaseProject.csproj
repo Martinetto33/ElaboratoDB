@@ -8,4 +8,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="sql\Clash of Clans creazione Database.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="sql\Clash of Clans creazione Database.sql" />
+  </ItemGroup>
+
 </Project>

@@ -13,5 +13,7 @@ namespace DatabaseProject.model
         public string Id { get; } = id;
 
         public Village Village { get; set; }
+
+        public Clan Clan { get; set; }
     }
 }
