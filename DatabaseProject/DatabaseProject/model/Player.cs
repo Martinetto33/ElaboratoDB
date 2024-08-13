@@ -7,7 +7,7 @@
         public string Id { get; } = id;
 
         /// <summary>
-        /// A list of all the <see cref="Account"/>s that this player has.
+        /// A set of all the <see cref="Account"/>s that this player has.
         /// </summary>
         public ISet<Account> Accounts { get; } = new HashSet<Account>();
     }
