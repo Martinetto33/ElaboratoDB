@@ -1,6 +1,6 @@
 ﻿namespace DatabaseProject.model
 {
-    internal class Player(string id, string name, string username)
+    public class Player(string id, string name, string username)
     {
         public string Name { get; } = name;
         public string Username { get; } = username;

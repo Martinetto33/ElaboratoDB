@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.model
 {
-    enum ClanRole
+    public enum ClanRole
     {
         Leader,
         CoLeader,
         Elder,
         Member
     }
-    internal class Clan(
+    public class Clan(
         string clanId,
         string name,
         IDictionary<Account, ClanRole> membersAndRoles,

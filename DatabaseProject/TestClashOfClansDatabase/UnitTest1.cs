@@ -1,3 +1,5 @@
+using DatabaseProject.model;
+
 namespace TestClashOfClansDatabase
 {
     [TestClass]
@@ -6,6 +8,7 @@ namespace TestClashOfClansDatabase
         [TestMethod]
         public void TestMethod1()
         {
+            Account account = new Account("MartyBro33", "hello@gmail.com", "123");
         }
     }
 }

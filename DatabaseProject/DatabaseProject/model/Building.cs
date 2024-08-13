@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.model
 {
-    enum BuildingType
+    public enum BuildingType
     {
         Defense,
         Resource,
         Special
     }
 
-    enum ResourceType
+    public enum ResourceType
     {
         Gold,
         Elixir,
         DarkElixir
     }
 
-    enum SpecialBuildingRole
+    public enum SpecialBuildingRole
     {
         TownHall,
         ClanCastle,
         Laboratory,
         ArmyCamp
     }
-    internal class BaseBuilding
+    public class BaseBuilding
     {
         public string BuildingId { get; }
         public string VillageId { get; }
@@ -68,7 +68,7 @@ namespace DatabaseProject.model
         }
     }
 
-    internal class Defense(
+    public class Defense(
         string buildingId,
         string villageId,
         string name,
@@ -100,7 +100,7 @@ namespace DatabaseProject.model
         }
     }
 
-    internal class ResourceExtractor(
+    public class ResourceExtractor(
         string buildingId,
         string villageId,
         string name,
@@ -121,7 +121,7 @@ namespace DatabaseProject.model
         }
     }
 
-    internal class SpecialBuilding(
+    public class SpecialBuilding(
         string buildingId,
         string villageId,
         string name,

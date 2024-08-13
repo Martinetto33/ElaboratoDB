@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.model
 {
-    internal class Laboratory(
+    public class Laboratory(
         string buildingId,
         string villageId,
         string name,

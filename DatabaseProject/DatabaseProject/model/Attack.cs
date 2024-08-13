@@ -1,6 +1,6 @@
 ﻿namespace DatabaseProject.model
 {
-    internal class Attack(string id, Account attacker, Account defender)
+    public class Attack(string id, Account attacker, Account defender)
     {
         public string Id { get; } = id;
         public int? ObtainedPercentage { get; set; } = null;

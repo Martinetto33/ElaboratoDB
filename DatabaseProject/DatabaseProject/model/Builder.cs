@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.model
 {
-    internal class Builder(string villageId, int builderId)
+    public class Builder(string villageId, int builderId)
     {
         public string VillageId { get; } = villageId;
         public int BuilderId { get; } = builderId;

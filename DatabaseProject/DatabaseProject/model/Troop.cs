@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.model
 {
-    internal class Troop(
+    public class Troop(
         string villageId,
         string name,
         int level,

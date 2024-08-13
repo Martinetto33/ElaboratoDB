@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.model
 {
-    internal class War(
+    public class War(
         string warId,
         IDictionary<Clan, ISet<Attack>> clans,
         bool isInProgress

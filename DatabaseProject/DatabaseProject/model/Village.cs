@@ -1,6 +1,6 @@
 ﻿namespace DatabaseProject.model
 {
-    internal class Village(
+    public class Village(
         string villageId,
         string accountId,
         int experienceLevel,
