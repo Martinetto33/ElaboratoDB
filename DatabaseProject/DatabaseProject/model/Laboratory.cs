@@ -11,20 +11,17 @@ namespace DatabaseProject.model
         string description
     ) : SpecialBuilding(buildingId, villageId, name, level, healthPoints, description, SpecialBuildingRole.Laboratory)
     {
-        private readonly IList<Troop> _upgradingTroops = [];
-        public IList<Troop> UpgradingTroops { get; set; } = [];
+        public bool IsBusy { get; set; } = false;
+        public Troop? UpgradingTroop { get; set; } = null;
 
         public async Task UpgradeTroop(Troop troop)
         {
-            UpgradingTroops.Add(troop); // used only to allow external interrogations
-            _upgradingTroops.Add(troop);
+            this.UpgradingTroop = troop;
+            this.IsBusy = true;
             // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
-            foreach (Troop upgradingTroop in _upgradingTroops)
-            {
-                await upgradingTroop.UpgradeAsync(upgradingTroop.Level * Configuration.UPGRADE_TIME_PER_LEVEL);
-                UpgradingTroops.Remove(upgradingTroop);
-            }
-            _upgradingTroops.Clear();
+            await troop.UpgradeAsync(troop.Level * Configuration.UPGRADE_TIME_PER_LEVEL);
+            this.UpgradingTroop = null;
+            this.IsBusy = false;
         }
     }
 }

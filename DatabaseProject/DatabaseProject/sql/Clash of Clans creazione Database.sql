@@ -78,6 +78,7 @@ create table EDIFICIO (
      ProduzioneOraria int,
      DescrizioneFunzione varchar(500),
      Ruolo varchar(100),
+     Occupato char,
      constraint IDEDIFICIO_1 primary key (IdVillaggio, IdEdificio));
 
 create table GIOCATORE (

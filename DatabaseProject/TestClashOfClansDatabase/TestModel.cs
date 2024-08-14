@@ -57,7 +57,7 @@ namespace TestClashOfClansDatabase
             Assert.AreEqual(2, troop.Level);
             Assert.AreEqual(15.0, troop.DamagePerSecond);
             Assert.AreEqual(110, troop.HealthPoints);
-            Assert.IsTrue(laboratory.UpgradingTroops.Count == 0);
+            Assert.IsTrue(laboratory.UpgradingTroop == null);
         }
 
         [TestMethod]
