@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DatabaseProject.config;
 
 namespace DatabaseProject.model
 {
@@ -15,18 +11,20 @@ namespace DatabaseProject.model
         string description
     ) : SpecialBuilding(buildingId, villageId, name, level, healthPoints, description, SpecialBuildingRole.Laboratory)
     {
+        private readonly IList<Troop> _upgradingTroops = [];
         public IList<Troop> UpgradingTroops { get; set; } = [];
 
         public async Task UpgradeTroop(Troop troop)
         {
-            UpgradingTroops.Add(troop);
+            UpgradingTroops.Add(troop); // used only to allow external interrogations
+            _upgradingTroops.Add(troop);
             // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
-            foreach (Troop upgradingTroop in UpgradingTroops)
+            foreach (Troop upgradingTroop in _upgradingTroops)
             {
-                await upgradingTroop.UpgradeAsync(upgradingTroop.Level * 5);
-                Console.WriteLine($"Troop {upgradingTroop.Name} has been upgraded to level {upgradingTroop.Level}.");
+                await upgradingTroop.UpgradeAsync(upgradingTroop.Level * Configuration.UPGRADE_TIME_PER_LEVEL);
                 UpgradingTroops.Remove(upgradingTroop);
             }
+            _upgradingTroops.Clear();
         }
     }
 }

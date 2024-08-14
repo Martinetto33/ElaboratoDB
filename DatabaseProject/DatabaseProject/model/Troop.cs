@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseProject.config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,14 +23,17 @@ namespace DatabaseProject.model
         public double DamagePerSecond { get; set; } = damagePerSecond;
         public string Description { get; } = description;
 
-        public async Task UpgradeAsync(int upgradeTimeInSeconds)
+        public async Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
-            await Task.Delay(upgradeTimeInSeconds * 1000);
-            this.Level++;
-            this.HealthPoints += 10;
-            this.DamagePerSecond += 5;
-            Console.WriteLine($"Troop {this.Name} has been upgraded to level {this.Level}.");
+            if (this.Level < Configuration.MAX_LEVEL)
+            {
+                // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
+                await Task.Delay((int)(upgradeTimeInSeconds * 1000));
+                this.Level++;
+                this.HealthPoints += 10;
+                this.DamagePerSecond += 5;
+                Console.WriteLine($"Troop {this.Name} has been upgraded to level {this.Level}.");
+            }
         }
     }
 }

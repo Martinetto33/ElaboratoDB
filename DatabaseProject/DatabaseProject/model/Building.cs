@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseProject.config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,14 +58,17 @@ namespace DatabaseProject.model
         /// Asynchronously upgrades the building after a specified delay.
         /// </summary>
         /// <param name="upgradeTimeInSeconds">The time in seconds to wait before upgrading.</param>
-        public async virtual Task UpgradeAsync(int upgradeTimeInSeconds)
+        public async virtual Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            // Simulate the time passing for the upgrade
-            await Task.Delay(upgradeTimeInSeconds * 1000);
+            if (this.Level < Configuration.MAX_LEVEL)
+            {
+                // Simulate the time passing for the upgrade
+                await Task.Delay((int)(upgradeTimeInSeconds * 1000));
 
-            // Perform the upgrade
-            Level++;
-            HealthPoints += 100; // Example: Increase health points on upgrade
+                // Perform the upgrade
+                Level++;
+                HealthPoints += 100; // Example: Increase health points on upgrade
+            }
         }
     }
 
@@ -83,19 +87,22 @@ namespace DatabaseProject.model
         public int TargetsNumber { get; set; } = targetsNumber;
         public int AttackRange { get; set; } = attackRange;
 
-        public async override Task UpgradeAsync(int upgradeTimeInSeconds)
+        public async override Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            await Task.Delay(upgradeTimeInSeconds * 1000);
-            Level++;
-            HealthPoints += 100;
-            DamagePerSecond += 100.0;
-            if (Random.Shared.Next(0, 2) == 0)
+            if (this.Level < Configuration.MAX_LEVEL)
             {
-                TargetsNumber++;
-            }
-            else
-            {
-                AttackRange++;
+                await Task.Delay((int)(upgradeTimeInSeconds * 1000));
+                Level++;
+                HealthPoints += 100;
+                DamagePerSecond += 100.0;
+                if (Random.Shared.Next(0, 2) == 0)
+                {
+                    TargetsNumber++;
+                }
+                else
+                {
+                    AttackRange++;
+                }
             }
         }
     }
@@ -112,12 +119,15 @@ namespace DatabaseProject.model
     {
         public ResourceType ResourceType { get; } = type;
         public int ProductionRate { get; set; } = productionRate;
-        public async override Task UpgradeAsync(int upgradeTimeInSeconds)
+        public async override Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            await Task.Delay(upgradeTimeInSeconds * 1000);
-            Level++;
-            HealthPoints += 100;
-            ProductionRate += 100;
+            if (this.Level < Configuration.MAX_LEVEL)
+            {
+                await Task.Delay((int)(upgradeTimeInSeconds * 1000));
+                Level++;
+                HealthPoints += 100;
+                ProductionRate += 100;
+            }
         }
     }
 

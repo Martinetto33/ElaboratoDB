@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DatabaseProject.config;
 
 namespace DatabaseProject.model
 {
@@ -25,7 +21,7 @@ namespace DatabaseProject.model
                 this.IsBusy = true;
                 this.UpgradingBuilding = upgradingBuilding;
                 // Wait for the building to upgrade; each upgrade takes 5 seconds per level.
-                await upgradingBuilding.UpgradeAsync(upgradingBuilding.Level * 5);
+                await upgradingBuilding.UpgradeAsync(upgradingBuilding.Level * Configuration.UPGRADE_TIME_PER_LEVEL);
                 Console.WriteLine($"Builder {this.BuilderId} has finished upgrading {upgradingBuilding.Name} to level {upgradingBuilding.Level}.");
                 this.IsBusy = false;
                 this.UpgradingBuilding = null;
