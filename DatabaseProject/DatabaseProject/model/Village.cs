@@ -54,9 +54,9 @@
 
         public void UpgradeTroop(Troop troop)
         {
-            if (this.Laboratory.UpgradingTroops.Contains(troop))
+            if (this.Laboratory.IsBusy)
             {
-                Console.WriteLine($"Troop {troop.Name} is already being upgraded.");
+                Console.WriteLine($"Troop {this.Laboratory.UpgradingTroop?.Name} is already being upgraded.");
                 return;
             }
             this.Laboratory.UpgradeTroop(troop);

@@ -15,6 +15,7 @@ namespace DatabaseProject.model
             if (this.IsBusy)
             {
                 Console.WriteLine($"Builder {this.BuilderId} is busy upgrading another building.");
+                throw new BuilderBusyException("Builder is busy upgrading another building.");
             }
             else
             {

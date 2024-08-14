@@ -16,6 +16,11 @@ namespace DatabaseProject.model
 
         public async Task UpgradeTroop(Troop troop)
         {
+            if (this.IsBusy)
+            {
+                Console.WriteLine($"Laboratory is busy upgrading troop: {this.UpgradingTroop?.Name}.");
+                throw new LaboratoryBusyException("Laboratory is busy upgrading another troop.");
+            }
             this.UpgradingTroop = troop;
             this.IsBusy = true;
             // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
