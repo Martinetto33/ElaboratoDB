@@ -17,8 +17,8 @@ namespace DatabaseProject
 
         private void playersButton_Click(object sender, EventArgs e)
         {
-            /*PlayersMenu playersMenu = new PlayersMenu();
-            playersMenu.Show();*/
+            PlayersScreen playersScreen = new();
+            LoadFormIntoPanel(playersScreen);
             Console.WriteLine("Players button clicked");
         }
 
@@ -34,6 +34,16 @@ namespace DatabaseProject
             /*WarsMenu warsMenu = new WarsMenu();
             warsMenu.Show();*/
             Console.WriteLine("Wars button clicked");
+        }
+
+        private void LoadFormIntoPanel(Form form)
+        {
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            this.panelContainer.Controls.Clear();
+            this.panelContainer.Controls.Add(form);
+            form.Show();
         }
 
         /**

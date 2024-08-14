@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseProject.daos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,16 @@ namespace DatabaseProject
         public PlayersScreen()
         {
             InitializeComponent();
+        }
+
+        private void PlayersScreen_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void AddPlayerTestButton_Click(object sender, EventArgs e)
+        {
+            PlayerDao.CreatePlayer("Alin", "Bordeianu");
+            Console.WriteLine("Player added");
         }
     }
 }

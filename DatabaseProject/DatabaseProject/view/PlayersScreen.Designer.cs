@@ -28,12 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            AddPlayerTestButton = new Button();
+            SuspendLayout();
+            // 
+            // AddPlayerTestButton
+            // 
+            AddPlayerTestButton.Location = new Point(122, 101);
+            AddPlayerTestButton.Name = "AddPlayerTestButton";
+            AddPlayerTestButton.Size = new Size(530, 93);
+            AddPlayerTestButton.TabIndex = 0;
+            AddPlayerTestButton.Text = "Aggiungi Giocatore [Test]";
+            AddPlayerTestButton.UseVisualStyleBackColor = true;
+            AddPlayerTestButton.Click += AddPlayerTestButton_Click;
+            // 
+            // PlayersScreen
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(AddPlayerTestButton);
+            Name = "PlayersScreen";
+            Text = "Giocatori";
+            Load += PlayersScreen_Load;
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button AddPlayerTestButton;
     }
 }

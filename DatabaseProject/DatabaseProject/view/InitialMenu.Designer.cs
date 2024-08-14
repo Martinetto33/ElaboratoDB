@@ -32,6 +32,7 @@
             PlayersButton = new Button();
             ClansButton = new Button();
             WarsButton = new Button();
+            panelContainer = new Panel();
             SuspendLayout();
             // 
             // ExitButton
@@ -82,20 +83,31 @@
             WarsButton.UseVisualStyleBackColor = true;
             WarsButton.Click += warsButton_Click;
             // 
-            // Form1
+            // panelContainer
+            // 
+            panelContainer.Dock = DockStyle.Fill;
+            panelContainer.Location = new Point(0, 0);
+            panelContainer.Name = "panelContainer";
+            panelContainer.Size = new Size(720, 461);
+            panelContainer.TabIndex = 4;
+            // 
+            // InitialMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(720, 461);
-            Controls.Add(WarsButton);
-            Controls.Add(ClansButton);
-            Controls.Add(PlayersButton);
-            Controls.Add(ExitButton);
+            Controls.Add(panelContainer);
             MinimumSize = new Size(600, 500);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "InitialMenu";
+            Text = "Clash of Clans Database";
             Load += Form1_Load;
             ResumeLayout(false);
+
+            // Add buttons to the panelContainer
+            panelContainer.Controls.Add(ExitButton);
+            panelContainer.Controls.Add(PlayersButton);
+            panelContainer.Controls.Add(ClansButton);
+            panelContainer.Controls.Add(WarsButton);
         }
 
         #endregion
@@ -104,5 +116,6 @@
         private Button PlayersButton;
         private Button ClansButton;
         private Button WarsButton;
+        private Panel panelContainer;
     }
 }
