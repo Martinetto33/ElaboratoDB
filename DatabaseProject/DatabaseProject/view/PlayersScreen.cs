@@ -27,5 +27,10 @@ namespace DatabaseProject
             PlayerDao.CreatePlayer("Alin", "Bordeianu");
             Console.WriteLine("Player added");
         }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

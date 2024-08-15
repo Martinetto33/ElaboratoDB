@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayersScreen));
             AddPlayerTestButton = new Button();
+            BackButton = new Button();
             SuspendLayout();
             // 
             // AddPlayerTestButton
@@ -41,11 +43,22 @@
             AddPlayerTestButton.UseVisualStyleBackColor = true;
             AddPlayerTestButton.Click += AddPlayerTestButton_Click;
             // 
+            // BackButton
+            // 
+            BackButton.Image = (Image)resources.GetObject("BackButton.Image");
+            BackButton.Location = new Point(12, 12);
+            BackButton.Name = "BackButton";
+            BackButton.Size = new Size(50, 50);
+            BackButton.TabIndex = 1;
+            BackButton.UseVisualStyleBackColor = true;
+            BackButton.Click += BackButton_Click;
+            // 
             // PlayersScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(BackButton);
             Controls.Add(AddPlayerTestButton);
             Name = "PlayersScreen";
             Text = "Giocatori";
@@ -56,5 +69,6 @@
         #endregion
 
         private Button AddPlayerTestButton;
+        private Button BackButton;
     }
 }
