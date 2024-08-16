@@ -10,16 +10,16 @@ namespace DatabaseProject.view
     {
         public static void LoadPanel(Form form, Panel parentPanel)
         {
-            form.TopLevel = false;
+            //form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
-            parentPanel.Controls.Clear();
+            //parentPanel.Controls.Clear();
             Console.Write("Controls contained in form: ");
             foreach (var control in form.Controls)
             {
                 Console.Write(control.ToString() + " ");
             }
-            parentPanel.Controls.Add(form);
+            //parentPanel.Controls.Add(form);
             form.Show();
         }
     }

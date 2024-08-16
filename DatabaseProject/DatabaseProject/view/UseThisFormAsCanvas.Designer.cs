@@ -1,6 +1,6 @@
 ﻿namespace DatabaseProject
 {
-    partial class PlayersScreen
+    partial class UseThisFormAsCanvas
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayersScreen));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UseThisFormAsCanvas));
             AddPlayerTestButton = new Button();
             BackButton = new Button();
             panelContainer = new Panel();

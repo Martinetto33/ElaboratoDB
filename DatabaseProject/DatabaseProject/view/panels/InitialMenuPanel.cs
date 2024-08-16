@@ -1,38 +1,29 @@
-﻿namespace DatabaseProject
-{
-    partial class InitialMenu
-    {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+namespace DatabaseProject.view.panels
+{
+    /**
+     * This class represents the initial menu panel.
+     * I think the error I was making was trying to create a new form for each "screen" I wanted to display;
+     * I should make a panel for each screen and load it into the main form instead.
+     */
+    public class InitialMenuPanel : UserControl
+    {
+        public InitialMenuPanel()
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            InitializeComponent();
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            ExitButton = new Button();
-            PlayersButton = new Button();
-            ClansButton = new Button();
-            WarsButton = new Button();
-            panelContainer = new Panel();
+            var ExitButton = new Button();
+            var PlayersButton = new Button();
+            var ClansButton = new Button();
+            var WarsButton = new Button();
             SuspendLayout();
             // 
             // ExitButton
@@ -83,45 +74,48 @@
             WarsButton.UseVisualStyleBackColor = true;
             WarsButton.Click += warsButton_Click;
             // 
-            // panelContainer
-            // 
-            panelContainer.Dock = DockStyle.Fill;
-            panelContainer.Location = new Point(0, 0);
-            panelContainer.Name = "panelContainer";
-            panelContainer.Size = new Size(720, 461);
-            panelContainer.TabIndex = 4;
-            // 
             // InitialMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(720, 461);
-            Controls.Add(panelContainer);
             MinimumSize = new Size(600, 500);
             Name = "InitialMenu";
             Text = "Clash of Clans Database";
-            Load += Form1_Load;
+
+            this.Controls.Add(ExitButton);
+            this.Controls.Add(PlayersButton);
+            this.Controls.Add(ClansButton);
+            this.Controls.Add(WarsButton);
             ResumeLayout(false);
-
-            // Add buttons to the panelContainer
-            panelContainer.Controls.Add(ExitButton);
-            panelContainer.Controls.Add(PlayersButton);
-            panelContainer.Controls.Add(ClansButton);
-            panelContainer.Controls.Add(WarsButton);
-
-            // Setting the panelContainer as the parent panel
-            if (this.PanelContainer == null)
-            {
-                this.PanelContainer = panelContainer;
-            }
         }
 
-        #endregion
+        // The Exit button
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
 
-        private Button ExitButton;
-        private Button PlayersButton;
-        private Button ClansButton;
-        private Button WarsButton;
-        private Panel panelContainer;
+        private void playersButton_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Players button clicked");
+            // This is the method to change panel in the parent
+            var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
+            mainForm.LoadPanel(new InitialMenuPanel()); // TODO: replace with correct panel
+        }
+
+        private void clansButton_Click(object sender, EventArgs e)
+        {
+            /*ClansMenu clansMenu = new ClansMenu();
+            clansMenu.Show();*/
+            Console.WriteLine("Clans button clicked");
+        }
+
+        private void warsButton_Click(object sender, EventArgs e)
+        {
+            /*WarsMenu warsMenu = new WarsMenu();
+            warsMenu.Show();*/
+            Console.WriteLine("Wars button clicked");
+        }
     }
 }

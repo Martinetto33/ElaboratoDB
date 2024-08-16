@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace DatabaseProject
 {
-    public partial class PlayersScreen : Form
+    public partial class UseThisFormAsCanvas : Form
     {
         public Panel PanelContainer { get; set; }
 
-        public PlayersScreen()
+        public UseThisFormAsCanvas()
         {
             InitializeComponent();
         }
@@ -33,7 +33,7 @@ namespace DatabaseProject
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            InitialMenu initialMenu = new()
+            ClashOfClansDatabaseApplication initialMenu = new()
             {
                 PanelContainer = this.PanelContainer
             };
