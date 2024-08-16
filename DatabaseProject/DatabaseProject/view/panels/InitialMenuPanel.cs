@@ -101,7 +101,7 @@ namespace DatabaseProject.view.panels
             Console.WriteLine("Players button clicked");
             // This is the method to change panel in the parent
             var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
-            mainForm.LoadPanel(new InitialMenuPanel()); // TODO: replace with correct panel
+            mainForm.LoadPanel(new PlayersPanel());
         }
 
         private void clansButton_Click(object sender, EventArgs e)
