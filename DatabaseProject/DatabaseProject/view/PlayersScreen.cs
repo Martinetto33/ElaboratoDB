@@ -1,4 +1,5 @@
 ﻿using DatabaseProject.daos;
+using DatabaseProject.view;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,7 @@ namespace DatabaseProject
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-
+            ViewLoader.LoadPanel(new InitialMenu(), this.panelContainer);
         }
     }
 }

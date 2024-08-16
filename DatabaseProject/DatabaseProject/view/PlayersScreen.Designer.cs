@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayersScreen));
             AddPlayerTestButton = new Button();
             BackButton = new Button();
+            panelContainer = new Panel();
             SuspendLayout();
             // 
             // AddPlayerTestButton
@@ -53,22 +54,36 @@
             BackButton.UseVisualStyleBackColor = true;
             BackButton.Click += BackButton_Click;
             // 
+            // panelContainer
+            // 
+            panelContainer.Dock = DockStyle.Fill;
+            panelContainer.Location = new Point(0, 0);
+            panelContainer.Name = "panelContainer";
+            panelContainer.Size = new Size(800, 450);
+            panelContainer.TabIndex = 2;
+            // 
             // PlayersScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(panelContainer);
             Controls.Add(BackButton);
             Controls.Add(AddPlayerTestButton);
             Name = "PlayersScreen";
             Text = "Giocatori";
             Load += PlayersScreen_Load;
             ResumeLayout(false);
+
+            // Adding buttons to the panel container
+            panelContainer.Controls.Add(AddPlayerTestButton);
+            panelContainer.Controls.Add(BackButton);
         }
 
         #endregion
 
         private Button AddPlayerTestButton;
         private Button BackButton;
+        private Panel panelContainer;
     }
 }
