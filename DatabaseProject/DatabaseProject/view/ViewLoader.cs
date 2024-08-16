@@ -14,6 +14,11 @@ namespace DatabaseProject.view
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
             parentPanel.Controls.Clear();
+            Console.Write("Controls contained in form: ");
+            foreach (var control in form.Controls)
+            {
+                Console.Write(control.ToString() + " ");
+            }
             parentPanel.Controls.Add(form);
             form.Show();
         }

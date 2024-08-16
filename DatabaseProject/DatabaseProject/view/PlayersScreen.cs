@@ -14,6 +14,8 @@ namespace DatabaseProject
 {
     public partial class PlayersScreen : Form
     {
+        public Panel PanelContainer { get; set; }
+
         public PlayersScreen()
         {
             InitializeComponent();
@@ -31,7 +33,11 @@ namespace DatabaseProject
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            ViewLoader.LoadPanel(new InitialMenu(), this.panelContainer);
+            InitialMenu initialMenu = new()
+            {
+                PanelContainer = this.PanelContainer
+            };
+            ViewLoader.LoadPanel(initialMenu, this.panelContainer);
         }
     }
 }

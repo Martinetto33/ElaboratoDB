@@ -6,6 +6,7 @@ namespace DatabaseProject
 {
     public partial class InitialMenu : Form
     {
+        public Panel? PanelContainer { get; set; }
         public InitialMenu()
         {
             InitializeComponent();
@@ -19,7 +20,11 @@ namespace DatabaseProject
 
         private void playersButton_Click(object sender, EventArgs e)
         {
-            ViewLoader.LoadPanel(new PlayersScreen(), this.panelContainer);
+            PlayersScreen playersScreen = new()
+            {
+                PanelContainer = this.PanelContainer!
+            };
+            ViewLoader.LoadPanel(playersScreen, this.PanelContainer!);
             Console.WriteLine("Players button clicked");
         }
 

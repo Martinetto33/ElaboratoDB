@@ -108,6 +108,12 @@
             panelContainer.Controls.Add(PlayersButton);
             panelContainer.Controls.Add(ClansButton);
             panelContainer.Controls.Add(WarsButton);
+
+            // Setting the panelContainer as the parent panel
+            if (this.PanelContainer == null)
+            {
+                this.PanelContainer = panelContainer;
+            }
         }
 
         #endregion

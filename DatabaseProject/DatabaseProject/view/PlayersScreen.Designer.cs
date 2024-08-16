@@ -67,17 +67,13 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(panelContainer);
             Controls.Add(BackButton);
             Controls.Add(AddPlayerTestButton);
+            Controls.Add(panelContainer);
             Name = "PlayersScreen";
             Text = "Giocatori";
             Load += PlayersScreen_Load;
             ResumeLayout(false);
-
-            // Adding buttons to the panel container
-            panelContainer.Controls.Add(AddPlayerTestButton);
-            panelContainer.Controls.Add(BackButton);
         }
 
         #endregion
