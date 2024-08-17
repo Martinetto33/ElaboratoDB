@@ -1,4 +1,5 @@
 ﻿using DatabaseProject.daos;
+using DatabaseProject.Properties;
 
 namespace DatabaseProject.view.panels
 {
@@ -11,38 +12,34 @@ namespace DatabaseProject.view.panels
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UseThisFormAsCanvas));
             var AddPlayerButton = new Button();
             var BackButton = new Button();
             SuspendLayout();
             // 
-            // AddPlayerButton
+            // AddPlayerTestButton
             // 
-            AddPlayerButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            AddPlayerButton.Font = new Font("Segoe UI", 15F);
-            AddPlayerButton.Location = new Point(156, 41);
-            AddPlayerButton.Name = "AddPlayerButton";
-            AddPlayerButton.Size = new Size(409, 77);
-            AddPlayerButton.TabIndex = 1;
-            AddPlayerButton.Text = "Aggiungi Giocatore";
+            AddPlayerButton.Location = new Point(122, 101);
+            AddPlayerButton.Name = "AddPlayerTestButton";
+            AddPlayerButton.Size = new Size(530, 93);
+            AddPlayerButton.TabIndex = 0;
+            AddPlayerButton.Text = "Aggiungi Giocatore [Test]";
             AddPlayerButton.UseVisualStyleBackColor = true;
             AddPlayerButton.Click += AddPlayerButton_Click;
             // 
             // BackButton
             // 
-            BackButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            BackButton.Font = new Font("Segoe UI", 15F);
-            BackButton.Location = new Point(156, 138);
+            BackButton.Image = (Image)resources.GetObject("BackButton.Image");
+            BackButton.Location = new Point(12, 12);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(409, 77);
-            BackButton.TabIndex = 2;
-            BackButton.Text = "Indietro";
+            BackButton.Size = new Size(50, 50);
+            BackButton.TabIndex = 1;
             BackButton.UseVisualStyleBackColor = true;
             BackButton.Click += BackButton_Click;
 
             this.Controls.Add(AddPlayerButton);
             this.Controls.Add(BackButton);
 
-            // TODO: add image to back button and resize correctly the panels
             ResumeLayout(false);
         }
 

@@ -33,11 +33,6 @@ namespace DatabaseProject
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            ClashOfClansDatabaseApplication initialMenu = new()
-            {
-                PanelContainer = this.PanelContainer
-            };
-            ViewLoader.LoadPanel(initialMenu, this.panelContainer);
         }
     }
 }

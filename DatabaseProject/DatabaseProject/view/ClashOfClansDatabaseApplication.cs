@@ -6,7 +6,6 @@ namespace DatabaseProject
 {
     public partial class ClashOfClansDatabaseApplication : Form
     {
-        public Panel? PanelContainer { get; set; }
         public ClashOfClansDatabaseApplication()
         {
             InitializeComponent();
@@ -17,7 +16,6 @@ namespace DatabaseProject
             this.Controls.Clear();
             panel.Dock = DockStyle.Fill;
             this.Controls.Add(panel);
-            Console.WriteLine("LoadPanel called!!");
         }
 
         /**
