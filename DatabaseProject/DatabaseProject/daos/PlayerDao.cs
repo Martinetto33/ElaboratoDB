@@ -19,5 +19,13 @@ namespace DatabaseProject.daos
                 context.SaveChanges();
             }
         }
+
+        public static List<Giocatore> GetAllPlayers()
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return [.. context.Giocatori];
+            }
+        }
     }
 }

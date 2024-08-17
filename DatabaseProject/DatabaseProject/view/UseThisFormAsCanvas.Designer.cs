@@ -31,13 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UseThisFormAsCanvas));
             AddPlayerTestButton = new Button();
             BackButton = new Button();
+            textBox1 = new TextBox();
+            label1 = new Label();
+            PlayersPanel = new Panel();
             SuspendLayout();
             // 
             // AddPlayerTestButton
             // 
-            AddPlayerTestButton.Location = new Point(122, 101);
+            AddPlayerTestButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            AddPlayerTestButton.Location = new Point(136, 26);
             AddPlayerTestButton.Name = "AddPlayerTestButton";
-            AddPlayerTestButton.Size = new Size(530, 93);
+            AddPlayerTestButton.Size = new Size(524, 93);
             AddPlayerTestButton.TabIndex = 0;
             AddPlayerTestButton.Text = "Aggiungi Giocatore [Test]";
             AddPlayerTestButton.UseVisualStyleBackColor = true;
@@ -53,22 +57,66 @@
             BackButton.UseVisualStyleBackColor = true;
             BackButton.Click += BackButton_Click;
             // 
-            // PlayersScreen
+            // textBox1
+            // 
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox1.BorderStyle = BorderStyle.FixedSingle;
+            textBox1.Cursor = Cursors.IBeam;
+            textBox1.Font = new Font("Segoe UI", 16F);
+            textBox1.Location = new Point(136, 165);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Inserisci il nome del giocatore...";
+            textBox1.Size = new Size(524, 36);
+            textBox1.TabIndex = 2;
+            textBox1.TextChanged += textBox1_TextChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(135, 135);
+            label1.Name = "label1";
+            label1.Size = new Size(118, 21);
+            label1.TabIndex = 3;
+            label1.Text = "Cerca giocatore";
+            label1.Click += label1_Click;
+            // 
+            // PlayersPanel
+            // 
+            PlayersPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PlayersPanel.AutoScroll = true;
+            PlayersPanel.BackColor = Color.White;
+            PlayersPanel.BorderStyle = BorderStyle.FixedSingle;
+            PlayersPanel.Location = new Point(136, 214);
+            PlayersPanel.Name = "PlayersPanel";
+            PlayersPanel.Padding = new Padding(10);
+            PlayersPanel.Size = new Size(524, 246);
+            PlayersPanel.TabIndex = 4;
+            // 
+            // UseThisFormAsCanvas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(794, 472);
+            Controls.Add(PlayersPanel);
+            Controls.Add(label1);
+            Controls.Add(textBox1);
             Controls.Add(BackButton);
             Controls.Add(AddPlayerTestButton);
-            Name = "PlayersScreen";
+            MinimumSize = new Size(600, 500);
+            Name = "UseThisFormAsCanvas";
             Text = "Giocatori";
             Load += PlayersScreen_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button AddPlayerTestButton;
         private Button BackButton;
+        private TextBox textBox1;
+        private Label label1;
+        private Panel PlayersPanel;
     }
 }
