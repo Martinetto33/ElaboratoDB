@@ -79,6 +79,10 @@ namespace DatabaseProject.view.panels
             playerNamesPanel.Padding = new Padding(10);
             playerNamesPanel.Size = new Size(645, 323);
             playerNamesPanel.TabIndex = 4;
+
+            // fetching data from database
+            LoadPlayerButtons(playerNamesPanel);
+
             // 
             // PlayersPanel
             // 
@@ -95,8 +99,19 @@ namespace DatabaseProject.view.panels
 
         private void AddPlayerButton_Click(object sender, EventArgs e)
         {
-            PlayerDao.CreatePlayer("Alin", "Bordeianu");
-            Console.WriteLine("Player added");
+            //PlayerDao.CreatePlayer("Alin", "Bordeianu");
+            //Console.WriteLine("Player added");
+            this.ShowPlayerInsertionForm();
+        }
+
+        private void ShowPlayerInsertionForm()
+        {
+            using var playerInsertionForm = new PlayerInsertionForm();
+            playerInsertionForm.ShowDialog();
+            if (playerInsertionForm.DialogResult == DialogResult.OK)
+            {
+                LoadPlayerButtons(playerNamesPanel);
+            }
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -107,21 +122,19 @@ namespace DatabaseProject.view.panels
 
         private void LoadPlayerButtons(Panel playerNamesPanel)
         {
-            List<Giocatore> players = PlayerDao.GetAllPlayers();
+            List<Giocatore> players = [.. PlayerDao.GetAllPlayers().OrderBy(player => player.Cognome)];
             playerNamesPanel.Controls.Clear();
 
-            int yOffset = 10;
             foreach (var player in players)
             {
                 Button playerButton = new Button
                 {
                     Text = $"{player.Nome} {player.Cognome}",
-                    Location = new Point(10, yOffset),
-                    Width = 200
+                    Dock = DockStyle.Top,
+                    Height = 40,
                 };
                 playerButton.Click += (sender, e) => PlayerButton_Click(player);
                 playerNamesPanel.Controls.Add(playerButton);
-                yOffset += 40; // Adjust spacing between buttons
             }
         }
 
