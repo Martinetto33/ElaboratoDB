@@ -122,8 +122,9 @@ namespace DatabaseProject.view.panels
 
         private void AddAccountButton_Click(object sender, EventArgs e)
         {
-            AccountDao.CreateAccount(this.player, "Prova", "Prova");
-            //LoadAccountsButtons(accountsPanel);
+            // TODO: implement form to create account
+            AccountDao.CreateAccount(this.player, "harorova", "Prova");
+            LoadAccountsButtons(accountUsernamesPanel);
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -136,7 +137,7 @@ namespace DatabaseProject.view.panels
         {
             this.searchBar.FilterEntries(entry => entry.Username.ToLower().Contains(textBox1.Text.ToLower()));
             var filteredEntries = this.searchBar.GetFilteredEntries();
-            //accountsPanel.Controls.Clear();
+            accountUsernamesPanel.Controls.Clear();
 
             foreach (var entry in filteredEntries)
             {
@@ -147,13 +148,13 @@ namespace DatabaseProject.view.panels
                     Height = 40,
                 };
                 playerButton.Click += (sender, e) => AccountButton_Click(entry);
-                //accountsPanel.Controls.Add(playerButton);
+                accountUsernamesPanel.Controls.Add(playerButton);
             }
         }
 
         private void LoadAccountsButtons(Panel accountsPanel)
         {
-            List<Account> accounts = AccountDao.GetAllAccounts();
+            List<Account> accounts = AccountDao.GetAccountsFromPlayer(this.player);
             this.searchBar = new SearchBar<Account>(accounts);
             accountsPanel.Controls.Clear();
 

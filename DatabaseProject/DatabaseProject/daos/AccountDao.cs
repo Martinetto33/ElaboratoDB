@@ -36,5 +36,13 @@ namespace DatabaseProject.daos
                 return [.. context.Accounts];
             }
         }
+
+        public static List<Account> GetAccountsFromPlayer(Giocatore player)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return context.Accounts.Where(account => account.IdGiocatore == player.IdGiocatore).ToList();
+            }
+        }
     }
 }
