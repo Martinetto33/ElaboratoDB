@@ -7,6 +7,7 @@ namespace DatabaseProject.view.panels
 {
     internal class PlayersPanel : UserControl
     {
+        private SearchBar<Giocatore> searchBar;
         public PlayersPanel()
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace DatabaseProject.view.panels
             AddPlayerButton.Name = "AddPlayerButton";
             AddPlayerButton.Size = new Size(645, 93);
             AddPlayerButton.TabIndex = 0;
-            AddPlayerButton.Text = "Aggiungi Giocatore [Test]";
+            AddPlayerButton.Text = "Aggiungi Giocatore";
             AddPlayerButton.UseVisualStyleBackColor = true;
             AddPlayerButton.Click += AddPlayerButton_Click;
             // 
@@ -123,11 +124,12 @@ namespace DatabaseProject.view.panels
         private void LoadPlayerButtons(Panel playerNamesPanel)
         {
             List<Giocatore> players = [.. PlayerDao.GetAllPlayers().OrderBy(player => player.Cognome)];
+            this.searchBar = new SearchBar<Giocatore>(players);
             playerNamesPanel.Controls.Clear();
 
             foreach (var player in players)
             {
-                Button playerButton = new Button
+                Button playerButton = new()
                 {
                     Text = $"{player.Nome} {player.Cognome}",
                     Dock = DockStyle.Top,
@@ -140,7 +142,21 @@ namespace DatabaseProject.view.panels
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            this.searchBar.FilterEntries(e => $"{e.Nome} {e.Cognome}".ToLower().Contains(textBox1.Text.ToLower()));
+            var filteredEntries = this.searchBar.GetFilteredEntries();
+            playerNamesPanel.Controls.Clear();
 
+            foreach (var entry in filteredEntries)
+            {
+                Button playerButton = new()
+                {
+                    Text = $"{entry.Nome} {entry.Cognome}",
+                    Dock = DockStyle.Top,
+                    Height = 40,
+                };
+                playerButton.Click += (sender, e) => PlayerButton_Click(entry);
+                playerNamesPanel.Controls.Add(playerButton);
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)

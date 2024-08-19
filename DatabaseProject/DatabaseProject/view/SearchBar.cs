@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace DatabaseProject.view
 {
-    public class SearchBar(IList<string> allEntries)
+    // Could be made generic, by passing a filtering method
+    public class SearchBar<T>(IList<T> allEntries)
     {
-        private readonly IList<string> allEntries = allEntries;
-        private IList<string> filteredEntries = allEntries;
+        private readonly IList<T> allEntries = allEntries;
+        private IList<T> filteredEntries = allEntries;
 
-        public void FilterEntries(string filter)
+        public void FilterEntries(Predicate<T> predicate)
         {
-            this.filteredEntries = this.allEntries.Where(entry => entry.Contains(filter.ToLower())).ToList();
+            //this.filteredEntries = this.allEntries.Where(entry => entry.Contains(filter.ToLower())).ToList();
+            this.filteredEntries = this.allEntries.Where(entry => predicate.Invoke(entry)).ToList();
         }
 
-        public IList<string> GetFilteredEntries()
+        public IList<T> GetFilteredEntries()
         {
             return this.filteredEntries;
         }
