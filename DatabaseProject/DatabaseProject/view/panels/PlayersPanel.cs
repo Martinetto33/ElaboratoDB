@@ -1,7 +1,5 @@
 ﻿using DatabaseProject.daos;
 using DatabaseProject.database;
-using DatabaseProject.model;
-using DatabaseProject.Properties;
 
 namespace DatabaseProject.view.panels
 {

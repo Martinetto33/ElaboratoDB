@@ -11,14 +11,14 @@ namespace DatabaseProject.view.panels
         private Button backButton;
         private TextBox textBox1;
         private Label label1;
-        private Panel accountsPanel;
+        private Panel accountUsernamesPanel;
         private Label playerNameLabel;
 
         public AccountsPanel(Giocatore player)
         {
             this.player = player;
             InitializeComponent();
-            LoadAccountsButtons(accountsPanel);
+            //LoadAccountsButtons(accountsPanel);
         }
         private void InitializeComponent()
         {
@@ -27,7 +27,7 @@ namespace DatabaseProject.view.panels
             textBox1 = new TextBox();
             label1 = new Label();
             playerNameLabel = new Label();
-            accountsPanel = new Panel();
+            accountUsernamesPanel = new Panel();
             SuspendLayout();
             // 
             // addAccountButton
@@ -43,6 +43,8 @@ namespace DatabaseProject.view.panels
             // 
             // backButton
             // 
+            backButton.BackgroundImage = images.ImageConverter.BackArrow(); // this doesn't work
+            backButton.BackgroundImageLayout = ImageLayout.Center;
             backButton.Location = new Point(12, 12);
             backButton.Name = "backButton";
             backButton.Size = new Size(50, 50);
@@ -75,23 +77,41 @@ namespace DatabaseProject.view.panels
             // 
             // playerNameLabel
             // 
-            playerNameLabel.AutoSize = true;
+            playerNameLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            playerNameLabel.AutoEllipsis = true;
             playerNameLabel.Font = new Font("Segoe UI", 25F);
-            playerNameLabel.Location = new Point(264, 16);
+            playerNameLabel.Location = new Point(136, 12);
             playerNameLabel.Name = "playerNameLabel";
-            playerNameLabel.Size = new Size(0, 46);
+            playerNameLabel.Size = new Size(459, 46);
             playerNameLabel.TabIndex = 5;
+            playerNameLabel.Text = "Giocatore: Nome Cognome";
+            playerNameLabel.TextAlign = ContentAlignment.TopCenter;
+
+            // Adjusting font size
+            AdjustFontSizeToFit(playerNameLabel);
+
+            // 
+            // accountUsernamesPanel
+            // 
+            accountUsernamesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            accountUsernamesPanel.AutoScroll = true;
+            accountUsernamesPanel.BackColor = Color.White;
+            accountUsernamesPanel.BorderStyle = BorderStyle.FixedSingle;
+            accountUsernamesPanel.Location = new Point(136, 268);
+            accountUsernamesPanel.Name = "accountUsernamesPanel";
+            accountUsernamesPanel.Size = new Size(459, 213);
+            accountUsernamesPanel.TabIndex = 6;
             // 
             // AccountsPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(accountUsernamesPanel);
             Controls.Add(backButton);
             Controls.Add(playerNameLabel);
             Controls.Add(addAccountButton);
             Controls.Add(label1);
             Controls.Add(textBox1);
-            Controls.Add(accountsPanel);
             MinimumSize = new Size(600, 500);
             Name = "AccountsPanel";
             Size = new Size(729, 500);
@@ -102,7 +122,7 @@ namespace DatabaseProject.view.panels
         private void AddAccountButton_Click(object sender, EventArgs e)
         {
             AccountDao.CreateAccount(this.player, "Prova", "Prova");
-            LoadAccountsButtons(accountsPanel);
+            //LoadAccountsButtons(accountsPanel);
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -115,7 +135,7 @@ namespace DatabaseProject.view.panels
         {
             this.searchBar.FilterEntries(entry => entry.Username.ToLower().Contains(textBox1.Text.ToLower()));
             var filteredEntries = this.searchBar.GetFilteredEntries();
-            accountsPanel.Controls.Clear();
+            //accountsPanel.Controls.Clear();
 
             foreach (var entry in filteredEntries)
             {
@@ -126,7 +146,7 @@ namespace DatabaseProject.view.panels
                     Height = 40,
                 };
                 playerButton.Click += (sender, e) => AccountButton_Click(entry);
-                accountsPanel.Controls.Add(playerButton);
+                //accountsPanel.Controls.Add(playerButton);
             }
         }
 
@@ -153,6 +173,32 @@ namespace DatabaseProject.view.panels
         {
             // Go to village page
 
+        }
+
+        private void AdjustFontSizeToFit(Label label)
+        {
+            // Start with the current font size
+            float fontSize = label.Font.Size;
+            SizeF textSize;
+
+            // Measure the text size
+            using (Graphics g = label.CreateGraphics())
+            {
+                textSize = g.MeasureString(label.Text, new Font(label.Font.FontFamily, fontSize));
+            }
+
+            // Reduce the font size until the text fits within the label's bounds
+            while (textSize.Width > label.Width && fontSize > 1)
+            {
+                fontSize -= 0.5f;
+                using (Graphics g = label.CreateGraphics())
+                {
+                    textSize = g.MeasureString(label.Text, new Font(label.Font.FontFamily, fontSize));
+                }
+            }
+
+            // Set the adjusted font size
+            label.Font = new Font(label.Font.FontFamily, fontSize);
         }
     }
 }
