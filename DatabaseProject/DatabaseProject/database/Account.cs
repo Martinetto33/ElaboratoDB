@@ -15,13 +15,13 @@ public partial class Account
 
     public Guid IdGiocatore { get; set; }
 
-    public virtual ICollection<AccountAttaccante> AccountAttaccantes { get; set; } = new List<AccountAttaccante>();
+    public virtual ICollection<AccountAttaccante> AccountAttaccanti { get; set; } = new List<AccountAttaccante>();
 
-    public virtual ICollection<AccountDifensore> AccountDifensores { get; set; } = new List<AccountDifensore>();
+    public virtual ICollection<AccountDifensore> AccountDifensori { get; set; } = new List<AccountDifensore>();
 
     public virtual Giocatore IdGiocatoreNavigation { get; set; } = null!;
 
     public virtual Villaggio IdVillaggioNavigation { get; set; } = null!;
 
-    public virtual ICollection<PartecipazioneClan> PartecipazioneClans { get; set; } = new List<PartecipazioneClan>();
+    public virtual ICollection<PartecipazioneClan> PartecipazioniClan { get; set; } = new List<PartecipazioneClan>();
 }

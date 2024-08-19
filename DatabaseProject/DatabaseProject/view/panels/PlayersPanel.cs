@@ -34,11 +34,11 @@ namespace DatabaseProject.view.panels
             AddPlayerButton.UseVisualStyleBackColor = true;
             AddPlayerButton.Click += AddPlayerButton_Click;
             // 
-            // BackButton
+            // backButton
             // 
-            BackButton.Image = (Image)resources.GetObject("BackButton.Image");
+            BackButton.Image = (Image)resources.GetObject("backButton.Image");
             BackButton.Location = new Point(12, 12);
-            BackButton.Name = "BackButton";
+            BackButton.Name = "backButton";
             BackButton.Size = new Size(50, 50);
             BackButton.TabIndex = 1;
             BackButton.UseVisualStyleBackColor = true;
@@ -67,7 +67,6 @@ namespace DatabaseProject.view.panels
             searchPlayerLabel.Size = new Size(118, 21);
             searchPlayerLabel.TabIndex = 3;
             searchPlayerLabel.Text = "Cerca giocatore";
-            searchPlayerLabel.Click += label1_Click;
             // 
             // playerNamesPanel
             // 
@@ -85,14 +84,14 @@ namespace DatabaseProject.view.panels
             LoadPlayerButtons(playerNamesPanel);
 
             // 
-            // PlayersPanel
+            // accountsPanel
             // 
             Controls.Add(AddPlayerButton);
             Controls.Add(BackButton);
             Controls.Add(textBox1);
             Controls.Add(searchPlayerLabel);
             Controls.Add(playerNamesPanel);
-            Name = "PlayersPanel";
+            Name = "accountsPanel";
             Size = new Size(860, 560);
             ResumeLayout(false);
             PerformLayout();
@@ -159,15 +158,10 @@ namespace DatabaseProject.view.panels
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void PlayerButton_Click(Giocatore player)
         {
             var mainForm = (ClashOfClansDatabaseApplication)this.ParentForm!;
-            //mainForm.LoadPanel(new PlayerDetailsPanel(player));
+            mainForm.LoadPanel(new AccountsPanel(player));
         }
 
         private Button AddPlayerButton;

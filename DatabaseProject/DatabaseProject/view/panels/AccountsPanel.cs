@@ -1,0 +1,158 @@
+﻿using DatabaseProject.daos;
+using DatabaseProject.database;
+
+namespace DatabaseProject.view.panels
+{
+    class AccountsPanel : UserControl
+    {
+        private readonly Giocatore player;
+        private SearchBar<Account> searchBar;
+        private Button addAccountButton;
+        private Button backButton;
+        private TextBox textBox1;
+        private Label label1;
+        private Panel accountsPanel;
+        private Label playerNameLabel;
+
+        public AccountsPanel(Giocatore player)
+        {
+            this.player = player;
+            InitializeComponent();
+            LoadAccountsButtons(accountsPanel);
+        }
+        private void InitializeComponent()
+        {
+            addAccountButton = new Button();
+            backButton = new Button();
+            textBox1 = new TextBox();
+            label1 = new Label();
+            playerNameLabel = new Label();
+            accountsPanel = new Panel();
+            SuspendLayout();
+            // 
+            // addAccountButton
+            // 
+            addAccountButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            addAccountButton.Location = new Point(136, 87);
+            addAccountButton.Name = "addAccountButton";
+            addAccountButton.Size = new Size(459, 93);
+            addAccountButton.TabIndex = 0;
+            addAccountButton.Text = "Aggiungi Account";
+            addAccountButton.UseVisualStyleBackColor = true;
+            addAccountButton.Click += AddAccountButton_Click;
+            // 
+            // backButton
+            // 
+            backButton.Location = new Point(12, 12);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(50, 50);
+            backButton.TabIndex = 1;
+            backButton.UseVisualStyleBackColor = true;
+            backButton.Click += BackButton_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox1.BorderStyle = BorderStyle.FixedSingle;
+            textBox1.Cursor = Cursors.IBeam;
+            textBox1.Font = new Font("Segoe UI", 16F);
+            textBox1.Location = new Point(136, 226);
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Inserisci lo username dell'account...";
+            textBox1.Size = new Size(459, 36);
+            textBox1.TabIndex = 2;
+            textBox1.TextChanged += TextBox1_TextChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(135, 196);
+            label1.Name = "label1";
+            label1.Size = new Size(107, 21);
+            label1.TabIndex = 3;
+            label1.Text = "Cerca account";
+            // 
+            // playerNameLabel
+            // 
+            playerNameLabel.AutoSize = true;
+            playerNameLabel.Font = new Font("Segoe UI", 25F);
+            playerNameLabel.Location = new Point(264, 16);
+            playerNameLabel.Name = "playerNameLabel";
+            playerNameLabel.Size = new Size(0, 46);
+            playerNameLabel.TabIndex = 5;
+            // 
+            // AccountsPanel
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(backButton);
+            Controls.Add(playerNameLabel);
+            Controls.Add(addAccountButton);
+            Controls.Add(label1);
+            Controls.Add(textBox1);
+            Controls.Add(accountsPanel);
+            MinimumSize = new Size(600, 500);
+            Name = "AccountsPanel";
+            Size = new Size(729, 500);
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        private void AddAccountButton_Click(object sender, EventArgs e)
+        {
+            AccountDao.CreateAccount(this.player, "Prova", "Prova");
+            LoadAccountsButtons(accountsPanel);
+        }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+            var mainForm = (ClashOfClansDatabaseApplication)this.ParentForm!;
+            mainForm.LoadPanel(new PlayersPanel());
+        }
+
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            this.searchBar.FilterEntries(entry => entry.Username.ToLower().Contains(textBox1.Text.ToLower()));
+            var filteredEntries = this.searchBar.GetFilteredEntries();
+            accountsPanel.Controls.Clear();
+
+            foreach (var entry in filteredEntries)
+            {
+                Button playerButton = new()
+                {
+                    Text = $"{entry.Username}",
+                    Dock = DockStyle.Top,
+                    Height = 40,
+                };
+                playerButton.Click += (sender, e) => AccountButton_Click(entry);
+                accountsPanel.Controls.Add(playerButton);
+            }
+        }
+
+        private void LoadAccountsButtons(Panel accountsPanel)
+        {
+            List<Account> accounts = AccountDao.GetAllAccounts();
+            this.searchBar = new SearchBar<Account>(accounts);
+            accountsPanel.Controls.Clear();
+
+            foreach (var account in accounts)
+            {
+                Button accountButton = new()
+                {
+                    Text = $"{account.Username}",
+                    Dock = DockStyle.Top,
+                    Height = 40,
+                };
+                accountButton.Click += (sender, e) => AccountButton_Click(account);
+                accountsPanel.Controls.Add(accountButton);
+            }
+        }
+
+        private void AccountButton_Click(Account account)
+        {
+            // Go to village page
+
+        }
+    }
+}

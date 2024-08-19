@@ -90,7 +90,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.IdAttacco).ValueGeneratedOnAdd();
             entity.Property(e => e.TrofeiOttenuti).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.AccountAttaccantes)
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.AccountAttaccanti)
                 .HasForeignKey(d => d.IdAccount)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKACC_ACC_ATTACKER");
@@ -112,7 +112,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.IdAttacco).ValueGeneratedOnAdd();
             entity.Property(e => e.TrofeiOttenuti).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.AccountDifensores)
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.AccountDifensori)
                 .HasForeignKey(d => d.IdAccount)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKACC_ACC_DEFENDER");
@@ -317,7 +317,7 @@ public partial class ClashOfClansContext : DbContext
 
             entity.Property(e => e.Ruolo).HasMaxLength(20);
 
-            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.PartecipazioneClans)
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.PartecipazioniClan)
                 .HasForeignKey(d => d.IdAccount)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKPERMANENZA");

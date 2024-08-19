@@ -59,5 +59,25 @@ namespace DatabaseProject.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] back_arrow {
+            get {
+                object obj = ResourceManager.GetObject("back_arrow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] back_arrow_icon {
+            get {
+                object obj = ResourceManager.GetObject("back_arrow_icon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
