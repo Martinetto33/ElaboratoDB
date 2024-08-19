@@ -18,10 +18,11 @@ namespace DatabaseProject.view.panels
         {
             this.player = player;
             InitializeComponent();
-            //LoadAccountsButtons(accountsPanel);
+            LoadAccountsButtons(accountUsernamesPanel!);
         }
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountsPanel));
             addAccountButton = new Button();
             backButton = new Button();
             textBox1 = new TextBox();
@@ -33,9 +34,9 @@ namespace DatabaseProject.view.panels
             // addAccountButton
             // 
             addAccountButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            addAccountButton.Location = new Point(136, 87);
+            addAccountButton.Location = new Point(136, 83);
             addAccountButton.Name = "addAccountButton";
-            addAccountButton.Size = new Size(459, 93);
+            addAccountButton.Size = new Size(330, 93);
             addAccountButton.TabIndex = 0;
             addAccountButton.Text = "Aggiungi Account";
             addAccountButton.UseVisualStyleBackColor = true;
@@ -43,7 +44,7 @@ namespace DatabaseProject.view.panels
             // 
             // backButton
             // 
-            backButton.BackgroundImage = images.ImageConverter.BackArrow(); // this doesn't work
+            backButton.BackgroundImage = (Image)resources.GetObject("backButton.BackgroundImage");
             backButton.BackgroundImageLayout = ImageLayout.Center;
             backButton.Location = new Point(12, 12);
             backButton.Name = "backButton";
@@ -58,10 +59,10 @@ namespace DatabaseProject.view.panels
             textBox1.BorderStyle = BorderStyle.FixedSingle;
             textBox1.Cursor = Cursors.IBeam;
             textBox1.Font = new Font("Segoe UI", 16F);
-            textBox1.Location = new Point(136, 226);
+            textBox1.Location = new Point(136, 222);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Inserisci lo username dell'account...";
-            textBox1.Size = new Size(459, 36);
+            textBox1.Size = new Size(330, 36);
             textBox1.TabIndex = 2;
             textBox1.TextChanged += TextBox1_TextChanged;
             // 
@@ -69,7 +70,7 @@ namespace DatabaseProject.view.panels
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(135, 196);
+            label1.Location = new Point(135, 192);
             label1.Name = "label1";
             label1.Size = new Size(107, 21);
             label1.TabIndex = 3;
@@ -80,14 +81,13 @@ namespace DatabaseProject.view.panels
             playerNameLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             playerNameLabel.AutoEllipsis = true;
             playerNameLabel.Font = new Font("Segoe UI", 25F);
-            playerNameLabel.Location = new Point(136, 12);
+            playerNameLabel.Location = new Point(136, 25);
             playerNameLabel.Name = "playerNameLabel";
-            playerNameLabel.Size = new Size(459, 46);
+            playerNameLabel.Size = new Size(330, 46);
             playerNameLabel.TabIndex = 5;
-            playerNameLabel.Text = "Giocatore: Nome Cognome";
+            playerNameLabel.Text = $"Giocatore: {this.player.Nome} {this.player.Cognome}";
             playerNameLabel.TextAlign = ContentAlignment.TopCenter;
-
-            // Adjusting font size
+            
             AdjustFontSizeToFit(playerNameLabel);
 
             // 
@@ -97,9 +97,9 @@ namespace DatabaseProject.view.panels
             accountUsernamesPanel.AutoScroll = true;
             accountUsernamesPanel.BackColor = Color.White;
             accountUsernamesPanel.BorderStyle = BorderStyle.FixedSingle;
-            accountUsernamesPanel.Location = new Point(136, 268);
+            accountUsernamesPanel.Location = new Point(136, 264);
             accountUsernamesPanel.Name = "accountUsernamesPanel";
-            accountUsernamesPanel.Size = new Size(459, 213);
+            accountUsernamesPanel.Size = new Size(330, 202);
             accountUsernamesPanel.TabIndex = 6;
             // 
             // AccountsPanel
@@ -114,7 +114,8 @@ namespace DatabaseProject.view.panels
             Controls.Add(textBox1);
             MinimumSize = new Size(600, 500);
             Name = "AccountsPanel";
-            Size = new Size(729, 500);
+            Size = new Size(600, 500);
+            Load += AccountsPanel_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -199,6 +200,11 @@ namespace DatabaseProject.view.panels
 
             // Set the adjusted font size
             label.Font = new Font(label.Font.FontFamily, fontSize);
+        }
+
+        private void AccountsPanel_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

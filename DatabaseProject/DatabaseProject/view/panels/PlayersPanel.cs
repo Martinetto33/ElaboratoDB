@@ -13,7 +13,6 @@ namespace DatabaseProject.view.panels
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayersPanel));
             AddPlayerButton = new Button();
             BackButton = new Button();
             textBox1 = new TextBox();
@@ -34,7 +33,7 @@ namespace DatabaseProject.view.panels
             // 
             // backButton
             // 
-            BackButton.Image = (Image)resources.GetObject("backButton.Image");
+            BackButton.Image = images.ImageConverter.BackArrow();
             BackButton.Location = new Point(12, 12);
             BackButton.Name = "backButton";
             BackButton.Size = new Size(50, 50);
