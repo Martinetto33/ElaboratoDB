@@ -1,4 +1,5 @@
 ﻿using DatabaseProject.daos;
+using DatabaseProject.database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,30 +12,22 @@ using System.Windows.Forms;
 
 namespace DatabaseProject.view
 {
-    public partial class PlayerInsertionForm : Form
+    public partial class AccountInsertionForm : Form
     {
-        public PlayerInsertionForm()
+        public Giocatore player { get; }
+        public AccountInsertionForm(Giocatore player)
         {
+            this.player = player;
             InitializeComponent();
-            this.Shown += new EventHandler(PlayerInsertionForm_Load);
+            this.Shown += new EventHandler(AccountInsertionForm_Shown);
         }
 
-        private void PlayerInsertionForm_Load(object sender, EventArgs e)
+        private void AccountInsertionForm_Shown(object? sender, EventArgs e)
         {
-            textBox1.Focus(); // Set focus to the first name text box
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            this.textBox1.Focus();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void firstNameLabel_Click(object sender, EventArgs e)
         {
 
         }
@@ -47,7 +40,7 @@ namespace DatabaseProject.view
 
         private void confirmButton_Click(object sender, EventArgs e)
         {
-            PlayerDao.CreatePlayer(textBox1.Text, textBox2.Text);
+            AccountDao.CreateAccount(player, textBox1.Text, textBox2.Text);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

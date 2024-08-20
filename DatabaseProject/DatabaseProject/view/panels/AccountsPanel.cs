@@ -122,9 +122,12 @@ namespace DatabaseProject.view.panels
 
         private void AddAccountButton_Click(object sender, EventArgs e)
         {
-            // TODO: implement form to create account
-            AccountDao.CreateAccount(this.player, "harorova", "Prova");
-            LoadAccountsButtons(accountUsernamesPanel);
+            using var accountInsertionForm = new AccountInsertionForm(this.player);
+            accountInsertionForm.ShowDialog();
+            if (accountInsertionForm.DialogResult == DialogResult.OK)
+            {
+                LoadAccountsButtons(accountUsernamesPanel);
+            }
         }
 
         private void BackButton_Click(object sender, EventArgs e)
