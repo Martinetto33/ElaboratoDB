@@ -15,7 +15,7 @@ public partial class Clan
 
     public Guid IdClan { get; set; }
 
-    public virtual ICollection<Combattimento> Combattimentos { get; set; } = new List<Combattimento>();
+    public virtual ICollection<Combattimento> Combattimenti { get; set; } = new List<Combattimento>();
 
-    public virtual ICollection<PartecipazioneClan> PartecipazioneClans { get; set; } = new List<PartecipazioneClan>();
+    public virtual ICollection<PartecipazioneClan> PartecipazioniClan { get; set; } = new List<PartecipazioneClan>();
 }

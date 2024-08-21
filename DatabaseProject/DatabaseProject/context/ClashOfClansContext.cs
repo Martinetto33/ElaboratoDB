@@ -168,7 +168,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasMaxLength(1)
                 .IsFixedLength();
 
-            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.Combattimentos)
+            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.Combattimenti)
                 .HasForeignKey(d => d.IdClan)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOM_CLA");
@@ -195,7 +195,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasMaxLength(1)
                 .IsFixedLength();
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Costruttores)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Costruttori)
                 .HasForeignKey(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOLLABORAZIONE");
@@ -229,7 +229,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.Tipo).HasMaxLength(50);
             entity.Property(e => e.TipoRisorsa).HasMaxLength(30);
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Edificios)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Edifici)
                 .HasForeignKey(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOMPOSIZIONE");
@@ -322,7 +322,7 @@ public partial class ClashOfClansContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKPERMANENZA");
 
-            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.PartecipazioneClans)
+            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.PartecipazioniClan)
                 .HasForeignKey(d => d.IdClan)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKACCOGLIENZA");
@@ -342,7 +342,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.Nome).HasMaxLength(50);
             entity.Property(e => e.PuntiVita).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Truppas)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Truppe)
                 .HasForeignKey(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKDISPONIBILITA");

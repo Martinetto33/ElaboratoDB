@@ -21,107 +21,135 @@
         }
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UseThisFormAsCanvas));
-            addAccountButton = new Button();
-            backButton = new Button();
-            textBox1 = new TextBox();
-            label1 = new Label();
-            accountsPanel = new Panel();
-            playerNameLabel = new Label();
+            panel1 = new Panel();
+            panel3 = new Panel();
+            tabControl1 = new TabControl();
+            Villaggio = new TabPage();
+            Attacchi = new TabPage();
+            Clan = new TabPage();
+            panel4 = new Panel();
+            panel2 = new Panel();
+            leftPanel = new Panel();
+            panel3.SuspendLayout();
+            tabControl1.SuspendLayout();
+            leftPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // addAccountButton
+            // panel1
             // 
-            addAccountButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            addAccountButton.Location = new Point(136, 87);
-            addAccountButton.Name = "addAccountButton";
-            addAccountButton.Size = new Size(524, 93);
-            addAccountButton.TabIndex = 0;
-            addAccountButton.Text = "Aggiungi Account";
-            addAccountButton.UseVisualStyleBackColor = true;
-            addAccountButton.Click += AddPlayerTestButton_Click;
+            panel1.AutoScroll = true;
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(1013, 0);
+            panel1.MinimumSize = new Size(200, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(200, 678);
+            panel1.TabIndex = 2;
             // 
-            // backButton
+            // panel3
             // 
-            backButton.Image = (Image)resources.GetObject("backButton.Image");
-            backButton.Location = new Point(12, 12);
-            backButton.Name = "backButton";
-            backButton.Size = new Size(50, 50);
-            backButton.TabIndex = 1;
-            backButton.UseVisualStyleBackColor = true;
-            backButton.Click += BackButton_Click;
+            panel3.Controls.Add(panel4);
+            panel3.Controls.Add(tabControl1);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(200, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(813, 678);
+            panel3.TabIndex = 3;
             // 
-            // textBox1
+            // tabControl1
             // 
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Cursor = Cursors.IBeam;
-            textBox1.Font = new Font("Segoe UI", 16F);
-            textBox1.Location = new Point(136, 226);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Inserisci lo username dell'account...";
-            textBox1.Size = new Size(524, 36);
-            textBox1.TabIndex = 2;
-            textBox1.TextChanged += textBox1_TextChanged;
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl1.Controls.Add(Villaggio);
+            tabControl1.Controls.Add(Attacchi);
+            tabControl1.Controls.Add(Clan);
+            tabControl1.Location = new Point(6, 106);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(801, 572);
+            tabControl1.TabIndex = 1;
             // 
-            // label1
+            // Villaggio
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(135, 196);
-            label1.Name = "label1";
-            label1.Size = new Size(107, 21);
-            label1.TabIndex = 3;
-            label1.Text = "Cerca account";
-            label1.Click += label1_Click;
+            Villaggio.AutoScroll = true;
+            Villaggio.Location = new Point(4, 24);
+            Villaggio.Name = "Villaggio";
+            Villaggio.Padding = new Padding(3);
+            Villaggio.Size = new Size(793, 544);
+            Villaggio.TabIndex = 0;
+            Villaggio.Text = "Villaggio";
+            Villaggio.UseVisualStyleBackColor = true;
             // 
-            // accountsPanel
+            // Attacchi
             // 
-            accountsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            accountsPanel.AutoScroll = true;
-            accountsPanel.BackColor = Color.White;
-            accountsPanel.BorderStyle = BorderStyle.FixedSingle;
-            accountsPanel.Location = new Point(136, 268);
-            accountsPanel.Name = "accountsPanel";
-            accountsPanel.Padding = new Padding(10);
-            accountsPanel.Size = new Size(524, 255);
-            accountsPanel.TabIndex = 4;
+            Attacchi.Location = new Point(4, 24);
+            Attacchi.Name = "Attacchi";
+            Attacchi.Padding = new Padding(3);
+            Attacchi.Size = new Size(531, 406);
+            Attacchi.TabIndex = 1;
+            Attacchi.Text = "Attacchi";
+            Attacchi.UseVisualStyleBackColor = true;
             // 
-            // playerNameLabel
+            // Clan
             // 
-            playerNameLabel.AutoSize = true;
-            playerNameLabel.Font = new Font("Segoe UI", 25F);
-            playerNameLabel.Location = new Point(264, 16);
-            playerNameLabel.Name = "playerNameLabel";
-            playerNameLabel.Size = new Size(267, 46);
-            playerNameLabel.TabIndex = 5;
-            playerNameLabel.Text = "Nome Giocatore";
-            playerNameLabel.Click += label2_Click;
+            Clan.Location = new Point(4, 24);
+            Clan.Name = "Clan";
+            Clan.Size = new Size(531, 406);
+            Clan.TabIndex = 2;
+            Clan.Text = "Clan";
+            Clan.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            panel4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel4.BackColor = SystemColors.ControlDarkDark;
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(813, 100);
+            panel4.TabIndex = 2;
+            // 
+            // panel2
+            // 
+            panel2.Location = new Point(206, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(593, 89);
+            panel2.TabIndex = 3;
+            // 
+            // leftPanel
+            // 
+            leftPanel.AutoScroll = true;
+            leftPanel.Controls.Add(panel2);
+            leftPanel.Dock = DockStyle.Left;
+            leftPanel.Location = new Point(0, 0);
+            leftPanel.MinimumSize = new Size(200, 0);
+            leftPanel.Name = "leftPanel";
+            leftPanel.Size = new Size(200, 678);
+            leftPanel.TabIndex = 1;
             // 
             // UseThisFormAsCanvas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(794, 535);
-            Controls.Add(playerNameLabel);
-            Controls.Add(accountsPanel);
-            Controls.Add(label1);
-            Controls.Add(textBox1);
-            Controls.Add(backButton);
-            Controls.Add(addAccountButton);
-            MinimumSize = new Size(600, 500);
+            ClientSize = new Size(1213, 678);
+            Controls.Add(panel3);
+            Controls.Add(panel1);
+            Controls.Add(leftPanel);
+            MinimumSize = new Size(1000, 600);
             Name = "UseThisFormAsCanvas";
             Text = "Giocatore";
             Load += PlayersScreen_Load;
+            panel3.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
+            leftPanel.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
-        private Button addAccountButton;
-        private Button backButton;
-        private TextBox textBox1;
-        private Label label1;
-        private Panel accountsPanel;
-        private Label playerNameLabel;
+        private Panel panel1;
+        private Panel panel4;
+        private Panel panel3;
+        private TabControl tabControl1;
+        private TabPage Villaggio;
+        private TabPage Attacchi;
+        private TabPage Clan;
+        private Panel panel2;
+        private Panel leftPanel;
     }
 }

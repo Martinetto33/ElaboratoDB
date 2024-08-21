@@ -17,9 +17,9 @@ public partial class Villaggio
 
     public virtual Account? Account { get; set; }
 
-    public virtual ICollection<Costruttore> Costruttores { get; set; } = new List<Costruttore>();
+    public virtual ICollection<Costruttore> Costruttori { get; set; } = new List<Costruttore>();
 
-    public virtual ICollection<Edificio> Edificios { get; set; } = new List<Edificio>();
+    public virtual ICollection<Edificio> Edifici { get; set; } = new List<Edificio>();
 
-    public virtual ICollection<Truppa> Truppas { get; set; } = new List<Truppa>();
+    public virtual ICollection<Truppa> Truppe { get; set; } = new List<Truppa>();
 }
