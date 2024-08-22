@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseProject.model
+namespace DatabaseProject.model.code
 {
     public class War(
         string warId,
@@ -18,12 +18,12 @@ namespace DatabaseProject.model
 
         public void StartWar()
         {
-            this.IsInProgress = true;
+            IsInProgress = true;
         }
 
         public void EndWar()
         {
-            this.IsInProgress = false;
+            IsInProgress = false;
         }
 
         public void AddAttack(Clan clan, Attack attack)
@@ -37,7 +37,7 @@ namespace DatabaseProject.model
             }
             else
             {
-                this.Clans.Add(clan, new HashSet<Attack> { attack });
+                Clans.Add(clan, new HashSet<Attack> { attack });
             }
         }
     }

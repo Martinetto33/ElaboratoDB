@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseProject.model
+namespace DatabaseProject.model.code
 {
     public enum ClanRole
     {
@@ -31,33 +31,33 @@ namespace DatabaseProject.model
 
         public void AddMember(Account member, ClanRole role = ClanRole.Member)
         {
-            this.Members.Add(member, role);
+            Members.Add(member, role);
         }
 
         public void RemoveMember(Account member)
         {
-            if (Members.Count(entry => entry.Value == ClanRole.Leader) == 1 && this.Members[member] == ClanRole.Leader)
+            if (Members.Count(entry => entry.Value == ClanRole.Leader) == 1 && Members[member] == ClanRole.Leader)
             {
-                Console.WriteLine($"Cannot remove the last leader from clan {this.Name}. First, demote member {member.Username}.");
+                Console.WriteLine($"Cannot remove the last leader from clan {Name}. First, demote member {member.Username}.");
                 return;
             }
-            this.Members.Remove(member);
+            Members.Remove(member);
         }
 
         public void promoteMember(Account member)
         {
-            if (this.Members.ContainsKey(member))
+            if (Members.ContainsKey(member))
             {
-                switch (this.Members[member])
+                switch (Members[member])
                 {
                     case ClanRole.Member:
-                        this.Members[member] = ClanRole.Elder;
+                        Members[member] = ClanRole.Elder;
                         break;
                     case ClanRole.Elder:
-                        this.Members[member] = ClanRole.CoLeader;
+                        Members[member] = ClanRole.CoLeader;
                         break;
                     case ClanRole.CoLeader:
-                        this.Members[member] = ClanRole.Leader;
+                        Members[member] = ClanRole.Leader;
                         break;
                     case ClanRole.Leader:
                         Console.WriteLine("Cannot promote a leader.");
@@ -72,18 +72,18 @@ namespace DatabaseProject.model
 
         public void demoteMember(Account member)
         {
-            if (this.Members.ContainsKey(member))
+            if (Members.ContainsKey(member))
             {
-                switch (this.Members[member])
+                switch (Members[member])
                 {
                     case ClanRole.Leader:
-                        this.Members[member] = ClanRole.CoLeader;
+                        Members[member] = ClanRole.CoLeader;
                         break;
                     case ClanRole.CoLeader:
-                        this.Members[member] = ClanRole.Elder;
+                        Members[member] = ClanRole.Elder;
                         break;
                     case ClanRole.Elder:
-                        this.Members[member] = ClanRole.Member;
+                        Members[member] = ClanRole.Member;
                         break;
                     case ClanRole.Member:
                         Console.WriteLine("Cannot demote a member.");

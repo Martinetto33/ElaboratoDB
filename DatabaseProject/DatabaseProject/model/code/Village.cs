@@ -1,4 +1,4 @@
-﻿namespace DatabaseProject.model
+﻿namespace DatabaseProject.model.code
 {
     public class Village(
         string villageId,
@@ -21,7 +21,7 @@
         It's used by the simulator to determine the probability of winning a war attack.
          */
         private double _strength = 0.0;
-        public double Strength { get { return this._strength; } }
+        public double Strength { get { return _strength; } }
         public int ExperienceLevel { get; set; } = experienceLevel;
         public int Trophies { get; set; } = trophies;
         public int WarStars { get; set; } = warStars;
@@ -40,26 +40,26 @@
         public void UpdateStrength(int attacksPerformed)
         {
             if (attacksPerformed == 0 || attacksPerformed < 0) return;
-            this._strength = this.WarStars / (3.0 * attacksPerformed);
+            _strength = WarStars / (3.0 * attacksPerformed);
         }
 
         public void UpgradeBuilding(BaseBuilding building)
         {
-            if (this.Builders.Any(Builder => !Builder.IsBusy))
+            if (Builders.Any(Builder => !Builder.IsBusy))
             {
-                var freeBuilder = this.Builders.First(Builder => !Builder.IsBusy);
+                var freeBuilder = Builders.First(Builder => !Builder.IsBusy);
                 freeBuilder.UpgradeBuilding(building);
             }
         }
 
         public void UpgradeTroop(Troop troop)
         {
-            if (this.Laboratory.IsBusy)
+            if (Laboratory.IsBusy)
             {
-                Console.WriteLine($"Troop {this.Laboratory.UpgradingTroop?.Name} is already being upgraded.");
+                Console.WriteLine($"Troop {Laboratory.UpgradingTroop?.Name} is already being upgraded.");
                 return;
             }
-            this.Laboratory.UpgradeTroop(troop);
+            Laboratory.UpgradeTroop(troop);
         }
     }
 }

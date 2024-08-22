@@ -1,5 +1,5 @@
 using DatabaseProject.config;
-using DatabaseProject.model;
+using DatabaseProject.model.code;
 
 namespace TestClashOfClansDatabase
 {

@@ -1,7 +1,7 @@
 ﻿using DatabaseProject.config;
 using DatabaseProject.database;
 
-namespace DatabaseProject.model
+namespace DatabaseProject.model.code
 {
     public enum BuildingType
     {
@@ -42,12 +42,12 @@ namespace DatabaseProject.model
             BuildingType type
         )
         {
-            this.BuildingId = buildingId;
-            this.VillageId = villageId;
-            this.Name = name;
-            this.Level = level;
-            this.HealthPoints = healthPoints;
-            this.BuildingType = type;
+            BuildingId = buildingId;
+            VillageId = villageId;
+            Name = name;
+            Level = level;
+            HealthPoints = healthPoints;
+            BuildingType = type;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace DatabaseProject.model
         /// <param name="upgradeTimeInSeconds">The time in seconds to wait before upgrading.</param>
         public async virtual Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            if (this.Level < Configuration.MAX_LEVEL)
+            if (Level < Configuration.MAX_LEVEL)
             {
                 // Simulate the time passing for the upgrade
                 await Task.Delay((int)(upgradeTimeInSeconds * 1000));
@@ -85,7 +85,7 @@ namespace DatabaseProject.model
 
         public async override Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            if (this.Level < Configuration.MAX_LEVEL)
+            if (Level < Configuration.MAX_LEVEL)
             {
                 await Task.Delay((int)(upgradeTimeInSeconds * 1000));
                 Level++;
@@ -131,7 +131,7 @@ namespace DatabaseProject.model
         public int ProductionRate { get; set; } = productionRate;
         public async override Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            if (this.Level < Configuration.MAX_LEVEL)
+            if (Level < Configuration.MAX_LEVEL)
             {
                 await Task.Delay((int)(upgradeTimeInSeconds * 1000));
                 Level++;

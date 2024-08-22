@@ -1,4 +1,4 @@
-﻿namespace DatabaseProject.model
+﻿namespace DatabaseProject.model.code
 {
     public class Player(string id, string name, string username)
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseProject.model
+namespace DatabaseProject.model.code
 {
     public class Troop(
         string villageId,
@@ -25,14 +25,14 @@ namespace DatabaseProject.model
 
         public async Task UpgradeAsync(double upgradeTimeInSeconds)
         {
-            if (this.Level < Configuration.MAX_LEVEL)
+            if (Level < Configuration.MAX_LEVEL)
             {
                 // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
                 await Task.Delay((int)(upgradeTimeInSeconds * 1000));
-                this.Level++;
-                this.HealthPoints += 10;
-                this.DamagePerSecond += 5;
-                Console.WriteLine($"Troop {this.Name} has been upgraded to level {this.Level}.");
+                Level++;
+                HealthPoints += 10;
+                DamagePerSecond += 5;
+                Console.WriteLine($"Troop {Name} has been upgraded to level {Level}.");
             }
         }
     }

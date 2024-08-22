@@ -1,6 +1,6 @@
 ﻿using DatabaseProject.daos;
 using DatabaseProject.database;
-using DatabaseProject.model;
+using DatabaseProject.model.code;
 using DatabaseProject.view.images;
 
 namespace DatabaseProject

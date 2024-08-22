@@ -1,4 +1,4 @@
-﻿namespace DatabaseProject.model
+﻿namespace DatabaseProject.model.code
 {
     public class Attack(string id, Account attacker, Account defender)
     {

@@ -1,10 +1,10 @@
 ﻿using DatabaseProject.database;
-using DatabaseProject.model;
+using DatabaseProject.model.code;
 using DatabaseProject.view.images;
 
 namespace DatabaseProject.view.panels
 {
-    public class VillagePanel: UserControl
+    public class VillagePanel : UserControl
     {
         public database.Account Account { get; }
         public Villaggio Village { get { return this.Account.IdVillaggioNavigation; } }
@@ -626,9 +626,19 @@ namespace DatabaseProject.view.panels
             var listItem = new ListViewItem
             {
                 Text = attack.StelleOttenute.ToString(),
-                SubItems = { attack.PercentualeDistruzione.ToString(), attack.TempoImpiegato.ToString(), trophiesForAttack.ToString() }
+                SubItems = { attack.PercentualeDistruzione.ToString(), attack.TempoImpiegato.ToString(), trophiesForAttack.ToString(), attackType }
             };
             this.listView2.Items.Add(listItem);
+        }
+
+        public void UpdateBuildersPanel(List<Builder> builders)
+        {
+            this.Costruttori.Items.Clear();
+            foreach (var builder in builders)
+            {
+                // TODO: add timer logic to show the time left for the building to be completed.
+                this.Costruttori.Items.Add($"Costruttore {builder.BuilderId}: {builder.UpgradingBuilding?.Name ?? "Libero"}");
+            }
         }
     }
 }

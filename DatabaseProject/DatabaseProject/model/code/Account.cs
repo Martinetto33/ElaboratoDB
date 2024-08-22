@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseProject.model
+namespace DatabaseProject.model.code
 {
     public class Account(string username, string email, string id)
     {
