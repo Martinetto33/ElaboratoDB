@@ -29,6 +29,7 @@ namespace DatabaseProject
             ListViewGroup listViewGroup3 = new ListViewGroup("Difese", HorizontalAlignment.Left);
             ListViewItem listViewItem1 = new ListViewItem("Estrattore di Elisir", 6);
             ListViewItem listViewItem2 = new ListViewItem(new string[] { "2", "100%", "3m 30s", "3" }, -1);
+            ListViewItem listViewItem3 = new ListViewItem("Arciere", 0);
             leftSplitContainer = new SplitContainer();
             leftPanelsSplitContainer = new SplitContainer();
             accountUsernameLabel = new Label();
@@ -441,6 +442,7 @@ namespace DatabaseProject
             // clanRoleLabel
             // 
             clanRoleLabel.AutoSize = true;
+            clanRoleLabel.BackColor = Color.FromArgb(255, 128, 0);
             clanRoleLabel.Location = new Point(206, 0);
             clanRoleLabel.Name = "clanRoleLabel";
             clanRoleLabel.Size = new Size(87, 15);
@@ -504,12 +506,12 @@ namespace DatabaseProject
             // troopsListView
             // 
             troopsListView.Dock = DockStyle.Fill;
+            troopsListView.Items.AddRange(new ListViewItem[] { listViewItem3 });
             troopsListView.Location = new Point(0, 0);
             troopsListView.Name = "troopsListView";
             troopsListView.Size = new Size(223, 561);
             troopsListView.TabIndex = 0;
             troopsListView.UseCompatibleStateImageBehavior = false;
-            troopsListView.LargeImageList = ImageLoader.GetTroopsImageList(new Size(50, 50));
             // 
             // UseThisFormAsCanvas
             // 
