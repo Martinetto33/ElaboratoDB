@@ -1,0 +1,48 @@
+﻿using DatabaseProject.model.api;
+using DatabaseProject.model.code;
+
+namespace DatabaseProject.view.panels.village
+{
+    public partial class UpgradingTroopControl : UserControl
+    {
+        private static readonly int TIMER_INTERVAL = 1000;
+        private static readonly int MAX_PROGRESS = 100;
+        private readonly string displayedText;
+        private readonly IUpgradeObservable<Troop> upgradePerformer;
+        public UpgradingTroopControl(string stringToDisplay, IUpgradeObservable<Troop> upgradePerformer)
+        {
+            this.displayedText = stringToDisplay;
+            this.upgradePerformer = upgradePerformer;
+            InitializeComponent();
+            this.displayedStringLabel.Text = this.displayedText;
+            this.timeLabel.Text = $"Tempo rimanente: {MapMillisToTime(this.upgradePerformer.GetUpgradeTime())}";
+            this.timer1.Interval = TIMER_INTERVAL;
+            this.progressBar1.Maximum = MAX_PROGRESS;
+            this.timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.progressBar1.Value = MapProgressToPercentage();
+            if (this.progressBar1.Value == MAX_PROGRESS)
+            {
+                this.timer1.Stop();
+            }
+            this.timeLabel.Text = $"Tempo rimanente: {MapMillisToTime(this.upgradePerformer.GetRemainingUpgradeTime())}";
+        }
+
+        private static string MapMillisToTime(long millis)
+        {
+            TimeSpan time = TimeSpan.FromMilliseconds(millis);
+            return 0L <= millis ? time.ToString(@"mm\:ss") : "00:00";
+        }
+
+        private int MapProgressToPercentage()
+        {
+            long interval = this.upgradePerformer.GetUpgradeTime();
+            long remaining = this.upgradePerformer.GetRemainingUpgradeTime();
+            return interval > 0 ? (int)((interval - remaining) * MAX_PROGRESS / interval) : MAX_PROGRESS;
+        }
+
+    }
+}
