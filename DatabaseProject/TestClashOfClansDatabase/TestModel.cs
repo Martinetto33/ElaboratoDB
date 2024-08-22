@@ -116,5 +116,35 @@ namespace TestClashOfClansDatabase
             var defense = new Defense("building1", "123", "Cannon", level, 100, 20.0, targetsNumber, range);
             Assert.ThrowsExceptionAsync<BuilderBusyException>(() => builder.UpgradeBuilding(defense));
         }
+
+        [TestMethod]
+        public void TestBuildingUpgradeTime()
+        {
+            var builder = new Builder("123", 1);
+            int targetsNumber = 1;
+            int range = 10;
+            int level = 1;
+            int health = 100;
+            double damagePerSecond = 20.0;
+            var building = new Defense("building1", "123", "Cannon", level, health, damagePerSecond, targetsNumber, range);
+            builder.UpgradeBuilding(building);
+            var upgradeTime = (long)(level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000);
+            Assert.AreEqual(upgradeTime, builder.GetUpgradeTime());
+            Assert.IsTrue(builder.GetRemainingUpgradeTime() < upgradeTime);
+        }
+
+        [TestMethod]
+        public void TestTroopUpgradeTime()
+        {
+            var lab = new Laboratory("123", "123", "Lab", 1, 100, "This is the laboratory");
+            int level = 1;
+            int health = 100;
+            double damagePerSecond = 10.0;
+            var troop = new Troop("123", "Barbarian", level, health, damagePerSecond, "This is a Barbarian");
+            lab.UpgradeTroop(troop);
+            var upgradeTime = (long)(level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000);
+            Assert.AreEqual(upgradeTime, lab.GetUpgradeTime());
+            Assert.IsTrue(lab.GetRemainingUpgradeTime() < upgradeTime);
+        }
     }
 }
