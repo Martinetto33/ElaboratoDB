@@ -3,14 +3,16 @@ using DatabaseProject.model.api;
 using DatabaseProject.model.code;
 using DatabaseProject.view.images;
 
-namespace DatabaseProject.view.panels
+namespace DatabaseProject.view.panels.village
 {
     public class VillagePanel : UserControl
     {
         public database.Account Account { get; }
-        public Villaggio Village { get { return this.Account.IdVillaggioNavigation; } }
+        public Villaggio Village { get { return Account.IdVillaggioNavigation; } }
         public List<IUpgradeObservable<BaseBuilding>> Builders { get; }
         public IUpgradeObservable<Troop> Laboratory { get; }
+        private readonly UpgradeObserverImpl<Troop> laboratoryObserver;
+        private readonly List<UpgradeObserverImpl<BaseBuilding>> builderObservers;
 
         private SplitContainer leftSplitContainer;
         private SplitContainer rightSplitContainer;
@@ -52,14 +54,27 @@ namespace DatabaseProject.view.panels
         private ListView troopsListView;
         public VillagePanel(database.Account account, List<IUpgradeObservable<BaseBuilding>> builders, IUpgradeObservable<Troop> laboratory)
         {
-            this.Account = account;
+            Account = account;
             InitializeComponent();
             Builders = builders;
             Laboratory = laboratory;
-            Builders.ForEach(builder => builder.RegisterObserver(new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
+            laboratoryObserver = new UpgradeObserverImpl<Troop>(upgradedTroop =>
             {
-                UpdateBuildersPanel(Builders);
-            })));
+                AddTroopToView(upgradedTroop);
+            });
+            laboratory.RegisterObserver(laboratoryObserver);
+            builderObservers = [];
+            foreach (var builder in Builders)
+            {
+                var builderObserver = new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
+                {
+                    UpdateBuildersPanel(Builders);
+                });
+                builder.RegisterObserver(builderObserver);
+                builderObservers.Add(builderObserver);
+            }
+            UpdateBuildersPanel(Builders);
+            UpdateLaboratoryPanel(Laboratory);
         }
 
         private void InitializeComponent()
@@ -590,6 +605,15 @@ namespace DatabaseProject.view.panels
             ResumeLayout(false);
         }
 
+        private void ClearObservers()
+        {
+            Laboratory.RemoveObserver(laboratoryObserver);
+            foreach (var builder in Builders)
+            {
+                builderObservers.ForEach(observer => builder.RemoveObserver(observer));
+            }
+        }
+
         public void AddBuildingToView(Edificio building)
         {
             var imageIndex = ImageLoader.GetIndexFromDatabaseBuildingName(building.Nome);
@@ -614,15 +638,21 @@ namespace DatabaseProject.view.panels
             listView1.Items.Add(listItem);
         }
 
-        public void AddTroopToView(Truppa troop)
+        /// <summary>
+        /// Looks for an ImageIndex in the ImageList of the ListView control that corresponds to the name of the troop.
+        /// Ensure that the name of the troop is listed in the ImageLoader class.
+        /// </summary>
+        /// <param name="troop">A model representation of a <see cref="Truppa"/>.</param>
+        public void AddTroopToView(Troop troop)
         {
-            var imageIndex = ImageLoader.GetIndexFromDatabaseTroopName(troop.Nome);
+            // The following line will throw a KeyNotFoundException if the troop name is not found in the ImageLoader class.
+            var imageIndex = ImageLoader.GetIndexFromDatabaseTroopName(troop.Name);
             var listItem = new ListViewItem
             {
-                Text = troop.Nome,
+                Text = troop.Name,
                 ImageIndex = (int)imageIndex
             };
-            this.troopsListView.Items.Add(listItem);
+            troopsListView.Items.Add(listItem);
         }
 
         /// <summary>
@@ -638,28 +668,34 @@ namespace DatabaseProject.view.panels
                 Text = attack.StelleOttenute.ToString(),
                 SubItems = { attack.PercentualeDistruzione.ToString(), attack.TempoImpiegato.ToString(), trophiesForAttack.ToString(), attackType }
             };
-            this.listView2.Items.Add(listItem);
+            listView2.Items.Add(listItem);
         }
 
         public void UpdateBuildersPanel(List<IUpgradeObservable<BaseBuilding>> builders)
         {
-            this.Costruttori.Items.Clear();
-            foreach (var builder in builders)
+            Costruttori.Items.Clear();
+            builders.ForEach(builder =>
             {
-                // TODO: add timer logic to show the time left for the building to be completed.
                 if (builder.IsBusy())
                 {
-                    // Creating an observer and implementing its callback logic to be performed when the
-                    // building is upgraded.
-                    builder.RegisterObserver(new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
-                    {
-
-                    }));
+                    Costruttori.Items.Add($"Costruttore {builder.GetObservableId()}: {builder.GetUpgradingObjectName()} {builder.GetRemainingUpgradeTime()}");
                 }
                 else
                 {
-
+                    Costruttori.Items.Add($"Costruttore {builder.GetObservableId()}: Libero");
                 }
+            });
+        }
+
+        public void UpdateLaboratoryPanel(IUpgradeObservable<Troop> laboratory)
+        {
+            if (laboratory.IsBusy())
+            {
+                Laboratorio.Items.Add($"Laboratorio: {laboratory.GetUpgradingObjectName()} {laboratory.GetRemainingUpgradeTime()}");
+            }
+            else
+            {
+                Laboratorio.Items.Add("Laboratorio: Libero");
             }
         }
     }

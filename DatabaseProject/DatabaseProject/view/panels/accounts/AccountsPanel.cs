@@ -1,7 +1,7 @@
 ﻿using DatabaseProject.daos;
 using DatabaseProject.database;
 
-namespace DatabaseProject.view.panels
+namespace DatabaseProject.view.panels.account
 {
     class AccountsPanel : UserControl
     {
@@ -85,9 +85,9 @@ namespace DatabaseProject.view.panels
             playerNameLabel.Name = "playerNameLabel";
             playerNameLabel.Size = new Size(330, 46);
             playerNameLabel.TabIndex = 5;
-            playerNameLabel.Text = $"Giocatore: {this.player.Nome} {this.player.Cognome}";
+            playerNameLabel.Text = $"Giocatore: {player.Nome} {player.Cognome}";
             playerNameLabel.TextAlign = ContentAlignment.TopCenter;
-            
+
             AdjustFontSizeToFit(playerNameLabel);
 
             // 
@@ -122,7 +122,7 @@ namespace DatabaseProject.view.panels
 
         private void AddAccountButton_Click(object sender, EventArgs e)
         {
-            using var accountInsertionForm = new AccountInsertionForm(this.player);
+            using var accountInsertionForm = new AccountInsertionForm(player);
             accountInsertionForm.ShowDialog();
             if (accountInsertionForm.DialogResult == DialogResult.OK)
             {
@@ -132,14 +132,14 @@ namespace DatabaseProject.view.panels
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            var mainForm = (ClashOfClansDatabaseApplication)this.ParentForm!;
+            var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
             mainForm.LoadPanel(new PlayersPanel());
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            this.searchBar.FilterEntries(entry => entry.Username.ToLower().Contains(textBox1.Text.ToLower()));
-            var filteredEntries = this.searchBar.GetFilteredEntries();
+            searchBar.FilterEntries(entry => entry.Username.ToLower().Contains(textBox1.Text.ToLower()));
+            var filteredEntries = searchBar.GetFilteredEntries();
             accountUsernamesPanel.Controls.Clear();
 
             foreach (var entry in filteredEntries)
@@ -157,8 +157,8 @@ namespace DatabaseProject.view.panels
 
         private void LoadAccountsButtons(Panel accountsPanel)
         {
-            List<Account> accounts = AccountDao.GetAccountsFromPlayer(this.player);
-            this.searchBar = new SearchBar<Account>(accounts);
+            List<Account> accounts = AccountDao.GetAccountsFromPlayer(player);
+            searchBar = new SearchBar<Account>(accounts);
             accountsPanel.Controls.Clear();
 
             foreach (var account in accounts)

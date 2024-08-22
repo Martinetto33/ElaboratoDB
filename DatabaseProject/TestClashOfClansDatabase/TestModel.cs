@@ -1,4 +1,5 @@
 using DatabaseProject.config;
+using DatabaseProject.model.api;
 using DatabaseProject.model.code;
 
 namespace TestClashOfClansDatabase
@@ -122,6 +123,30 @@ namespace TestClashOfClansDatabase
             var upgradeTime = (long)(level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000);
             Assert.AreEqual(upgradeTime, lab.GetUpgradeTime());
             Assert.IsTrue(lab.GetRemainingUpgradeTime() < upgradeTime);
+        }
+
+        [TestMethod]
+        public async Task TestObservers()
+        {
+            var laboratory = CreateLaboratory();
+            var builder = CreateBuilder();
+            var defense = CreateDefense();
+            var troop = CreateTroop();
+            int laboratoryObserverTarget = 0;
+            int builderObserverTarget = 0;
+            UpgradeObserverImpl<Troop> laboratoryObserver = new(t => laboratoryObserverTarget++);
+            UpgradeObserverImpl<BaseBuilding> builderObserver = new(b => builderObserverTarget++);
+            laboratory.RegisterObserver(laboratoryObserver);
+            builder.RegisterObserver(builderObserver);
+            await laboratory.UpgradeTroop(troop);
+            await builder.UpgradeBuilding(defense);
+            Assert.AreEqual(1, laboratoryObserverTarget);
+            Assert.AreEqual(1, builderObserverTarget);
+            // Observers need not to be automatically detached
+            Assert.IsTrue(builder.RemoveObserver(builderObserver));
+            Assert.IsFalse(builder.RemoveObserver(builderObserver));
+            Assert.IsTrue(laboratory.RemoveObserver(laboratoryObserver));
+            Assert.IsFalse(laboratory.RemoveObserver(laboratoryObserver));
         }
     }
 }

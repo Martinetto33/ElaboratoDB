@@ -1,7 +1,7 @@
 ﻿using DatabaseProject.daos;
 using DatabaseProject.database;
 
-namespace DatabaseProject.view.panels
+namespace DatabaseProject.view.panels.player
 {
     internal class PlayersPanel : UserControl
     {
@@ -98,7 +98,7 @@ namespace DatabaseProject.view.panels
         {
             //PlayerDao.CreatePlayer("Alin", "Bordeianu");
             //Console.WriteLine("Player added");
-            this.ShowPlayerInsertionForm();
+            ShowPlayerInsertionForm();
         }
 
         private void ShowPlayerInsertionForm()
@@ -113,14 +113,14 @@ namespace DatabaseProject.view.panels
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            var mainForm = (ClashOfClansDatabaseApplication)this.ParentForm!;
+            var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
             mainForm.LoadPanel(new InitialMenuPanel());
         }
 
         private void LoadPlayerButtons(Panel playerNamesPanel)
         {
             List<Giocatore> players = [.. PlayerDao.GetAllPlayers().OrderBy(player => player.Cognome)];
-            this.searchBar = new SearchBar<Giocatore>(players);
+            searchBar = new SearchBar<Giocatore>(players);
             playerNamesPanel.Controls.Clear();
 
             foreach (var player in players)
@@ -138,8 +138,8 @@ namespace DatabaseProject.view.panels
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            this.searchBar.FilterEntries(e => $"{e.Nome} {e.Cognome}".ToLower().Contains(textBox1.Text.ToLower()));
-            var filteredEntries = this.searchBar.GetFilteredEntries();
+            searchBar.FilterEntries(e => $"{e.Nome} {e.Cognome}".ToLower().Contains(textBox1.Text.ToLower()));
+            var filteredEntries = searchBar.GetFilteredEntries();
             playerNamesPanel.Controls.Clear();
 
             foreach (var entry in filteredEntries)
@@ -157,7 +157,7 @@ namespace DatabaseProject.view.panels
 
         private void PlayerButton_Click(Giocatore player)
         {
-            var mainForm = (ClashOfClansDatabaseApplication)this.ParentForm!;
+            var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
             mainForm.LoadPanel(new AccountsPanel(player));
         }
 

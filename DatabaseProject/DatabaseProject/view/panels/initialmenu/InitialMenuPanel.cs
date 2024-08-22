@@ -1,4 +1,4 @@
-﻿namespace DatabaseProject.view.panels
+﻿namespace DatabaseProject.view.panels.initialmenu
 {
     /**
      * This class represents the initial menu panel.
@@ -77,24 +77,24 @@
             Name = "InitialMenu";
             Text = "Clash of Clans Database";
 
-            this.Controls.Add(ExitButton);
-            this.Controls.Add(PlayersButton);
-            this.Controls.Add(ClansButton);
-            this.Controls.Add(WarsButton);
+            Controls.Add(ExitButton);
+            Controls.Add(PlayersButton);
+            Controls.Add(ClansButton);
+            Controls.Add(WarsButton);
             ResumeLayout(false);
         }
 
         // The Exit button
         private void exitButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
         private void playersButton_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Players button clicked");
             // This is the method to change panel in the parent
-            var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
+            var mainForm = (ClashOfClansDatabaseApplication)Parent!;
             mainForm.LoadPanel(new PlayersPanel());
         }
 

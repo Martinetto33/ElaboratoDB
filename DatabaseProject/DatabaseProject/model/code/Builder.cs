@@ -39,7 +39,7 @@ namespace DatabaseProject.model.code
 
         public void RegisterObserver(IUpgradeObserver<BaseBuilding> observer) => this._observers.Add(observer);
 
-        public void RemoveObserver(IUpgradeObserver<BaseBuilding> observer) => this._observers.Remove(observer);
+        public bool RemoveObserver(IUpgradeObserver<BaseBuilding> observer) => this._observers.Remove(observer);
 
         public void NotifyObservers()
         {
