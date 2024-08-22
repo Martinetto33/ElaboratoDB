@@ -23,9 +23,12 @@ namespace DatabaseProject
         }
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             ListViewGroup listViewGroup1 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
             ListViewGroup listViewGroup2 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
             ListViewGroup listViewGroup3 = new ListViewGroup("Difese", HorizontalAlignment.Left);
+            ListViewItem listViewItem1 = new ListViewItem("Estrattore di Elisir", 6);
+            ListViewItem listViewItem2 = new ListViewItem(new string[] { "2", "100%", "3m 30s", "3" }, -1);
             leftSplitContainer = new SplitContainer();
             leftPanelsSplitContainer = new SplitContainer();
             accountUsernameLabel = new Label();
@@ -45,17 +48,16 @@ namespace DatabaseProject
             villageTab = new TabPage();
             listView1 = new ListView();
             attacksTab = new TabPage();
-            clanTab = new TabPage();
-            Truppe = new ListBox();
             listView2 = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
+            clanTab = new TabPage();
             clanTabSplitContainer = new SplitContainer();
             flowLayoutPanel2 = new FlowLayoutPanel();
-            clanRoleLabel = new Label();
             clanNameLabel = new Label();
+            clanRoleLabel = new Label();
             membersNumberLabel = new Label();
             trophiesNumberLabel = new Label();
             starsNumberLabel = new Label();
@@ -63,6 +65,7 @@ namespace DatabaseProject
             columnHeader5 = new ColumnHeader();
             columnHeader6 = new ColumnHeader();
             columnHeader7 = new ColumnHeader();
+            troopsListView = new ListView();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
@@ -213,7 +216,7 @@ namespace DatabaseProject
             // 
             // rightSplitContainer.Panel2
             // 
-            rightSplitContainer.Panel2.Controls.Add(Truppe);
+            rightSplitContainer.Panel2.Controls.Add(troopsListView);
             rightSplitContainer.Size = new Size(769, 561);
             rightSplitContainer.SplitterDistance = 542;
             rightSplitContainer.TabIndex = 0;
@@ -331,21 +334,14 @@ namespace DatabaseProject
             listViewGroup3.Header = "Difese";
             listViewGroup3.Name = "defensesListViewGroup";
             listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            listViewItem1.Group = listViewGroup1;
+            listView1.Items.AddRange(new ListViewItem[] { listViewItem1 });
             listView1.Location = new Point(3, 3);
             listView1.Name = "listView1";
             listView1.Size = new Size(528, 447);
             listView1.TabIndex = 0;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
-
-            // Code added by me
-            listView1.LargeImageList = ImageLoader.GetBuildingsImageList(new Size(64, 64));
-            var listViewElement = new ListViewItem();
-            listViewElement.ImageIndex = (int)ImageLoader.BuildingsIndexes.ElixirCollector;
-            listViewElement.Group = listViewGroup1;
-            listViewElement.Text = "Estrattore di Elisir";
-            listView1.Items.Add(listViewElement);
-
             // 
             // attacksTab
             // 
@@ -358,46 +354,18 @@ namespace DatabaseProject
             attacksTab.Text = "Attacchi";
             attacksTab.UseVisualStyleBackColor = true;
             // 
-            // clanTab
-            // 
-            clanTab.Controls.Add(clanTabSplitContainer);
-            clanTab.Location = new Point(4, 24);
-            clanTab.Name = "clanTab";
-            clanTab.Padding = new Padding(3);
-            clanTab.Size = new Size(534, 453);
-            clanTab.TabIndex = 2;
-            clanTab.Text = "Clan";
-            clanTab.UseVisualStyleBackColor = true;
-            // 
-            // Truppe
-            // 
-            Truppe.Dock = DockStyle.Fill;
-            Truppe.FormattingEnabled = true;
-            Truppe.ItemHeight = 15;
-            Truppe.Location = new Point(0, 0);
-            Truppe.Name = "Truppe";
-            Truppe.Size = new Size(223, 561);
-            Truppe.TabIndex = 0;
-            // 
             // listView2
             // 
             listView2.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
             listView2.Dock = DockStyle.Fill;
             listView2.GridLines = true;
+            listView2.Items.AddRange(new ListViewItem[] { listViewItem2 });
             listView2.Location = new Point(3, 3);
             listView2.Name = "listView2";
             listView2.Size = new Size(528, 447);
             listView2.TabIndex = 0;
             listView2.UseCompatibleStateImageBehavior = false;
             listView2.View = View.Details;
-
-            // Code added by me
-            var listViewElement2 = new ListViewItem();
-            listViewElement2.Text = "2";
-            listViewElement2.SubItems.Add("100%");
-            listViewElement2.SubItems.Add("3m 30s");
-            listViewElement2.SubItems.Add("3");
-            listView2.Items.Add(listViewElement2);
             // 
             // columnHeader1
             // 
@@ -416,6 +384,17 @@ namespace DatabaseProject
             // columnHeader4
             // 
             columnHeader4.Text = "Trofei";
+            // 
+            // clanTab
+            // 
+            clanTab.Controls.Add(clanTabSplitContainer);
+            clanTab.Location = new Point(4, 24);
+            clanTab.Name = "clanTab";
+            clanTab.Padding = new Padding(3);
+            clanTab.Size = new Size(534, 453);
+            clanTab.TabIndex = 2;
+            clanTab.Text = "Clan";
+            clanTab.UseVisualStyleBackColor = true;
             // 
             // clanTabSplitContainer
             // 
@@ -449,15 +428,6 @@ namespace DatabaseProject
             flowLayoutPanel2.Size = new Size(528, 95);
             flowLayoutPanel2.TabIndex = 0;
             // 
-            // clanRoleLabel
-            // 
-            clanRoleLabel.AutoSize = true;
-            clanRoleLabel.Location = new Point(206, 0);
-            clanRoleLabel.Name = "clanRoleLabel";
-            clanRoleLabel.Size = new Size(87, 15);
-            clanRoleLabel.TabIndex = 0;
-            clanRoleLabel.Text = "Ruolo: Anziano";
-            // 
             // clanNameLabel
             // 
             clanNameLabel.AutoSize = true;
@@ -467,6 +437,15 @@ namespace DatabaseProject
             clanNameLabel.Size = new Size(197, 37);
             clanNameLabel.TabIndex = 1;
             clanNameLabel.Text = "Clan: Babbucce";
+            // 
+            // clanRoleLabel
+            // 
+            clanRoleLabel.AutoSize = true;
+            clanRoleLabel.Location = new Point(206, 0);
+            clanRoleLabel.Name = "clanRoleLabel";
+            clanRoleLabel.Size = new Size(87, 15);
+            clanRoleLabel.TabIndex = 0;
+            clanRoleLabel.Text = "Ruolo: Anziano";
             // 
             // membersNumberLabel
             // 
@@ -521,6 +500,16 @@ namespace DatabaseProject
             // 
             columnHeader7.Text = "Trofei";
             columnHeader7.Width = 100;
+            // 
+            // troopsListView
+            // 
+            troopsListView.Dock = DockStyle.Fill;
+            troopsListView.Location = new Point(0, 0);
+            troopsListView.Name = "troopsListView";
+            troopsListView.Size = new Size(223, 561);
+            troopsListView.TabIndex = 0;
+            troopsListView.UseCompatibleStateImageBehavior = false;
+            troopsListView.LargeImageList = ImageLoader.GetTroopsImageList(new Size(50, 50));
             // 
             // UseThisFormAsCanvas
             // 
@@ -587,7 +576,6 @@ namespace DatabaseProject
         private ListBox Costruttori;
         private ListBox Laboratorio;
         private ListView listView1;
-        private ListBox Truppe;
         private ListView listView2;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
@@ -604,5 +592,6 @@ namespace DatabaseProject
         private ColumnHeader columnHeader5;
         private ColumnHeader columnHeader6;
         private ColumnHeader columnHeader7;
+        private ListView troopsListView;
     }
 }

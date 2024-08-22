@@ -1,9 +1,5 @@
 ﻿using DatabaseProject.config;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DatabaseProject.database;
 
 namespace DatabaseProject.model
 {
@@ -105,6 +101,20 @@ namespace DatabaseProject.model
                 }
             }
         }
+
+        public static Defense FromEdificio(Edificio edificio)
+        {
+            return new Defense(
+                edificio.IdEdificio.ToString(),
+                edificio.IdVillaggio.ToString(),
+                edificio.Nome,
+                edificio.Livello,
+                edificio.PuntiVita,
+                edificio.DanniAlSecondo ?? 0,
+                edificio.NumeroBersagli ?? 0,
+                edificio.RaggioAzione ?? 0
+            );
+        }
     }
 
     public class ResourceExtractor(
@@ -129,6 +139,19 @@ namespace DatabaseProject.model
                 ProductionRate += 100;
             }
         }
+
+        public static ResourceExtractor FromEdificio(Edificio edificio)
+        {
+            return new ResourceExtractor(
+                edificio.IdEdificio.ToString(),
+                edificio.IdVillaggio.ToString(),
+                edificio.Nome,
+                edificio.Livello,
+                edificio.PuntiVita,
+                Enum.Parse<ResourceType>(edificio.TipoRisorsa!),
+                edificio.ProduzioneOraria ?? 0
+            );
+        }
     }
 
     public class SpecialBuilding(
@@ -143,5 +166,18 @@ namespace DatabaseProject.model
     {
         public string Description { get; } = description;
         public SpecialBuildingRole Role { get; } = role;
+
+        public static SpecialBuilding FromEdificio(Edificio edificio)
+        {
+            return new SpecialBuilding(
+                edificio.IdEdificio.ToString(),
+                edificio.IdVillaggio.ToString(),
+                edificio.Nome,
+                edificio.Livello,
+                edificio.PuntiVita,
+                edificio.DescrizioneFunzione!,
+                Enum.Parse<SpecialBuildingRole>(edificio.Ruolo!)
+            );
+        }
     }
 }

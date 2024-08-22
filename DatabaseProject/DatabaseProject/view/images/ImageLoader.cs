@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Immutable;
+using System.Reflection;
 
 namespace DatabaseProject.view.images
 {
@@ -15,14 +16,14 @@ namespace DatabaseProject.view.images
         private static readonly List<string> troopImagePaths =
             [
                 "archer.png",
-                "balloon.png", 
-                "barbarian.png", 
-                "dragon.png", 
-                "giant.png", 
-                "goblin.png", 
-                "healer.png", 
+                "balloon.png",
+                "barbarian.png",
+                "dragon.png",
+                "giant.png",
+                "goblin.png",
+                "healer.png",
                 "pekka.png",
-                "wall_breaker.png", 
+                "wall_breaker.png",
                 "wizard.png"
             ];
         private static readonly List<string> buildingImagePaths =
@@ -41,8 +42,8 @@ namespace DatabaseProject.view.images
                 "wizard_tower.png",
                 "x_bow.png"
             ];
-        public enum BuildingsIndexes
-        { 
+        public enum BuildingIndexes
+        {
             AirDefense = 0,
             ArcherTower = 1,
             ArmyCamp = 2,
@@ -57,19 +58,53 @@ namespace DatabaseProject.view.images
             WizardTower = 11,
             XBow = 12
         }
-        public enum TroopsIndexes
+        public enum TroopIndexes
         {
-            Archer = 13,
-            Balloon = 14,
-            Barbarian = 15,
-            Dragon = 16,
-            Giant = 17,
-            Goblin = 18,
-            Healer = 19,
-            Pekka = 20,
-            WallBreaker = 21,
-            Wizard = 22
+            Archer = 0,
+            Balloon = 1,
+            Barbarian = 2,
+            Dragon = 3,
+            Giant = 4,
+            Goblin = 5,
+            Healer = 6,
+            Pekka = 7,
+            WallBreaker = 8,
+            Wizard = 9
         }
+
+        private static readonly ImmutableDictionary<string, BuildingIndexes> DatabaseToBuildingIndexDictionary = ImmutableDictionary.CreateRange(
+                new KeyValuePair<string, BuildingIndexes>[]
+                {
+                    KeyValuePair.Create("Difesa aerea", BuildingIndexes.AirDefense),
+                    KeyValuePair.Create("Torre dell'arciere", BuildingIndexes.ArcherTower),
+                    KeyValuePair.Create("Accampamento", BuildingIndexes.ArmyCamp),
+                    KeyValuePair.Create("Cannone", BuildingIndexes.Cannon),
+                    KeyValuePair.Create("Castello del clan", BuildingIndexes.ClanCastle),
+                    KeyValuePair.Create("Trivella per elisir nero", BuildingIndexes.DarkElixirDrill),
+                    KeyValuePair.Create("Estrattore di elisir", BuildingIndexes.ElixirCollector),
+                    KeyValuePair.Create("Miniera d'oro", BuildingIndexes.GoldMine),
+                    KeyValuePair.Create("Torre infernale", BuildingIndexes.InfernoTower),
+                    KeyValuePair.Create("Laboratorio", BuildingIndexes.Laboratory),
+                    KeyValuePair.Create("Municipio", BuildingIndexes.TownHall),
+                    KeyValuePair.Create("Torre dello stregone", BuildingIndexes.WizardTower),
+                    KeyValuePair.Create("Arco-X", BuildingIndexes.XBow)
+                }
+            );
+        private static readonly ImmutableDictionary<string, TroopIndexes> DatabaseToTroopIndexDictionary = ImmutableDictionary.CreateRange(
+                new KeyValuePair<string, TroopIndexes>[]
+                {
+                    KeyValuePair.Create("Arciere", TroopIndexes.Archer),
+                    KeyValuePair.Create("Mongolfiera", TroopIndexes.Balloon),
+                    KeyValuePair.Create("Barbaro", TroopIndexes.Barbarian),
+                    KeyValuePair.Create("Drago", TroopIndexes.Dragon),
+                    KeyValuePair.Create("Gigante", TroopIndexes.Giant),
+                    KeyValuePair.Create("Goblin", TroopIndexes.Goblin),
+                    KeyValuePair.Create("Guaritore", TroopIndexes.Healer),
+                    KeyValuePair.Create("Pekka", TroopIndexes.Pekka),
+                    KeyValuePair.Create("Spaccamuro", TroopIndexes.WallBreaker),
+                    KeyValuePair.Create("Stregone", TroopIndexes.Wizard)
+                }
+            );
 
         public static string GetPath(string imageName)
         {
@@ -137,5 +172,8 @@ namespace DatabaseProject.view.images
             }
             return imageList;
         }
+
+        public static BuildingIndexes GetIndexFromDatabaseBuildingName(string buildingName) => DatabaseToBuildingIndexDictionary[buildingName];
+        public static TroopIndexes GetIndexFromDatabaseTroopName(string troopName) => DatabaseToTroopIndexDictionary[troopName];
     }
 }
