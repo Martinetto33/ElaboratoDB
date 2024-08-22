@@ -390,6 +390,14 @@ namespace DatabaseProject
             listView2.TabIndex = 0;
             listView2.UseCompatibleStateImageBehavior = false;
             listView2.View = View.Details;
+
+            // Code added by me
+            var listViewElement2 = new ListViewItem();
+            listViewElement2.Text = "2";
+            listViewElement2.SubItems.Add("100%");
+            listViewElement2.SubItems.Add("3m 30s");
+            listViewElement2.SubItems.Add("3");
+            listView2.Items.Add(listViewElement2);
             // 
             // columnHeader1
             // 
