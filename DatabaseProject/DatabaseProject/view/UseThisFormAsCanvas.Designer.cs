@@ -21,38 +21,53 @@
         }
         private void InitializeComponent()
         {
+            ListViewGroup listViewGroup1 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup2 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup3 = new ListViewGroup("Difese", HorizontalAlignment.Left);
             leftSplitContainer = new SplitContainer();
+            leftPanelsSplitContainer = new SplitContainer();
+            accountUsernameLabel = new Label();
+            playerNameLabel = new Label();
+            backButton = new Button();
+            buildersAndLaboratorySplitContainer = new SplitContainer();
+            Costruttori = new ListBox();
+            Laboratorio = new ListBox();
             rightSplitContainer = new SplitContainer();
             centralSplitContainer = new SplitContainer();
-            leftPanelsSplitContainer = new SplitContainer();
-            buildersAndLaboratorySplitContainer = new SplitContainer();
-            tabControl1 = new TabControl();
-            villageTab = new TabPage();
-            attacksTab = new TabPage();
-            clanTab = new TabPage();
             flowLayoutPanel1 = new FlowLayoutPanel();
             forceLabel = new Label();
             trophiesLabel = new Label();
             starsLabel = new Label();
             xpLabel = new Label();
+            tabControl1 = new TabControl();
+            villageTab = new TabPage();
+            attacksTab = new TabPage();
+            clanTab = new TabPage();
+            Truppe = new ListBox();
+            listView1 = new ListView();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
             leftSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)leftPanelsSplitContainer).BeginInit();
+            leftPanelsSplitContainer.Panel1.SuspendLayout();
+            leftPanelsSplitContainer.Panel2.SuspendLayout();
+            leftPanelsSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)buildersAndLaboratorySplitContainer).BeginInit();
+            buildersAndLaboratorySplitContainer.Panel1.SuspendLayout();
+            buildersAndLaboratorySplitContainer.Panel2.SuspendLayout();
+            buildersAndLaboratorySplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)rightSplitContainer).BeginInit();
             rightSplitContainer.Panel1.SuspendLayout();
+            rightSplitContainer.Panel2.SuspendLayout();
             rightSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)centralSplitContainer).BeginInit();
             centralSplitContainer.Panel1.SuspendLayout();
             centralSplitContainer.Panel2.SuspendLayout();
             centralSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)leftPanelsSplitContainer).BeginInit();
-            leftPanelsSplitContainer.Panel2.SuspendLayout();
-            leftPanelsSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)buildersAndLaboratorySplitContainer).BeginInit();
-            buildersAndLaboratorySplitContainer.SuspendLayout();
-            tabControl1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
+            tabControl1.SuspendLayout();
+            villageTab.SuspendLayout();
             SuspendLayout();
             // 
             // leftSplitContainer
@@ -73,6 +88,94 @@
             leftSplitContainer.SplitterDistance = 211;
             leftSplitContainer.TabIndex = 0;
             // 
+            // leftPanelsSplitContainer
+            // 
+            leftPanelsSplitContainer.Dock = DockStyle.Fill;
+            leftPanelsSplitContainer.Location = new Point(0, 0);
+            leftPanelsSplitContainer.Name = "leftPanelsSplitContainer";
+            leftPanelsSplitContainer.Orientation = Orientation.Horizontal;
+            // 
+            // leftPanelsSplitContainer.Panel1
+            // 
+            leftPanelsSplitContainer.Panel1.Controls.Add(accountUsernameLabel);
+            leftPanelsSplitContainer.Panel1.Controls.Add(playerNameLabel);
+            leftPanelsSplitContainer.Panel1.Controls.Add(backButton);
+            leftPanelsSplitContainer.Panel1.Paint += splitContainer2_Panel1_Paint;
+            // 
+            // leftPanelsSplitContainer.Panel2
+            // 
+            leftPanelsSplitContainer.Panel2.Controls.Add(buildersAndLaboratorySplitContainer);
+            leftPanelsSplitContainer.Size = new Size(211, 561);
+            leftPanelsSplitContainer.SplitterDistance = 109;
+            leftPanelsSplitContainer.TabIndex = 0;
+            // 
+            // accountUsernameLabel
+            // 
+            accountUsernameLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            accountUsernameLabel.Location = new Point(21, 80);
+            accountUsernameLabel.Name = "accountUsernameLabel";
+            accountUsernameLabel.Size = new Size(168, 15);
+            accountUsernameLabel.TabIndex = 1;
+            accountUsernameLabel.Text = "Username";
+            accountUsernameLabel.Click += label1_Click;
+            // 
+            // playerNameLabel
+            // 
+            playerNameLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            playerNameLabel.Location = new Point(21, 61);
+            playerNameLabel.Name = "playerNameLabel";
+            playerNameLabel.Size = new Size(168, 15);
+            playerNameLabel.TabIndex = 1;
+            playerNameLabel.Text = "Nome Cognome";
+            // 
+            // backButton
+            // 
+            backButton.BackgroundImage = Properties.Resources.back_arrow;
+            backButton.BackgroundImageLayout = ImageLayout.Zoom;
+            backButton.Location = new Point(8, 8);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(40, 40);
+            backButton.TabIndex = 0;
+            backButton.UseVisualStyleBackColor = true;
+            // 
+            // buildersAndLaboratorySplitContainer
+            // 
+            buildersAndLaboratorySplitContainer.Dock = DockStyle.Fill;
+            buildersAndLaboratorySplitContainer.Location = new Point(0, 0);
+            buildersAndLaboratorySplitContainer.Name = "buildersAndLaboratorySplitContainer";
+            buildersAndLaboratorySplitContainer.Orientation = Orientation.Horizontal;
+            // 
+            // buildersAndLaboratorySplitContainer.Panel1
+            // 
+            buildersAndLaboratorySplitContainer.Panel1.Controls.Add(Costruttori);
+            // 
+            // buildersAndLaboratorySplitContainer.Panel2
+            // 
+            buildersAndLaboratorySplitContainer.Panel2.Controls.Add(Laboratorio);
+            buildersAndLaboratorySplitContainer.Size = new Size(211, 448);
+            buildersAndLaboratorySplitContainer.SplitterDistance = 293;
+            buildersAndLaboratorySplitContainer.TabIndex = 0;
+            // 
+            // Costruttori
+            // 
+            Costruttori.Dock = DockStyle.Fill;
+            Costruttori.FormattingEnabled = true;
+            Costruttori.ItemHeight = 15;
+            Costruttori.Location = new Point(0, 0);
+            Costruttori.Name = "Costruttori";
+            Costruttori.Size = new Size(211, 293);
+            Costruttori.TabIndex = 0;
+            // 
+            // Laboratorio
+            // 
+            Laboratorio.Dock = DockStyle.Fill;
+            Laboratorio.FormattingEnabled = true;
+            Laboratorio.ItemHeight = 15;
+            Laboratorio.Location = new Point(0, 0);
+            Laboratorio.Name = "Laboratorio";
+            Laboratorio.Size = new Size(211, 151);
+            Laboratorio.TabIndex = 0;
+            // 
             // rightSplitContainer
             // 
             rightSplitContainer.Dock = DockStyle.Fill;
@@ -82,6 +185,10 @@
             // rightSplitContainer.Panel1
             // 
             rightSplitContainer.Panel1.Controls.Add(centralSplitContainer);
+            // 
+            // rightSplitContainer.Panel2
+            // 
+            rightSplitContainer.Panel2.Controls.Add(Truppe);
             rightSplitContainer.Size = new Size(769, 561);
             rightSplitContainer.SplitterDistance = 542;
             rightSplitContainer.TabIndex = 0;
@@ -105,72 +212,6 @@
             centralSplitContainer.SplitterDistance = 76;
             centralSplitContainer.TabIndex = 0;
             centralSplitContainer.SplitterMoved += splitContainer1_SplitterMoved;
-            // 
-            // leftPanelsSplitContainer
-            // 
-            leftPanelsSplitContainer.Dock = DockStyle.Fill;
-            leftPanelsSplitContainer.Location = new Point(0, 0);
-            leftPanelsSplitContainer.Name = "leftPanelsSplitContainer";
-            leftPanelsSplitContainer.Orientation = Orientation.Horizontal;
-            // 
-            // leftPanelsSplitContainer.Panel2
-            // 
-            leftPanelsSplitContainer.Panel2.Controls.Add(buildersAndLaboratorySplitContainer);
-            leftPanelsSplitContainer.Size = new Size(211, 561);
-            leftPanelsSplitContainer.SplitterDistance = 148;
-            leftPanelsSplitContainer.TabIndex = 0;
-            // 
-            // buildersAndLaboratorySplitContainer
-            // 
-            buildersAndLaboratorySplitContainer.Dock = DockStyle.Fill;
-            buildersAndLaboratorySplitContainer.Location = new Point(0, 0);
-            buildersAndLaboratorySplitContainer.Name = "buildersAndLaboratorySplitContainer";
-            buildersAndLaboratorySplitContainer.Orientation = Orientation.Horizontal;
-            buildersAndLaboratorySplitContainer.Size = new Size(211, 409);
-            buildersAndLaboratorySplitContainer.SplitterDistance = 199;
-            buildersAndLaboratorySplitContainer.TabIndex = 0;
-            // 
-            // tabControl1
-            // 
-            tabControl1.Controls.Add(villageTab);
-            tabControl1.Controls.Add(attacksTab);
-            tabControl1.Controls.Add(clanTab);
-            tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Location = new Point(0, 0);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(542, 481);
-            tabControl1.TabIndex = 0;
-            // 
-            // villageTab
-            // 
-            villageTab.Location = new Point(4, 24);
-            villageTab.Name = "villageTab";
-            villageTab.Padding = new Padding(3);
-            villageTab.Size = new Size(534, 453);
-            villageTab.TabIndex = 0;
-            villageTab.Text = "Villaggio";
-            villageTab.UseVisualStyleBackColor = true;
-            // 
-            // attacksTab
-            // 
-            attacksTab.Location = new Point(4, 24);
-            attacksTab.Name = "attacksTab";
-            attacksTab.Padding = new Padding(3);
-            attacksTab.Size = new Size(660, 554);
-            attacksTab.TabIndex = 1;
-            attacksTab.Text = "Attacchi";
-            attacksTab.UseVisualStyleBackColor = true;
-            // 
-            // clanTab
-            // 
-            clanTab.Location = new Point(4, 24);
-            clanTab.Name = "clanTab";
-            clanTab.Padding = new Padding(3);
-            clanTab.Size = new Size(660, 554);
-            clanTab.TabIndex = 2;
-            clanTab.Text = "Clan";
-            clanTab.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
             // 
@@ -232,6 +273,75 @@
             xpLabel.TabIndex = 0;
             xpLabel.Text = "XP: 1000";
             // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(villageTab);
+            tabControl1.Controls.Add(attacksTab);
+            tabControl1.Controls.Add(clanTab);
+            tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(542, 481);
+            tabControl1.TabIndex = 0;
+            // 
+            // villageTab
+            // 
+            villageTab.Controls.Add(listView1);
+            villageTab.Location = new Point(4, 24);
+            villageTab.Name = "villageTab";
+            villageTab.Padding = new Padding(3);
+            villageTab.Size = new Size(534, 453);
+            villageTab.TabIndex = 0;
+            villageTab.Text = "Villaggio";
+            villageTab.UseVisualStyleBackColor = true;
+            // 
+            // attacksTab
+            // 
+            attacksTab.Location = new Point(4, 24);
+            attacksTab.Name = "attacksTab";
+            attacksTab.Padding = new Padding(3);
+            attacksTab.Size = new Size(534, 453);
+            attacksTab.TabIndex = 1;
+            attacksTab.Text = "Attacchi";
+            attacksTab.UseVisualStyleBackColor = true;
+            // 
+            // clanTab
+            // 
+            clanTab.Location = new Point(4, 24);
+            clanTab.Name = "clanTab";
+            clanTab.Padding = new Padding(3);
+            clanTab.Size = new Size(534, 453);
+            clanTab.TabIndex = 2;
+            clanTab.Text = "Clan";
+            clanTab.UseVisualStyleBackColor = true;
+            // 
+            // Truppe
+            // 
+            Truppe.Dock = DockStyle.Fill;
+            Truppe.FormattingEnabled = true;
+            Truppe.ItemHeight = 15;
+            Truppe.Location = new Point(0, 0);
+            Truppe.Name = "Truppe";
+            Truppe.Size = new Size(223, 561);
+            Truppe.TabIndex = 0;
+            // 
+            // listView1
+            // 
+            listView1.Dock = DockStyle.Fill;
+            listViewGroup1.Header = "Edifici Speciali";
+            listViewGroup1.Name = "specialBuildingsListViewGroup";
+            listViewGroup2.Header = "Estrattori di Risorse";
+            listViewGroup2.Name = "resourcesExtractorsListViewGroup";
+            listViewGroup3.Header = "Difese";
+            listViewGroup3.Name = "defensesListViewGroup";
+            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            listView1.Location = new Point(3, 3);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(528, 447);
+            listView1.TabIndex = 0;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
             // UseThisFormAsCanvas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -246,21 +356,26 @@
             leftSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).EndInit();
             leftSplitContainer.ResumeLayout(false);
+            leftPanelsSplitContainer.Panel1.ResumeLayout(false);
+            leftPanelsSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)leftPanelsSplitContainer).EndInit();
+            leftPanelsSplitContainer.ResumeLayout(false);
+            buildersAndLaboratorySplitContainer.Panel1.ResumeLayout(false);
+            buildersAndLaboratorySplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)buildersAndLaboratorySplitContainer).EndInit();
+            buildersAndLaboratorySplitContainer.ResumeLayout(false);
             rightSplitContainer.Panel1.ResumeLayout(false);
+            rightSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)rightSplitContainer).EndInit();
             rightSplitContainer.ResumeLayout(false);
             centralSplitContainer.Panel1.ResumeLayout(false);
             centralSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)centralSplitContainer).EndInit();
             centralSplitContainer.ResumeLayout(false);
-            leftPanelsSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)leftPanelsSplitContainer).EndInit();
-            leftPanelsSplitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)buildersAndLaboratorySplitContainer).EndInit();
-            buildersAndLaboratorySplitContainer.ResumeLayout(false);
-            tabControl1.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
+            tabControl1.ResumeLayout(false);
+            villageTab.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -278,5 +393,12 @@
         private Label trophiesLabel;
         private Label starsLabel;
         private Label xpLabel;
+        private Button backButton;
+        private Label playerNameLabel;
+        private Label accountUsernameLabel;
+        private ListBox Costruttori;
+        private ListBox Laboratorio;
+        private ListView listView1;
+        private ListBox Truppe;
     }
 }

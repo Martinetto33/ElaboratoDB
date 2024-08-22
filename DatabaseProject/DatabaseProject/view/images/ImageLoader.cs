@@ -7,7 +7,7 @@ namespace DatabaseProject.view.images
     /// Remember to right click the images in the myresources folder and set the 
     /// Build Action to Embedded Resource.
     /// </summary>
-    public static class ImageConverter
+    public static class ImageLoader
     {
         private static readonly string basePath = "DatabaseProject.myresources";
 

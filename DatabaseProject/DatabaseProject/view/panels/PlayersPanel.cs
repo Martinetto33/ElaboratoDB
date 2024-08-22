@@ -33,7 +33,7 @@ namespace DatabaseProject.view.panels
             // 
             // backButton
             // 
-            BackButton.Image = images.ImageConverter.BackArrow();
+            BackButton.Image = images.ImageLoader.BackArrow();
             BackButton.Location = new Point(12, 12);
             BackButton.Name = "backButton";
             BackButton.Size = new Size(50, 50);
