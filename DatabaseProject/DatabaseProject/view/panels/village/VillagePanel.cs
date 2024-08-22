@@ -678,7 +678,7 @@ namespace DatabaseProject.view.panels.village
             {
                 if (builder.IsBusy())
                 {
-                    Costruttori.Items.Add($"Costruttore {builder.GetObservableId()}: {builder.GetUpgradingObjectName()} {builder.GetRemainingUpgradeTime()}");
+                    Costruttori.Items.Add($"Costruttore {builder.GetObservableId()}: {builder.GetUpgradingObjectName()} {builder.GetUpgradeTime()}");
                 }
                 else
                 {

@@ -24,7 +24,7 @@ namespace DatabaseProject.model.code
             {
                 IsBusy = true;
                 UpgradingBuilding = upgradingBuilding;
-                _upgradeStartTimestamp = DateTime.Now.Ticks;
+                _upgradeStartTimestamp = GetCurrentTimeInMilliseconds();
                 _upgradeEndTimestamp = _upgradeStartTimestamp + upgradingBuilding.Level * ((long) Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000L);
                 // Wait for the building to upgrade; each upgrade takes 5 seconds per level.
                 await upgradingBuilding.UpgradeAsync(upgradingBuilding.Level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS);
@@ -49,7 +49,9 @@ namespace DatabaseProject.model.code
             }
         }
 
-        public long GetRemainingUpgradeTime() => _upgradeEndTimestamp - DateTime.Now.Ticks;
+        public long GetRemainingUpgradeTime() => _upgradeEndTimestamp - GetCurrentTimeInMilliseconds();
+
+        private long GetCurrentTimeInMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         public long GetUpgradeTime() => _upgradeEndTimestamp - _upgradeStartTimestamp;
 

@@ -110,7 +110,7 @@ namespace TestClashOfClansDatabase
             builder.UpgradeBuilding(building);
             var upgradeTime = (long)(level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000);
             Assert.AreEqual(upgradeTime, builder.GetUpgradeTime());
-            Assert.IsTrue(builder.GetRemainingUpgradeTime() < upgradeTime);
+            Assert.IsTrue(builder.GetRemainingUpgradeTime() <= upgradeTime);
         }
 
         [TestMethod]
@@ -122,7 +122,7 @@ namespace TestClashOfClansDatabase
             lab.UpgradeTroop(troop);
             var upgradeTime = (long)(level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000);
             Assert.AreEqual(upgradeTime, lab.GetUpgradeTime());
-            Assert.IsTrue(lab.GetRemainingUpgradeTime() < upgradeTime);
+            Assert.IsTrue(lab.GetRemainingUpgradeTime() <= upgradeTime); // can't assert just <, sometimes tests run in less than 1ms
         }
 
         [TestMethod]

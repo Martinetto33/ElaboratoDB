@@ -1,3 +1,5 @@
+using DatabaseProject.view.panels.village;
+
 namespace DatabaseProject
 {
     public static class Program
@@ -12,7 +14,8 @@ namespace DatabaseProject
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //System.Windows.Forms.Application.Run(new ClashOfClansDatabaseApplication());
-            Application.Run(new UseThisFormAsCanvas());
+            //Application.Run(new UseThisFormAsCanvas());
+            Application.Run(new TestUpgradeForm());
         }
     }
 }

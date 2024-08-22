@@ -1,4 +1,6 @@
-﻿namespace DatabaseProject.view.panels.initialmenu
+﻿using DatabaseProject.view.panels.player;
+
+namespace DatabaseProject.view.panels.initialmenu
 {
     /**
      * This class represents the initial menu panel.

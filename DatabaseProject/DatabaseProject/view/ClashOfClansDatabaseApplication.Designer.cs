@@ -1,4 +1,5 @@
 ﻿using DatabaseProject.view.panels;
+using DatabaseProject.view.panels.initialmenu;
 
 namespace DatabaseProject
 {

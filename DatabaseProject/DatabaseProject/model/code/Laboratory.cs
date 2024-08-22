@@ -27,7 +27,7 @@ namespace DatabaseProject.model.code
             }
             UpgradingTroop = troop;
             IsBusy = true;
-            _upgradeStartTimestamp = DateTime.Now.Ticks;
+            _upgradeStartTimestamp = GetCurrentTimeInMilliseconds();
             _upgradeEndTimestamp = _upgradeStartTimestamp + troop.Level * ((long)Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS * 1000L);
             // Wait for the troop to upgrade; each upgrade takes 5 seconds per level.
             await troop.UpgradeAsync(troop.Level * Configuration.UPGRADE_TIME_PER_LEVEL_SECONDS);
@@ -51,7 +51,8 @@ namespace DatabaseProject.model.code
             }
         }
 
-        public long GetRemainingUpgradeTime() => _upgradeEndTimestamp - DateTime.Now.Ticks;
+        private long GetCurrentTimeInMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        public long GetRemainingUpgradeTime() => _upgradeEndTimestamp - GetCurrentTimeInMilliseconds();
 
         public long GetUpgradeTime() => _upgradeEndTimestamp - _upgradeStartTimestamp;
 

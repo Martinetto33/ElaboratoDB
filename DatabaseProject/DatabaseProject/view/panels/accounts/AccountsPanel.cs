@@ -1,5 +1,6 @@
 ﻿using DatabaseProject.daos;
 using DatabaseProject.database;
+using DatabaseProject.view.panels.player;
 
 namespace DatabaseProject.view.panels.account
 {
