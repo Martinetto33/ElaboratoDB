@@ -46,7 +46,6 @@ namespace DatabaseProject.model.code
             if (this.UpgradingBuilding != null && this._observers.Count > 0)
             {
                 this._observers.ForEach(observer => observer.OnUpgrade(UpgradingBuilding));
-                this._observers.Clear();
             }
         }
 

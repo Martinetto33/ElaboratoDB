@@ -48,7 +48,6 @@ namespace DatabaseProject.model.code
             if (this.UpgradingTroop != null && this._observers.Count > 0)
             {
                 this._observers.ForEach(observer => observer.OnUpgrade(UpgradingTroop));
-                this._observers.Clear();
             }
         }
 

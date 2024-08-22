@@ -1,4 +1,5 @@
 ﻿using DatabaseProject.database;
+using DatabaseProject.model.api;
 using DatabaseProject.model.code;
 using DatabaseProject.view.images;
 
@@ -8,6 +9,9 @@ namespace DatabaseProject.view.panels
     {
         public database.Account Account { get; }
         public Villaggio Village { get { return this.Account.IdVillaggioNavigation; } }
+        public List<IUpgradeObservable<BaseBuilding>> Builders { get; }
+        public IUpgradeObservable<Troop> Laboratory { get; }
+
         private SplitContainer leftSplitContainer;
         private SplitContainer rightSplitContainer;
         private SplitContainer centralSplitContainer;
@@ -46,10 +50,16 @@ namespace DatabaseProject.view.panels
         private ColumnHeader columnHeader7;
         private ColumnHeader columnHeader8;
         private ListView troopsListView;
-        public VillagePanel(database.Account account)
+        public VillagePanel(database.Account account, List<IUpgradeObservable<BaseBuilding>> builders, IUpgradeObservable<Troop> laboratory)
         {
             this.Account = account;
             InitializeComponent();
+            Builders = builders;
+            Laboratory = laboratory;
+            Builders.ForEach(builder => builder.RegisterObserver(new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
+            {
+                UpdateBuildersPanel(Builders);
+            })));
         }
 
         private void InitializeComponent()
@@ -631,13 +641,25 @@ namespace DatabaseProject.view.panels
             this.listView2.Items.Add(listItem);
         }
 
-        public void UpdateBuildersPanel(List<Builder> builders)
+        public void UpdateBuildersPanel(List<IUpgradeObservable<BaseBuilding>> builders)
         {
             this.Costruttori.Items.Clear();
             foreach (var builder in builders)
             {
                 // TODO: add timer logic to show the time left for the building to be completed.
-                this.Costruttori.Items.Add($"Costruttore {builder.BuilderId}: {builder.UpgradingBuilding?.Name ?? "Libero"}");
+                if (builder.IsBusy())
+                {
+                    // Creating an observer and implementing its callback logic to be performed when the
+                    // building is upgraded.
+                    builder.RegisterObserver(new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
+                    {
+
+                    }));
+                }
+                else
+                {
+
+                }
             }
         }
     }
