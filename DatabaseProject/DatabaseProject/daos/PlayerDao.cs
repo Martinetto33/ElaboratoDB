@@ -1,5 +1,6 @@
 ﻿using DatabaseProject.context;
 using DatabaseProject.database;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseProject.daos
 {
