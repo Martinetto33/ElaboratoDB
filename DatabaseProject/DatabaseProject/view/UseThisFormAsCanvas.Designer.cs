@@ -1,4 +1,6 @@
-﻿namespace DatabaseProject
+﻿using DatabaseProject.view.images;
+
+namespace DatabaseProject
 {
     partial class UseThisFormAsCanvas
     {
@@ -41,10 +43,26 @@
             xpLabel = new Label();
             tabControl1 = new TabControl();
             villageTab = new TabPage();
+            listView1 = new ListView();
             attacksTab = new TabPage();
             clanTab = new TabPage();
             Truppe = new ListBox();
-            listView1 = new ListView();
+            listView2 = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
+            clanTabSplitContainer = new SplitContainer();
+            flowLayoutPanel2 = new FlowLayoutPanel();
+            clanRoleLabel = new Label();
+            clanNameLabel = new Label();
+            membersNumberLabel = new Label();
+            trophiesNumberLabel = new Label();
+            starsNumberLabel = new Label();
+            listView3 = new ListView();
+            columnHeader5 = new ColumnHeader();
+            columnHeader6 = new ColumnHeader();
+            columnHeader7 = new ColumnHeader();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
@@ -68,6 +86,13 @@
             flowLayoutPanel1.SuspendLayout();
             tabControl1.SuspendLayout();
             villageTab.SuspendLayout();
+            attacksTab.SuspendLayout();
+            clanTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)clanTabSplitContainer).BeginInit();
+            clanTabSplitContainer.Panel1.SuspendLayout();
+            clanTabSplitContainer.Panel2.SuspendLayout();
+            clanTabSplitContainer.SuspendLayout();
+            flowLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // leftSplitContainer
@@ -296,8 +321,35 @@
             villageTab.Text = "Villaggio";
             villageTab.UseVisualStyleBackColor = true;
             // 
+            // listView1
+            // 
+            listView1.Dock = DockStyle.Fill;
+            listViewGroup1.Header = "Edifici Speciali";
+            listViewGroup1.Name = "specialBuildingsListViewGroup";
+            listViewGroup2.Header = "Estrattori di Risorse";
+            listViewGroup2.Name = "resourcesExtractorsListViewGroup";
+            listViewGroup3.Header = "Difese";
+            listViewGroup3.Name = "defensesListViewGroup";
+            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            listView1.Location = new Point(3, 3);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(528, 447);
+            listView1.TabIndex = 0;
+            listView1.UseCompatibleStateImageBehavior = false;
+            listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
+
+            // Code added by me
+            listView1.LargeImageList = ImageLoader.GetBuildingsImageList(new Size(64, 64));
+            var listViewElement = new ListViewItem();
+            listViewElement.ImageIndex = (int)ImageLoader.BuildingsIndexes.ElixirCollector;
+            listViewElement.Group = listViewGroup1;
+            listViewElement.Text = "Estrattore di Elisir";
+            listView1.Items.Add(listViewElement);
+
+            // 
             // attacksTab
             // 
+            attacksTab.Controls.Add(listView2);
             attacksTab.Location = new Point(4, 24);
             attacksTab.Name = "attacksTab";
             attacksTab.Padding = new Padding(3);
@@ -308,6 +360,7 @@
             // 
             // clanTab
             // 
+            clanTab.Controls.Add(clanTabSplitContainer);
             clanTab.Location = new Point(4, 24);
             clanTab.Name = "clanTab";
             clanTab.Padding = new Padding(3);
@@ -326,21 +379,140 @@
             Truppe.Size = new Size(223, 561);
             Truppe.TabIndex = 0;
             // 
-            // listView1
+            // listView2
             // 
-            listView1.Dock = DockStyle.Fill;
-            listViewGroup1.Header = "Edifici Speciali";
-            listViewGroup1.Name = "specialBuildingsListViewGroup";
-            listViewGroup2.Header = "Estrattori di Risorse";
-            listViewGroup2.Name = "resourcesExtractorsListViewGroup";
-            listViewGroup3.Header = "Difese";
-            listViewGroup3.Name = "defensesListViewGroup";
-            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
-            listView1.Location = new Point(3, 3);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(528, 447);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
+            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            listView2.Dock = DockStyle.Fill;
+            listView2.GridLines = true;
+            listView2.Location = new Point(3, 3);
+            listView2.Name = "listView2";
+            listView2.Size = new Size(528, 447);
+            listView2.TabIndex = 0;
+            listView2.UseCompatibleStateImageBehavior = false;
+            listView2.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Stelle";
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Percentuale";
+            columnHeader2.Width = 100;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Tempo";
+            columnHeader3.Width = 80;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Trofei";
+            // 
+            // clanTabSplitContainer
+            // 
+            clanTabSplitContainer.Dock = DockStyle.Fill;
+            clanTabSplitContainer.Location = new Point(3, 3);
+            clanTabSplitContainer.Name = "clanTabSplitContainer";
+            clanTabSplitContainer.Orientation = Orientation.Horizontal;
+            // 
+            // clanTabSplitContainer.Panel1
+            // 
+            clanTabSplitContainer.Panel1.Controls.Add(flowLayoutPanel2);
+            // 
+            // clanTabSplitContainer.Panel2
+            // 
+            clanTabSplitContainer.Panel2.Controls.Add(listView3);
+            clanTabSplitContainer.Size = new Size(528, 447);
+            clanTabSplitContainer.SplitterDistance = 95;
+            clanTabSplitContainer.TabIndex = 0;
+            // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.BackColor = Color.FromArgb(61, 174, 190);
+            flowLayoutPanel2.Controls.Add(clanNameLabel);
+            flowLayoutPanel2.Controls.Add(clanRoleLabel);
+            flowLayoutPanel2.Controls.Add(membersNumberLabel);
+            flowLayoutPanel2.Controls.Add(trophiesNumberLabel);
+            flowLayoutPanel2.Controls.Add(starsNumberLabel);
+            flowLayoutPanel2.Dock = DockStyle.Fill;
+            flowLayoutPanel2.Location = new Point(0, 0);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(528, 95);
+            flowLayoutPanel2.TabIndex = 0;
+            // 
+            // clanRoleLabel
+            // 
+            clanRoleLabel.AutoSize = true;
+            clanRoleLabel.Location = new Point(206, 0);
+            clanRoleLabel.Name = "clanRoleLabel";
+            clanRoleLabel.Size = new Size(87, 15);
+            clanRoleLabel.TabIndex = 0;
+            clanRoleLabel.Text = "Ruolo: Anziano";
+            // 
+            // clanNameLabel
+            // 
+            clanNameLabel.AutoSize = true;
+            clanNameLabel.Font = new Font("Segoe UI", 20F);
+            clanNameLabel.Location = new Point(3, 0);
+            clanNameLabel.Name = "clanNameLabel";
+            clanNameLabel.Size = new Size(197, 37);
+            clanNameLabel.TabIndex = 1;
+            clanNameLabel.Text = "Clan: Babbucce";
+            // 
+            // membersNumberLabel
+            // 
+            membersNumberLabel.AutoSize = true;
+            membersNumberLabel.Location = new Point(299, 0);
+            membersNumberLabel.Name = "membersNumberLabel";
+            membersNumberLabel.Size = new Size(84, 15);
+            membersNumberLabel.TabIndex = 2;
+            membersNumberLabel.Text = "Membri: 39/50";
+            // 
+            // trophiesNumberLabel
+            // 
+            trophiesNumberLabel.AutoSize = true;
+            trophiesNumberLabel.Location = new Point(389, 0);
+            trophiesNumberLabel.Name = "trophiesNumberLabel";
+            trophiesNumberLabel.Size = new Size(66, 15);
+            trophiesNumberLabel.TabIndex = 3;
+            trophiesNumberLabel.Text = "Trofei: 5000";
+            // 
+            // starsNumberLabel
+            // 
+            starsNumberLabel.AutoSize = true;
+            starsNumberLabel.Location = new Point(461, 0);
+            starsNumberLabel.Name = "starsNumberLabel";
+            starsNumberLabel.Size = new Size(53, 15);
+            starsNumberLabel.TabIndex = 4;
+            starsNumberLabel.Text = "Stelle: 15";
+            // 
+            // listView3
+            // 
+            listView3.Columns.AddRange(new ColumnHeader[] { columnHeader5, columnHeader6, columnHeader7 });
+            listView3.Dock = DockStyle.Fill;
+            listView3.GridLines = true;
+            listView3.Location = new Point(0, 0);
+            listView3.Name = "listView3";
+            listView3.Size = new Size(528, 348);
+            listView3.TabIndex = 0;
+            listView3.UseCompatibleStateImageBehavior = false;
+            listView3.View = View.Details;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Username";
+            columnHeader5.Width = 200;
+            // 
+            // columnHeader6
+            // 
+            columnHeader6.Text = "Ruolo";
+            columnHeader6.Width = 150;
+            // 
+            // columnHeader7
+            // 
+            columnHeader7.Text = "Trofei";
+            columnHeader7.Width = 100;
             // 
             // UseThisFormAsCanvas
             // 
@@ -376,6 +548,14 @@
             flowLayoutPanel1.PerformLayout();
             tabControl1.ResumeLayout(false);
             villageTab.ResumeLayout(false);
+            attacksTab.ResumeLayout(false);
+            clanTab.ResumeLayout(false);
+            clanTabSplitContainer.Panel1.ResumeLayout(false);
+            clanTabSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)clanTabSplitContainer).EndInit();
+            clanTabSplitContainer.ResumeLayout(false);
+            flowLayoutPanel2.ResumeLayout(false);
+            flowLayoutPanel2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -400,5 +580,21 @@
         private ListBox Laboratorio;
         private ListView listView1;
         private ListBox Truppe;
+        private ListView listView2;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private SplitContainer clanTabSplitContainer;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private Label clanNameLabel;
+        private Label clanRoleLabel;
+        private Label membersNumberLabel;
+        private Label trophiesNumberLabel;
+        private Label starsNumberLabel;
+        private ListView listView3;
+        private ColumnHeader columnHeader5;
+        private ColumnHeader columnHeader6;
+        private ColumnHeader columnHeader7;
     }
 }

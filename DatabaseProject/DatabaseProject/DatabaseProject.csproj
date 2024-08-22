@@ -12,6 +12,29 @@
   <ItemGroup>
     <None Remove="myresources\back_arrow.png" />
     <None Remove="myresources\back_arrow_icon.png" />
+    <None Remove="myresources\buildings\air_defense.png" />
+    <None Remove="myresources\buildings\archer_tower.png" />
+    <None Remove="myresources\buildings\army_camp.png" />
+    <None Remove="myresources\buildings\cannon.png" />
+    <None Remove="myresources\buildings\clan_castle.png" />
+    <None Remove="myresources\buildings\dark_elixir_drill.png" />
+    <None Remove="myresources\buildings\elixir_collector.png" />
+    <None Remove="myresources\buildings\gold_mine.png" />
+    <None Remove="myresources\buildings\inferno_tower.png" />
+    <None Remove="myresources\buildings\laboratory.png" />
+    <None Remove="myresources\buildings\town_hall.png" />
+    <None Remove="myresources\buildings\wizard_tower.png" />
+    <None Remove="myresources\buildings\x_bow.png" />
+    <None Remove="myresources\troops\archer.png" />
+    <None Remove="myresources\troops\balloon.png" />
+    <None Remove="myresources\troops\barbarian.png" />
+    <None Remove="myresources\troops\dragon.png" />
+    <None Remove="myresources\troops\giant.png" />
+    <None Remove="myresources\troops\goblin.png" />
+    <None Remove="myresources\troops\healer.png" />
+    <None Remove="myresources\troops\pekka.png" />
+    <None Remove="myresources\troops\wall_breaker.png" />
+    <None Remove="myresources\troops\wizard.png" />
     <None Remove="sql\Clash of Clans creazione Database.sql" />
   </ItemGroup>
 
@@ -22,6 +45,29 @@
     <EmbeddedResource Include="myresources\back_arrow_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="myresources\buildings\air_defense.png" />
+    <EmbeddedResource Include="myresources\buildings\archer_tower.png" />
+    <EmbeddedResource Include="myresources\buildings\army_camp.png" />
+    <EmbeddedResource Include="myresources\buildings\cannon.png" />
+    <EmbeddedResource Include="myresources\buildings\clan_castle.png" />
+    <EmbeddedResource Include="myresources\buildings\dark_elixir_drill.png" />
+    <EmbeddedResource Include="myresources\buildings\elixir_collector.png" />
+    <EmbeddedResource Include="myresources\buildings\gold_mine.png" />
+    <EmbeddedResource Include="myresources\buildings\inferno_tower.png" />
+    <EmbeddedResource Include="myresources\buildings\laboratory.png" />
+    <EmbeddedResource Include="myresources\buildings\town_hall.png" />
+    <EmbeddedResource Include="myresources\buildings\wizard_tower.png" />
+    <EmbeddedResource Include="myresources\buildings\x_bow.png" />
+    <EmbeddedResource Include="myresources\troops\archer.png" />
+    <EmbeddedResource Include="myresources\troops\balloon.png" />
+    <EmbeddedResource Include="myresources\troops\barbarian.png" />
+    <EmbeddedResource Include="myresources\troops\dragon.png" />
+    <EmbeddedResource Include="myresources\troops\giant.png" />
+    <EmbeddedResource Include="myresources\troops\goblin.png" />
+    <EmbeddedResource Include="myresources\troops\healer.png" />
+    <EmbeddedResource Include="myresources\troops\pekka.png" />
+    <EmbeddedResource Include="myresources\troops\wall_breaker.png" />
+    <EmbeddedResource Include="myresources\troops\wizard.png" />
   </ItemGroup>
 
   <ItemGroup>
