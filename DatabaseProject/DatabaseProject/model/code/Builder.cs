@@ -3,9 +3,8 @@ using DatabaseProject.model.api;
 
 namespace DatabaseProject.model.code
 {
-    public class Builder(string villageId, int builderId): IUpgradeObservable<BaseBuilding>
+    public class Builder(int builderId): IUpgradeObservable<BaseBuilding>
     {
-        public string VillageId { get; } = villageId;
         public int BuilderId { get; } = builderId;
         public bool IsBusy { get; set; } = false;
         public BaseBuilding? UpgradingBuilding { get; set; } = null;

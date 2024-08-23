@@ -27,7 +27,6 @@ namespace DatabaseProject.model.code
     public class BaseBuilding
     {
         public string BuildingId { get; }
-        public string VillageId { get; }
         public string Name { get; }
         public int Level { get; set; }
         public int HealthPoints { get; set; }
@@ -35,7 +34,6 @@ namespace DatabaseProject.model.code
 
         protected BaseBuilding(
             string buildingId,
-            string villageId,
             string name,
             int level,
             int healthPoints,
@@ -43,7 +41,6 @@ namespace DatabaseProject.model.code
         )
         {
             BuildingId = buildingId;
-            VillageId = villageId;
             Name = name;
             Level = level;
             HealthPoints = healthPoints;
@@ -70,14 +67,13 @@ namespace DatabaseProject.model.code
 
     public class Defense(
         string buildingId,
-        string villageId,
         string name,
         int level,
         int healthPoints,
         double damagePerSecond,
         int targetsNumber,
         int attackRange
-    ) : BaseBuilding(buildingId, villageId, name, level, healthPoints, BuildingType.Defense)
+    ) : BaseBuilding(buildingId, name, level, healthPoints, BuildingType.Defense)
     {
         public double DamagePerSecond { get; set; } = damagePerSecond;
         public int TargetsNumber { get; set; } = targetsNumber;
@@ -101,31 +97,16 @@ namespace DatabaseProject.model.code
                 }
             }
         }
-
-        public static Defense FromEdificio(Edificio edificio)
-        {
-            return new Defense(
-                edificio.IdEdificio.ToString(),
-                edificio.IdVillaggio.ToString(),
-                edificio.Nome,
-                edificio.Livello,
-                edificio.PuntiVita,
-                edificio.DanniAlSecondo ?? 0,
-                edificio.NumeroBersagli ?? 0,
-                edificio.RaggioAzione ?? 0
-            );
-        }
     }
 
     public class ResourceExtractor(
         string buildingId,
-        string villageId,
         string name,
         int level,
         int healthPoints,
         ResourceType type,
         int productionRate
-    ) : BaseBuilding(buildingId, villageId, name, level, healthPoints, BuildingType.Resource)
+    ) : BaseBuilding(buildingId, name, level, healthPoints, BuildingType.Resource)
     {
         public ResourceType ResourceType { get; } = type;
         public int ProductionRate { get; set; } = productionRate;
@@ -139,45 +120,18 @@ namespace DatabaseProject.model.code
                 ProductionRate += 100;
             }
         }
-
-        public static ResourceExtractor FromEdificio(Edificio edificio)
-        {
-            return new ResourceExtractor(
-                edificio.IdEdificio.ToString(),
-                edificio.IdVillaggio.ToString(),
-                edificio.Nome,
-                edificio.Livello,
-                edificio.PuntiVita,
-                Enum.Parse<ResourceType>(edificio.TipoRisorsa!),
-                edificio.ProduzioneOraria ?? 0
-            );
-        }
     }
 
     public class SpecialBuilding(
         string buildingId,
-        string villageId,
         string name,
         int level,
         int healthPoints,
         string description,
         SpecialBuildingRole role
-    ) : BaseBuilding(buildingId, villageId, name, level, healthPoints, BuildingType.Special)
+    ) : BaseBuilding(buildingId, name, level, healthPoints, BuildingType.Special)
     {
         public string Description { get; } = description;
         public SpecialBuildingRole Role { get; } = role;
-
-        public static SpecialBuilding FromEdificio(Edificio edificio)
-        {
-            return new SpecialBuilding(
-                edificio.IdEdificio.ToString(),
-                edificio.IdVillaggio.ToString(),
-                edificio.Nome,
-                edificio.Livello,
-                edificio.PuntiVita,
-                edificio.DescrizioneFunzione!,
-                Enum.Parse<SpecialBuildingRole>(edificio.Ruolo!)
-            );
-        }
     }
 }

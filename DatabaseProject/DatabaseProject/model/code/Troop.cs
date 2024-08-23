@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace DatabaseProject.model.code
 {
     public class Troop(
-        string villageId,
         string name,
         int level,
         int healthPoints,
@@ -16,7 +15,6 @@ namespace DatabaseProject.model.code
         string description
     )
     {
-        public string VillageId { get; } = villageId;
         public string Name { get; } = name;
         public int Level { get; set; } = level;
         public int HealthPoints { get; set; } = healthPoints;

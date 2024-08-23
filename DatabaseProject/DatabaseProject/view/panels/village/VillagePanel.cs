@@ -27,10 +27,11 @@ namespace DatabaseProject.view.panels.village
         {
             Account = account;
 #pragma warning disable S112 // General or reserved exceptions should never be thrown
-            Player = account.Player ?? throw new NullReferenceException("Player was null!");
+            //Player = account.Player ?? throw new NullReferenceException("Player was null!");
+            // Player = mapper(playerDao  select quello che ha questo account)
             Village = account.Village ?? throw new NullReferenceException("Village was null!");
 #pragma warning restore S112 // General or reserved exceptions should never be thrown
-            Clan = account.Clan;
+            //Clan = account.Clan;
             Attacks = attacksMadeAndUndergone;
             InitializeComponent();
             foreach (var builder in Village.Builders)
@@ -165,7 +166,7 @@ namespace DatabaseProject.view.panels.village
             var listItem = new ListViewItem
             {
                 Text = attack.ObtainedStars.ToString(),
-                SubItems = { attack.ObtainedPercentage.ToString(), attack.TimeTakenMS.ToString(), attack.ObtainedTrophies.ToString(), attack.GetAttackTypeFromAccountPerspective(this.Account) }
+                SubItems = { attack.ObtainedPercentage.ToString(), attack.TimeTakenMS.ToString(), attack.ObtainedTrophies.ToString()/*TODO: , attack.GetAttackTypeFromAccountPerspective(this.Account)*/ }
             };
             listView2.Items.Add(listItem);
         }

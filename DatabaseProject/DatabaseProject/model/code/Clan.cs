@@ -18,8 +18,7 @@ namespace DatabaseProject.model.code
         string name,
         IDictionary<Account, ClanRole> membersAndRoles,
         int totalTrophies,
-        int totalStarsWon,
-        IList<War> warsFought
+        int totalStarsWon
     )
     {
         public string ClanId { get; } = clanId;
@@ -27,8 +26,6 @@ namespace DatabaseProject.model.code
         public IDictionary<Account, ClanRole> Members { get; } = membersAndRoles;
         public int TotalTrophies { get; set; } = totalTrophies;
         public int TotalStarsWon { get; set; } = totalStarsWon;
-        public IList<War> WarsFought { get; } = warsFought;
-
         public void AddMember(Account member, ClanRole role = ClanRole.Member)
         {
             Members.Add(member, role);

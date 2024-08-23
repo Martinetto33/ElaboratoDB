@@ -160,7 +160,7 @@ namespace DatabaseProject.view.panels.player
         private void PlayerButton_Click(Giocatore player)
         {
             var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
-            mainForm.LoadPanel(new AccountsPanel(player));
+            //mainForm.LoadPanel(new AccountsPanel(player));
         }
 
         private Button AddPlayerButton;

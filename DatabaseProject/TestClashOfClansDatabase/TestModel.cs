@@ -7,10 +7,10 @@ namespace TestClashOfClansDatabase
     [TestClass]
     public class TestModel
     {
-        private static Builder CreateBuilder() => new("123", 1);
-        private static Laboratory CreateLaboratory() => new("123", "123", "Lab", 1, 100, "This is the LABORATORY");
-        private static Troop CreateTroop() => new("123", "Barbarian", 1, 100, 10.0, "This is a Barbarian");
-        private static Defense CreateDefense() => new("building1", "123", "Cannon", 1, 100, 20.0, 1, 10);
+        private static Builder CreateBuilder() => new(1);
+        private static Laboratory CreateLaboratory() => new("123", "Lab", 1, 100, "This is the LABORATORY");
+        private static Troop CreateTroop() => new("Barbarian", 1, 100, 10.0, "This is a Barbarian");
+        private static Defense CreateDefense() => new("building1", "Cannon", 1, 100, 20.0, 1, 10);
 
         [TestMethod]
         public void TestEnumToString()
@@ -72,17 +72,17 @@ namespace TestClashOfClansDatabase
             int level = Configuration.MAX_LEVEL;
             int health = 100;
             double damagePerSecond = 10.0;
-            Troop troop = new("123", "Barbarian", level, health, damagePerSecond, "This is a Barbarian");
+            Troop troop = new("Barbarian", level, health, damagePerSecond, "This is a Barbarian");
             await laboratory.UpgradeTroop(troop);
             Assert.AreEqual(Configuration.MAX_LEVEL, troop.Level);
 
-            var builder = new Builder("123", 1);
+            var builder = new Builder(1);
             int targetsNumber = 1;
             int range = 10;
             int bLevel = Configuration.MAX_LEVEL;
             int bHealth = 100;
             double bDamagePerSecond = 20.0;
-            var building = new Defense("building1", "123", "Cannon", bLevel, bHealth, bDamagePerSecond, targetsNumber, range);
+            var building = new Defense("building1", "Cannon", bLevel, bHealth, bDamagePerSecond, targetsNumber, range);
             await builder.UpgradeBuilding(building);
             Assert.AreEqual(Configuration.MAX_LEVEL, building.Level);
         }

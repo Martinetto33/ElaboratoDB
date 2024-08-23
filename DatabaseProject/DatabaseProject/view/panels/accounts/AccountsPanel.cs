@@ -1,12 +1,12 @@
 ﻿using DatabaseProject.daos;
-using DatabaseProject.database;
+using DatabaseProject.model.code;
 using DatabaseProject.view.panels.player;
 
 namespace DatabaseProject.view.panels.account
 {
     class AccountsPanel : UserControl
     {
-        private readonly Giocatore player;
+        private readonly Player player;
         private SearchBar<Account> searchBar;
         private Button addAccountButton;
         private Button backButton;
@@ -15,7 +15,7 @@ namespace DatabaseProject.view.panels.account
         private Panel accountUsernamesPanel;
         private Label playerNameLabel;
 
-        public AccountsPanel(Giocatore player)
+        public AccountsPanel(Player player)
         {
             this.player = player;
             InitializeComponent();
@@ -86,7 +86,7 @@ namespace DatabaseProject.view.panels.account
             playerNameLabel.Name = "playerNameLabel";
             playerNameLabel.Size = new Size(330, 46);
             playerNameLabel.TabIndex = 5;
-            playerNameLabel.Text = $"Giocatore: {player.Nome} {player.Cognome}";
+            playerNameLabel.Text = $"Giocatore: {player.Name} {player.Surname}";
             playerNameLabel.TextAlign = ContentAlignment.TopCenter;
 
             AdjustFontSizeToFit(playerNameLabel);
@@ -123,12 +123,12 @@ namespace DatabaseProject.view.panels.account
 
         private void AddAccountButton_Click(object sender, EventArgs e)
         {
-            using var accountInsertionForm = new AccountInsertionForm(player);
-            accountInsertionForm.ShowDialog();
-            if (accountInsertionForm.DialogResult == DialogResult.OK)
-            {
-                LoadAccountsButtons(accountUsernamesPanel);
-            }
+            //using var accountInsertionForm = new AccountInsertionForm(player);
+            //accountInsertionForm.ShowDialog();
+            //if (accountInsertionForm.DialogResult == DialogResult.OK)
+            //{
+            //    LoadAccountsButtons(accountUsernamesPanel);
+            //}
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -158,21 +158,21 @@ namespace DatabaseProject.view.panels.account
 
         private void LoadAccountsButtons(Panel accountsPanel)
         {
-            List<Account> accounts = AccountDao.GetAccountsFromPlayer(player);
-            searchBar = new SearchBar<Account>(accounts);
-            accountsPanel.Controls.Clear();
+            //List<Account> accounts = AccountDao.GetAccountsFromPlayer(player);
+            //searchBar = new SearchBar<Account>(accounts);
+            //accountsPanel.Controls.Clear();
 
-            foreach (var account in accounts)
-            {
-                Button accountButton = new()
-                {
-                    Text = $"{account.Username}",
-                    Dock = DockStyle.Top,
-                    Height = 40,
-                };
-                accountButton.Click += (sender, e) => AccountButton_Click(account);
-                accountsPanel.Controls.Add(accountButton);
-            }
+            //foreach (var account in accounts)
+            //{
+            //    Button accountButton = new()
+            //    {
+            //        Text = $"{account.Username}",
+            //        Dock = DockStyle.Top,
+            //        Height = 40,
+            //    };
+            //    accountButton.Click += (sender, e) => AccountButton_Click(account);
+            //    accountsPanel.Controls.Add(accountButton);
+            //}
         }
 
         private void AccountButton_Click(Account account)

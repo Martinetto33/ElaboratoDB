@@ -5,12 +5,11 @@ namespace DatabaseProject.model.code
 {
     public class Laboratory(
         string buildingId,
-        string villageId,
         string name,
         int level,
         int healthPoints,
         string description
-    ) : SpecialBuilding(buildingId, villageId, name, level, healthPoints, description, SpecialBuildingRole.Laboratory), IUpgradeObservable<Troop>
+    ) : SpecialBuilding(buildingId, name, level, healthPoints, description, SpecialBuildingRole.Laboratory), IUpgradeObservable<Troop>
     {
         public bool IsBusy { get; set; } = false;
         public Troop? UpgradingTroop { get; set; } = null;

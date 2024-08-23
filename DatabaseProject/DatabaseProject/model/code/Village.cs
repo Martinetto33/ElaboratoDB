@@ -2,7 +2,6 @@
 {
     public class Village(
         string villageId,
-        string accountId,
         int experienceLevel,
         int trophies,
         int warStars,
@@ -14,7 +13,6 @@
     )
     {
         public string VillageId { get; } = villageId;
-        public string AccountId { get; } = accountId;
         /*
          The strength is a value calculated as the number of stars obtained by the account
         divided by three times the number of war attacks performed by the account.
