@@ -67,7 +67,7 @@
             label2.Name = "label2";
             label2.Size = new Size(60, 15);
             label2.TabIndex = 2;
-            label2.Text = "Username";
+            label2.Text = "Surname";
             // 
             // textBox1
             // 

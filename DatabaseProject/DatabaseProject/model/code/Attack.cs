@@ -6,7 +6,13 @@
         public int? ObtainedPercentage { get; set; } = null;
         public int? ObtainedStars { get; set; } = null;
         public long? TimeTakenMS { get; set; } = null;
+        public int? ObtainedTrophies { get; set; } = null;
         public Account Attacker { get; set; } = attacker;
         public Account Defender { get; set; } = defender;
+
+        public string? GetAttackTypeFromAccountPerspective(Account account)
+        {
+            return account == Attacker ? "Attacco" : account == Defender ? "Difesa" : null;
+        }
     }
 }

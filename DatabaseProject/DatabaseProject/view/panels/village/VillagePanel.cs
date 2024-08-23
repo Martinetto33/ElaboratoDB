@@ -1,5 +1,4 @@
-﻿using DatabaseProject.database;
-using DatabaseProject.model.api;
+﻿using DatabaseProject.model.api;
 using DatabaseProject.model.code;
 using DatabaseProject.view.images;
 
@@ -7,25 +6,81 @@ namespace DatabaseProject.view.panels.village
 {
     public partial class VillagePanel : UserControl
     {
-        public database.Account Account { get; }
-        public Giocatore Player { get { return Account.IdGiocatoreNavigation; } }
-        public Villaggio Village { get { return Account.IdVillaggioNavigation; } }
-        public List<IUpgradeObservable<BaseBuilding>> Builders { get; }
+        public Account Account { get; }
+        public Player Player { get; }
+        public Village Village { get; }
+        public List<Attack> Attacks { get; }
+        public Clan? Clan { get; }
+        public List<IUpgradeObservable<BaseBuilding>> Builders { get; } = [];
         public IUpgradeObservable<Troop> Laboratory { get; }
-        private readonly UpgradeObserverImpl<Troop> laboratoryObserver;
-        private readonly List<UpgradeObserverImpl<BaseBuilding>> builderObservers;
+        private UpgradeObserverImpl<Troop> laboratoryObserver = null!;
+        private List<UpgradeObserverImpl<BaseBuilding>> builderObservers = null!;
 
-        public VillagePanel(database.Account account, List<IUpgradeObservable<BaseBuilding>> builders, IUpgradeObservable<Troop> laboratory)
+        /// <summary>
+        /// Needs model entities to build the complex village panel.
+        /// </summary>
+        /// <param name="account">The current account, that needs to have its Player and Village properties set.
+        /// The Clan can be null.</param>
+        /// <param name="attacksMadeAndUndergone"></param>
+        /// <exception cref="NullReferenceException"></exception>
+        public VillagePanel(Account account, List<Attack> attacksMadeAndUndergone)
         {
             Account = account;
+#pragma warning disable S112 // General or reserved exceptions should never be thrown
+            Player = account.Player ?? throw new NullReferenceException("Player was null!");
+            Village = account.Village ?? throw new NullReferenceException("Village was null!");
+#pragma warning restore S112 // General or reserved exceptions should never be thrown
+            Clan = account.Clan;
+            Attacks = attacksMadeAndUndergone;
             InitializeComponent();
-            Builders = builders;
-            Laboratory = laboratory;
+            foreach (var builder in Village.Builders)
+            {
+                Builders.Add(builder);
+            }
+            Laboratory = Village.Laboratory;
+            CreateAndRegisterObservers();
+            UpdateBuildersPanel(Builders);
+            UpdateLaboratoryPanel(Laboratory);
+            UpdateMainLabels();
+            // TODO: finish initialising the panels and the list views; manage the case of a null Clan.
+            UpdateAttacksPanel();
+            UpdateClanPanel();
+        }
+
+        private void UpdateClanPanel()
+        {
+            if (this.Clan != null)
+            {
+                this.clanNameLabel.Text = $"Clan: {this.Clan.Name}";
+                this.clanRoleLabel.Text = $"Ruolo: {this.Clan.Members[this.Account]}";
+                this.membersNumberLabel.Text = $"Membri: {this.Clan.Members.Count}/50";
+                this.clanTrophiesLabel.Text = $"Trofei: {this.Clan.TotalTrophies}";
+                this.clanStarsLabel.Text = $"Stelle: {this.Clan.TotalStarsWon}";
+                // Populating the members
+                var clanMembersList = this.Clan.Members.Keys.ToList();
+                // Sorting the members by trophies; may throw NullReferenceException if a member has no village.
+                clanMembersList.Sort((m1, m2) => m2.Village!.Trophies - m1.Village!.Trophies);
+                clanMembersList.ForEach(member =>
+                {
+                    var listItem = new ListViewItem
+                    {
+                        Text = member.Username,
+                        SubItems = { this.Clan.Members[member].ToString(), member.Village!.Trophies.ToString() }
+                    };
+                    this.listView3.Items.Add(listItem);
+                });
+            }
+        }
+
+        private void UpdateAttacksPanel() => Attacks.ForEach(attack => AddAttackToView(attack));
+
+        private void CreateAndRegisterObservers()
+        {
             laboratoryObserver = new UpgradeObserverImpl<Troop>(upgradedTroop =>
             {
                 AddTroopToView(upgradedTroop);
             });
-            laboratory.RegisterObserver(laboratoryObserver);
+            Laboratory.RegisterObserver(laboratoryObserver);
             builderObservers = [];
             foreach (var builder in Builders)
             {
@@ -36,8 +91,16 @@ namespace DatabaseProject.view.panels.village
                 builder.RegisterObserver(builderObserver);
                 builderObservers.Add(builderObserver);
             }
-            UpdateBuildersPanel(Builders);
-            UpdateLaboratoryPanel(Laboratory);
+        }
+
+        private void UpdateMainLabels()
+        {
+            playerNameLabel.Text = $"{Player.Name} {Player.Surname}";
+            accountUsernameLabel.Text = Account.Username;
+            forceLabel.Text = $"Forza: {Village.Strength * 100.0f}%";
+            trophiesLabel.Text = $"Trofei: {Village.Trophies}";
+            starsLabel.Text = $"Stelle: {Village.WarStars}";
+            xpLabel.Text = $"XP: {Village.ExperienceLevel}";
         }
 
         // TODO: Call this method when moving to another panel
@@ -50,15 +113,15 @@ namespace DatabaseProject.view.panels.village
             }
         }
 
-        public void AddBuildingToView(Edificio building)
+        public void AddBuildingToView(BaseBuilding building)
         {
-            var imageIndex = ImageLoader.GetIndexFromDatabaseBuildingName(building.Nome);
+            var imageIndex = ImageLoader.GetIndexFromDatabaseBuildingName(building.Name);
             var listItem = new ListViewItem
             {
-                Text = building.Nome,
+                Text = building.Name,
                 ImageIndex = (int)imageIndex
             };
-            BuildingType type = Enum.Parse<BuildingType>(building.Tipo);
+            BuildingType type = building.BuildingType;
             switch (type)
             {
                 case BuildingType.Defense:
@@ -92,17 +155,17 @@ namespace DatabaseProject.view.panels.village
         }
 
         /// <summary>
-        /// Adds an attack to the list view in the attacks tab.
+        /// Adds an attack to the list view in the attacksMadeAndUndergone tab.
         /// </summary>
         /// <param name="attack"></param>
         /// <param name="trophiesForAttack"></param>
         /// <param name="attackType">A string describing if this attack was actually an attack or a defense.</param>
-        public void AddAttackToView(Attacco attack, int trophiesForAttack, string attackType)
+        public void AddAttackToView(Attack attack)
         {
             var listItem = new ListViewItem
             {
-                Text = attack.StelleOttenute.ToString(),
-                SubItems = { attack.PercentualeDistruzione.ToString(), attack.TempoImpiegato.ToString(), trophiesForAttack.ToString(), attackType }
+                Text = attack.ObtainedStars.ToString(),
+                SubItems = { attack.ObtainedPercentage.ToString(), attack.TimeTakenMS.ToString(), attack.ObtainedTrophies.ToString(), attack.GetAttackTypeFromAccountPerspective(this.Account) }
             };
             listView2.Items.Add(listItem);
         }
@@ -143,6 +206,14 @@ namespace DatabaseProject.view.panels.village
                     Width = Laboratorio.Width
                 });
             }
+        }
+        
+        // Navigation methods
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            this.ClearObservers();
+            var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
+            //mainForm.LoadPanel(new AccountsPanel(Player)); TODO: need to switch to model entities!
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace DatabaseProject.model.code
 {
-    public class Player(string id, string name, string username)
+    public class Player(string id, string name, string surname)
     {
         public string Name { get; } = name;
-        public string Username { get; } = username;
+        public string Surname { get; } = surname;
         public string Id { get; } = id;
 
         /// <summary>

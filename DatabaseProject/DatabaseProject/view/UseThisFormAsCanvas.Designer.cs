@@ -145,7 +145,7 @@ namespace DatabaseProject
             accountUsernameLabel.Name = "accountUsernameLabel";
             accountUsernameLabel.Size = new Size(168, 15);
             accountUsernameLabel.TabIndex = 1;
-            accountUsernameLabel.Text = "Username";
+            accountUsernameLabel.Text = "Surname";
             accountUsernameLabel.Click += label1_Click;
             // 
             // playerNameLabel
@@ -490,7 +490,7 @@ namespace DatabaseProject
             // 
             // columnHeader5
             // 
-            columnHeader5.Text = "Username";
+            columnHeader5.Text = "Surname";
             columnHeader5.Width = 200;
             // 
             // columnHeader6

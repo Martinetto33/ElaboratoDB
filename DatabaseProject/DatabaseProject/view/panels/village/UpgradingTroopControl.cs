@@ -1,4 +1,5 @@
-﻿using DatabaseProject.model.api;
+﻿using DatabaseProject.common;
+using DatabaseProject.model.api;
 using DatabaseProject.model.code;
 
 namespace DatabaseProject.view.panels.village
@@ -15,7 +16,7 @@ namespace DatabaseProject.view.panels.village
             this.upgradePerformer = upgradePerformer;
             InitializeComponent();
             this.displayedStringLabel.Text = this.displayedText;
-            this.timeLabel.Text = $"Tempo rimanente: {MapMillisToTime(this.upgradePerformer.GetUpgradeTime())}";
+            this.timeLabel.Text = $"Tempo rimanente: {Utils.MapMillisToTime(this.upgradePerformer.GetUpgradeTime())}";
             this.timer1.Interval = TIMER_INTERVAL;
             this.progressBar1.Maximum = MAX_PROGRESS;
             this.timer1.Start();
@@ -28,13 +29,7 @@ namespace DatabaseProject.view.panels.village
             {
                 this.timer1.Stop();
             }
-            this.timeLabel.Text = $"Tempo rimanente: {MapMillisToTime(this.upgradePerformer.GetRemainingUpgradeTime())}";
-        }
-
-        private static string MapMillisToTime(long millis)
-        {
-            TimeSpan time = TimeSpan.FromMilliseconds(millis);
-            return 0L <= millis ? time.ToString(@"mm\:ss") : "00:00";
+            this.timeLabel.Text = $"Tempo rimanente: {Utils.MapMillisToTime(this.upgradePerformer.GetRemainingUpgradeTime())}";
         }
 
         private int MapProgressToPercentage()

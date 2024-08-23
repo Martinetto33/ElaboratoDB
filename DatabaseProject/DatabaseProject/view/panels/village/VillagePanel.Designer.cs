@@ -30,8 +30,8 @@
         private Label clanNameLabel;
         private Label clanRoleLabel;
         private Label membersNumberLabel;
-        private Label trophiesNumberLabel;
-        private Label starsNumberLabel;
+        private Label clanTrophiesLabel;
+        private Label clanStarsLabel;
         private ListView listView3;
         private ColumnHeader columnHeader5;
         private ColumnHeader columnHeader6;
@@ -43,9 +43,9 @@
 
         private void InitializeComponent()
         {
-            ListViewGroup listViewGroup4 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup5 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup6 = new ListViewGroup("Difese", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup1 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup2 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup3 = new ListViewGroup("Difese", HorizontalAlignment.Left);
             leftSplitContainer = new SplitContainer();
             leftPanelsSplitContainer = new SplitContainer();
             accountUsernameLabel = new Label();
@@ -53,6 +53,7 @@
             backButton = new Button();
             buildersAndLaboratorySplitContainer = new SplitContainer();
             Costruttori = new GroupBox();
+            Laboratorio = new GroupBox();
             rightSplitContainer = new SplitContainer();
             centralSplitContainer = new SplitContainer();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -76,14 +77,13 @@
             clanNameLabel = new Label();
             clanRoleLabel = new Label();
             membersNumberLabel = new Label();
-            trophiesNumberLabel = new Label();
-            starsNumberLabel = new Label();
+            clanTrophiesLabel = new Label();
+            clanStarsLabel = new Label();
             listView3 = new ListView();
             columnHeader5 = new ColumnHeader();
             columnHeader6 = new ColumnHeader();
             columnHeader7 = new ColumnHeader();
             troopsListView = new ListView();
-            Laboratorio = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
@@ -160,7 +160,7 @@
             accountUsernameLabel.Name = "accountUsernameLabel";
             accountUsernameLabel.Size = new Size(171, 15);
             accountUsernameLabel.TabIndex = 1;
-            accountUsernameLabel.Text = "Username";
+            accountUsernameLabel.Text = "Surname";
             // 
             // playerNameLabel
             // 
@@ -180,6 +180,7 @@
             backButton.Size = new Size(40, 40);
             backButton.TabIndex = 0;
             backButton.UseVisualStyleBackColor = true;
+            backButton.Click += backButton_Click;
             // 
             // buildersAndLaboratorySplitContainer
             // 
@@ -208,6 +209,16 @@
             Costruttori.TabIndex = 0;
             Costruttori.TabStop = false;
             Costruttori.Text = "Costruttori";
+            // 
+            // Laboratorio
+            // 
+            Laboratorio.Dock = DockStyle.Fill;
+            Laboratorio.Location = new Point(0, 0);
+            Laboratorio.Name = "Laboratorio";
+            Laboratorio.Size = new Size(214, 163);
+            Laboratorio.TabIndex = 0;
+            Laboratorio.TabStop = false;
+            Laboratorio.Text = "Laboratorio";
             // 
             // rightSplitContainer
             // 
@@ -331,13 +342,13 @@
             // listView1
             // 
             listView1.Dock = DockStyle.Fill;
-            listViewGroup4.Header = "Edifici Speciali";
-            listViewGroup4.Name = "specialBuildingsListViewGroup";
-            listViewGroup5.Header = "Estrattori di Risorse";
-            listViewGroup5.Name = "resourcesExtractorsListViewGroup";
-            listViewGroup6.Header = "Difese";
-            listViewGroup6.Name = "defensesListViewGroup";
-            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup4, listViewGroup5, listViewGroup6 });
+            listViewGroup1.Header = "Edifici Speciali";
+            listViewGroup1.Name = "specialBuildingsListViewGroup";
+            listViewGroup2.Header = "Estrattori di Risorse";
+            listViewGroup2.Name = "resourcesExtractorsListViewGroup";
+            listViewGroup3.Header = "Difese";
+            listViewGroup3.Name = "defensesListViewGroup";
+            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
             listView1.Location = new Point(3, 3);
             listView1.Name = "listView1";
             listView1.Size = new Size(537, 481);
@@ -425,8 +436,8 @@
             flowLayoutPanel2.Controls.Add(clanNameLabel);
             flowLayoutPanel2.Controls.Add(clanRoleLabel);
             flowLayoutPanel2.Controls.Add(membersNumberLabel);
-            flowLayoutPanel2.Controls.Add(trophiesNumberLabel);
-            flowLayoutPanel2.Controls.Add(starsNumberLabel);
+            flowLayoutPanel2.Controls.Add(clanTrophiesLabel);
+            flowLayoutPanel2.Controls.Add(clanStarsLabel);
             flowLayoutPanel2.Dock = DockStyle.Fill;
             flowLayoutPanel2.Location = new Point(0, 0);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -462,23 +473,23 @@
             membersNumberLabel.TabIndex = 2;
             membersNumberLabel.Text = "Membri: 39/50";
             // 
-            // trophiesNumberLabel
+            // clanTrophiesLabel
             // 
-            trophiesNumberLabel.AutoSize = true;
-            trophiesNumberLabel.Location = new Point(389, 0);
-            trophiesNumberLabel.Name = "trophiesNumberLabel";
-            trophiesNumberLabel.Size = new Size(66, 15);
-            trophiesNumberLabel.TabIndex = 3;
-            trophiesNumberLabel.Text = "Trofei: 5000";
+            clanTrophiesLabel.AutoSize = true;
+            clanTrophiesLabel.Location = new Point(389, 0);
+            clanTrophiesLabel.Name = "clanTrophiesLabel";
+            clanTrophiesLabel.Size = new Size(66, 15);
+            clanTrophiesLabel.TabIndex = 3;
+            clanTrophiesLabel.Text = "Trofei: 5000";
             // 
-            // starsNumberLabel
+            // clanStarsLabel
             // 
-            starsNumberLabel.AutoSize = true;
-            starsNumberLabel.Location = new Point(461, 0);
-            starsNumberLabel.Name = "starsNumberLabel";
-            starsNumberLabel.Size = new Size(53, 15);
-            starsNumberLabel.TabIndex = 4;
-            starsNumberLabel.Text = "Stelle: 15";
+            clanStarsLabel.AutoSize = true;
+            clanStarsLabel.Location = new Point(461, 0);
+            clanStarsLabel.Name = "clanStarsLabel";
+            clanStarsLabel.Size = new Size(53, 15);
+            clanStarsLabel.TabIndex = 4;
+            clanStarsLabel.Text = "Stelle: 15";
             // 
             // listView3
             // 
@@ -494,7 +505,7 @@
             // 
             // columnHeader5
             // 
-            columnHeader5.Text = "Username";
+            columnHeader5.Text = "Surname";
             columnHeader5.Width = 200;
             // 
             // columnHeader6
@@ -515,16 +526,6 @@
             troopsListView.Size = new Size(227, 600);
             troopsListView.TabIndex = 0;
             troopsListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // Laboratorio
-            // 
-            Laboratorio.Dock = DockStyle.Fill;
-            Laboratorio.Location = new Point(0, 0);
-            Laboratorio.Name = "Laboratorio";
-            Laboratorio.Size = new Size(214, 163);
-            Laboratorio.TabIndex = 0;
-            Laboratorio.TabStop = false;
-            Laboratorio.Text = "Laboratorio";
             // 
             // VillagePanel
             // 
