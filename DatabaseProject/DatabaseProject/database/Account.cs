@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DatabaseProject.database;
+﻿namespace DatabaseProject.database;
 
 public partial class Account
 {

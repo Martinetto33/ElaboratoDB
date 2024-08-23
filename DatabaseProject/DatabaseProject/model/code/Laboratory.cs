@@ -4,7 +4,7 @@ using DatabaseProject.model.api;
 namespace DatabaseProject.model.code
 {
     public class Laboratory(
-        string buildingId,
+        int buildingId,
         string name,
         int level,
         int healthPoints,

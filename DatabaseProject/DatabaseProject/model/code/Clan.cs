@@ -16,45 +16,45 @@ namespace DatabaseProject.model.code
     public class Clan(
         string clanId,
         string name,
-        IDictionary<Account, ClanRole> membersAndRoles,
+        IDictionary<string, ClanRole> membersAndRoles,
         int totalTrophies,
         int totalStarsWon
     )
     {
         public string ClanId { get; } = clanId;
         public string Name { get; } = name;
-        public IDictionary<Account, ClanRole> Members { get; } = membersAndRoles;
+        /// <summary>
+        /// Only contains pairs of account IDs and their respective roles in the clan.
+        /// This is done for the sake of performance.
+        /// </summary>
+        public IDictionary<string, ClanRole> Members { get; } = membersAndRoles;
         public int TotalTrophies { get; set; } = totalTrophies;
         public int TotalStarsWon { get; set; } = totalStarsWon;
-        public void AddMember(Account member, ClanRole role = ClanRole.Member)
+        public void AddMember(string accountId, ClanRole role = ClanRole.Member) => Members.Add(accountId, role);
+        public void RemoveMember(string accountId)
         {
-            Members.Add(member, role);
-        }
-
-        public void RemoveMember(Account member)
-        {
-            if (Members.Count(entry => entry.Value == ClanRole.Leader) == 1 && Members[member] == ClanRole.Leader)
+            if (Members.Count(entry => entry.Value == ClanRole.Leader) == 1 && Members[accountId] == ClanRole.Leader)
             {
-                Console.WriteLine($"Cannot remove the last leader from clan {Name}. First, demote member {member.Username}.");
+                Console.WriteLine($"Cannot remove the last leader from clan {Name}. First, demote account {accountId}.");
                 return;
             }
-            Members.Remove(member);
+            Members.Remove(accountId);
         }
 
-        public void promoteMember(Account member)
+        public void PromoteMember(string accountId)
         {
-            if (Members.ContainsKey(member))
+            if (Members.TryGetValue(accountId, out ClanRole value))
             {
-                switch (Members[member])
+                switch (value)
                 {
                     case ClanRole.Member:
-                        Members[member] = ClanRole.Elder;
+                        Members[accountId] = ClanRole.Elder;
                         break;
                     case ClanRole.Elder:
-                        Members[member] = ClanRole.CoLeader;
+                        Members[accountId] = ClanRole.CoLeader;
                         break;
                     case ClanRole.CoLeader:
-                        Members[member] = ClanRole.Leader;
+                        Members[accountId] = ClanRole.Leader;
                         break;
                     case ClanRole.Leader:
                         Console.WriteLine("Cannot promote a leader.");
@@ -67,23 +67,23 @@ namespace DatabaseProject.model.code
             }
         }
 
-        public void demoteMember(Account member)
+        public void DemoteMember(string accountId)
         {
-            if (Members.ContainsKey(member))
+            if (Members.TryGetValue(accountId, out ClanRole value))
             {
-                switch (Members[member])
+                switch (value)
                 {
                     case ClanRole.Leader:
-                        Members[member] = ClanRole.CoLeader;
+                        Members[accountId] = ClanRole.CoLeader;
                         break;
                     case ClanRole.CoLeader:
-                        Members[member] = ClanRole.Elder;
+                        Members[accountId] = ClanRole.Elder;
                         break;
                     case ClanRole.Elder:
-                        Members[member] = ClanRole.Member;
+                        Members[accountId] = ClanRole.Member;
                         break;
                     case ClanRole.Member:
-                        Console.WriteLine("Cannot demote a member.");
+                        Console.WriteLine("Cannot demote a accountId.");
                         break;
                 }
             }

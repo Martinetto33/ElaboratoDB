@@ -10,6 +10,12 @@ namespace DatabaseProject.daos
     /// </summary>
     public static partial class DatabaseEntitiesFactory
     {
+        /// <summary>
+        /// Create a new village for the given account.
+        /// This method doesn't automatically add the village id to the provided account!
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         public static Villaggio CreateVillage(Account account)
         {
             Guid villageGuid = Guid.NewGuid();
@@ -18,6 +24,14 @@ namespace DatabaseProject.daos
             {
                 builders.Add(CreateBuilder(villageGuid, i));
             }
+            return new Villaggio
+            {
+                IdVillaggio = villageGuid,
+                Account = account,
+                Costruttori = builders,
+                Edifici = CreateBuildings(villageGuid),
+                Truppe = CreateTroops(villageGuid)
+            };
         }
 
         public static Costruttore CreateBuilder(Guid villageGuid, int builderId)

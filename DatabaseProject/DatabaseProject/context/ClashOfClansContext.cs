@@ -134,7 +134,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.PercentualeDistruzione).HasColumnType("int(11)");
             entity.Property(e => e.StelleOttenute).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.Attaccos)
+            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.Attacchi)
                 .HasForeignKey(d => d.IdGuerra)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOSTITUZIONE");
@@ -173,7 +173,7 @@ public partial class ClashOfClansContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOM_CLA");
 
-            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.Combattimentos)
+            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.Combattimenti)
                 .HasForeignKey(d => d.IdGuerra)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOM_GUE");

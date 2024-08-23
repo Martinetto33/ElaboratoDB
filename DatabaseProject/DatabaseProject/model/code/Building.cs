@@ -26,14 +26,14 @@ namespace DatabaseProject.model.code
     }
     public class BaseBuilding
     {
-        public string BuildingId { get; }
+        public int BuildingId { get; }
         public string Name { get; }
         public int Level { get; set; }
         public int HealthPoints { get; set; }
         public BuildingType BuildingType { get; }
 
         protected BaseBuilding(
-            string buildingId,
+            int buildingId,
             string name,
             int level,
             int healthPoints,
@@ -66,7 +66,7 @@ namespace DatabaseProject.model.code
     }
 
     public class Defense(
-        string buildingId,
+        int buildingId,
         string name,
         int level,
         int healthPoints,
@@ -100,7 +100,7 @@ namespace DatabaseProject.model.code
     }
 
     public class ResourceExtractor(
-        string buildingId,
+        int buildingId,
         string name,
         int level,
         int healthPoints,
@@ -123,7 +123,7 @@ namespace DatabaseProject.model.code
     }
 
     public class SpecialBuilding(
-        string buildingId,
+        int buildingId,
         string name,
         int level,
         int healthPoints,

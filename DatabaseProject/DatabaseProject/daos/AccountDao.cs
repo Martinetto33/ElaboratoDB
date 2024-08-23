@@ -17,13 +17,21 @@ namespace DatabaseProject.daos
                     IdAccount = Guid.NewGuid(),
                     IdGiocatore = owner.IdGiocatore
                 };
-                var village = new Villaggio
-                {
-                    IdVillaggio = Guid.NewGuid(),
-                    Account = account
-                };
+                var village = DatabaseEntitiesFactory.CreateVillage(account);
                 account.IdVillaggio = village.IdVillaggio;
                 context.Accounts.Add(account);
+                foreach (var builder in village.Costruttori)
+                {
+                    context.Costruttori.Add(builder);
+                }
+                foreach (var building in village.Edifici)
+                {
+                    context.Edifici.Add(building);
+                }
+                foreach (var troop in village.Truppe)
+                {
+                    context.Truppe.Add(troop);
+                }
                 context.Villaggi.Add(village);
                 context.SaveChanges();
             }

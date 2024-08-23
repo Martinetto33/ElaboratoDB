@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DatabaseProject.daos;
 
 namespace DatabaseProject.model.code
 {
@@ -19,11 +15,13 @@ namespace DatabaseProject.model.code
         public void StartWar()
         {
             IsInProgress = true;
+            WarDao.StartWar(Guid.Parse(WarId));
         }
 
         public void EndWar()
         {
             IsInProgress = false;
+            WarDao.EndWar(Guid.Parse(WarId));
         }
 
         public void AddAttack(Clan clan, Attack attack)
