@@ -4,11 +4,7 @@ namespace DatabaseProject.mapper
 {
     public static class DatabaseToModelMapper
     {
-        public static KeyValuePair<Account, database.Account> MapAccount(
-            database.Account dbAccount, 
-            database.Giocatore player,
-            database.Villaggio village
-            )
+        public static KeyValuePair<Account, database.Account> MapAccount(database.Account dbAccount)
         {
             Account modelAccount = new(
                 dbAccount.Username,
