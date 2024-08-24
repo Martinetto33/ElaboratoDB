@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class Attacchi
+public partial class Attacco
 {
     public float TempoImpiegato { get; set; }
 
@@ -17,9 +17,9 @@ public partial class Attacchi
 
     public Guid IdAttacco { get; set; }
 
-    public virtual AccountAttaccanti? AccountAttaccanti { get; set; }
+    public virtual AccountAttaccante? AccountAttaccanti { get; set; }
 
-    public virtual AccountDifensori? AccountDifensori { get; set; }
+    public virtual AccountDifensore? AccountDifensori { get; set; }
 
     public virtual AttacchiEGuerre? AttacchiEGuerre { get; set; }
 }

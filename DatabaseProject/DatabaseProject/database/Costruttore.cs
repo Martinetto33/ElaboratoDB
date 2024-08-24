@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class Costruttori
+public partial class Costruttore
 {
     public Guid IdVillaggio { get; set; }
 
     public int IdCostruttore { get; set; }
 
-    public virtual Villaggi IdVillaggioNavigation { get; set; } = null!;
+    public virtual Villaggio IdVillaggioNavigation { get; set; } = null!;
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class EdificiInVillaggio
+public partial class EdificioInVillaggio
 {
     public Guid IdVillaggio { get; set; }
 
@@ -29,9 +29,9 @@ public partial class EdificiInVillaggio
 
     public int LivelloMiglioramento { get; set; }
 
-    public virtual Villaggi IdVillaggioNavigation { get; set; } = null!;
+    public virtual Villaggio IdVillaggioNavigation { get; set; } = null!;
 
-    public virtual ICollection<MiglioramentiEdificio> MiglioramentiEdificios { get; set; } = new List<MiglioramentiEdificio>();
+    public virtual ICollection<MiglioramentoEdificio> MiglioramentiEdificios { get; set; } = new List<MiglioramentoEdificio>();
 
-    public virtual StatisticheEdificiMigliorati StatisticheEdificiMigliorati { get; set; } = null!;
+    public virtual StatisticheEdificioMigliorato StatisticheEdificiMigliorati { get; set; } = null!;
 }

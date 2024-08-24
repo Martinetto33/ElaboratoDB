@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class TruppeInVillaggio
+public partial class TruppaInVillaggio
 {
     public Guid IdVillaggio { get; set; }
 
@@ -11,9 +11,9 @@ public partial class TruppeInVillaggio
 
     public string Nome { get; set; } = null!;
 
-    public virtual Villaggi IdVillaggioNavigation { get; set; } = null!;
+    public virtual Villaggio IdVillaggioNavigation { get; set; } = null!;
 
     public virtual ICollection<MiglioramentiTruppa> MiglioramentiTruppas { get; set; } = new List<MiglioramentiTruppa>();
 
-    public virtual TipiTruppe NomeNavigation { get; set; } = null!;
+    public virtual TipoTruppa NomeNavigation { get; set; } = null!;
 }

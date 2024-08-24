@@ -19,45 +19,45 @@ public partial class ClashOfClansContext : DbContext
 
     public virtual DbSet<Account> Accounts { get; set; }
 
-    public virtual DbSet<AccountAttaccanti> AccountAttaccantis { get; set; }
+    public virtual DbSet<AccountAttaccante> AccountAttaccanti { get; set; }
 
-    public virtual DbSet<AccountDifensori> AccountDifensoris { get; set; }
+    public virtual DbSet<AccountDifensore> AccountDifensori { get; set; }
 
-    public virtual DbSet<Attacchi> Attacchis { get; set; }
+    public virtual DbSet<Attacco> Attacchi { get; set; }
 
-    public virtual DbSet<AttacchiEGuerre> AttacchiEGuerres { get; set; }
+    public virtual DbSet<AttacchiEGuerre> AttacchiEGuerre { get; set; }
 
-    public virtual DbSet<Clan> Clans { get; set; }
+    public virtual DbSet<Clan> Clan { get; set; }
 
-    public virtual DbSet<Combattimenti> Combattimentis { get; set; }
+    public virtual DbSet<Combattimento> Combattimenti { get; set; }
 
-    public virtual DbSet<Costruttori> Costruttoris { get; set; }
+    public virtual DbSet<Costruttore> Costruttori { get; set; }
 
-    public virtual DbSet<EdificiInVillaggio> EdificiInVillaggios { get; set; }
+    public virtual DbSet<EdificioInVillaggio> EdificiInVillaggio { get; set; }
 
-    public virtual DbSet<Giocatori> Giocatoris { get; set; }
+    public virtual DbSet<Giocatore> Giocatori { get; set; }
 
-    public virtual DbSet<Guerre> Guerres { get; set; }
+    public virtual DbSet<Guerra> Guerre { get; set; }
 
-    public virtual DbSet<MiglioramentiEdificio> MiglioramentiEdificios { get; set; }
+    public virtual DbSet<MiglioramentoEdificio> MiglioramentiEdificio { get; set; }
 
-    public virtual DbSet<MiglioramentiTruppa> MiglioramentiTruppas { get; set; }
+    public virtual DbSet<MiglioramentiTruppa> MiglioramentiTruppa { get; set; }
 
-    public virtual DbSet<PartecipazioniClan> PartecipazioniClans { get; set; }
+    public virtual DbSet<PartecipazioneClan> PartecipazioniClan { get; set; }
 
-    public virtual DbSet<StatisticheEdificiMigliorati> StatisticheEdificiMiglioratis { get; set; }
+    public virtual DbSet<StatisticheEdificioMigliorato> StatisticheEdificiMigliorati { get; set; }
 
-    public virtual DbSet<StatisticheTruppeMigliorate> StatisticheTruppeMigliorates { get; set; }
+    public virtual DbSet<StatisticheTruppaMigliorata> StatisticheTruppeMigliorate { get; set; }
 
-    public virtual DbSet<TipiEdificio> TipiEdificios { get; set; }
+    public virtual DbSet<TipoEdificio> TipiEdifici { get; set; }
 
-    public virtual DbSet<TipiTruppe> TipiTruppes { get; set; }
+    public virtual DbSet<TipoTruppa> TipiTruppe { get; set; }
 
-    public virtual DbSet<TruppeInVillaggio> TruppeInVillaggios { get; set; }
+    public virtual DbSet<TruppaInVillaggio> TruppeInVillaggio { get; set; }
 
-    public virtual DbSet<Villaggi> Villaggis { get; set; }
+    public virtual DbSet<Villaggio> Villaggi { get; set; }
 
-    public virtual DbSet<VillaggiAccount> VillaggiAccounts { get; set; }
+    public virtual DbSet<VillaggioAccount> VillaggiAccount { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -86,7 +86,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKPROPRIETA");
         });
 
-        modelBuilder.Entity<AccountAttaccanti>(entity =>
+        modelBuilder.Entity<AccountAttaccante>(entity =>
         {
             entity.HasKey(e => e.IdAttacco).HasName("PRIMARY");
 
@@ -102,12 +102,12 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKACC_ACC");
 
             entity.HasOne(d => d.IdAttaccoNavigation).WithOne(p => p.AccountAttaccanti)
-                .HasForeignKey<AccountAttaccanti>(d => d.IdAttacco)
+                .HasForeignKey<AccountAttaccante>(d => d.IdAttacco)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKACC_ATT_FK");
         });
 
-        modelBuilder.Entity<AccountDifensori>(entity =>
+        modelBuilder.Entity<AccountDifensore>(entity =>
         {
             entity.HasKey(e => e.IdAttacco).HasName("PRIMARY");
 
@@ -123,12 +123,12 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKACC_ACC_1");
 
             entity.HasOne(d => d.IdAttaccoNavigation).WithOne(p => p.AccountDifensori)
-                .HasForeignKey<AccountDifensori>(d => d.IdAttacco)
+                .HasForeignKey<AccountDifensore>(d => d.IdAttacco)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKACC_ATT_1_FK");
         });
 
-        modelBuilder.Entity<Attacchi>(entity =>
+        modelBuilder.Entity<Attacco>(entity =>
         {
             entity.HasKey(e => e.IdAttacco).HasName("PRIMARY");
 
@@ -173,7 +173,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.TrofeiTotali).HasColumnType("int(11)");
         });
 
-        modelBuilder.Entity<Combattimenti>(entity =>
+        modelBuilder.Entity<Combattimento>(entity =>
         {
             entity.HasKey(e => new { e.IdGuerra, e.IdClan })
                 .HasName("PRIMARY")
@@ -200,7 +200,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKCOM_GUE");
         });
 
-        modelBuilder.Entity<Costruttori>(entity =>
+        modelBuilder.Entity<Costruttore>(entity =>
         {
             entity.HasKey(e => new { e.IdVillaggio, e.IdCostruttore })
                 .HasName("PRIMARY")
@@ -216,7 +216,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKCOLLABORAZIONE");
         });
 
-        modelBuilder.Entity<EdificiInVillaggio>(entity =>
+        modelBuilder.Entity<EdificioInVillaggio>(entity =>
         {
             entity.HasKey(e => new { e.IdVillaggio, e.IdEdificio })
                 .HasName("PRIMARY")
@@ -249,7 +249,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKCONFERIMENTO_STATISTICHE_EDIFICIO");
         });
 
-        modelBuilder.Entity<Giocatori>(entity =>
+        modelBuilder.Entity<Giocatore>(entity =>
         {
             entity.HasKey(e => e.IdGiocatore).HasName("PRIMARY");
 
@@ -259,7 +259,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.Nome).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Guerre>(entity =>
+        modelBuilder.Entity<Guerra>(entity =>
         {
             entity.HasKey(e => e.IdGuerra).HasName("PRIMARY");
 
@@ -270,7 +270,7 @@ public partial class ClashOfClansContext : DbContext
                 .IsFixedLength();
         });
 
-        modelBuilder.Entity<MiglioramentiEdificio>(entity =>
+        modelBuilder.Entity<MiglioramentoEdificio>(entity =>
         {
             entity.HasKey(e => new { e.IdVillaggio, e.IdEdificio, e.LivelloMiglioramento })
                 .HasName("PRIMARY")
@@ -310,7 +310,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKEVOLUZIONE_TRUPPA");
         });
 
-        modelBuilder.Entity<PartecipazioniClan>(entity =>
+        modelBuilder.Entity<PartecipazioneClan>(entity =>
         {
             entity.HasKey(e => new { e.IdClan, e.IdAccount, e.DataInizio })
                 .HasName("PRIMARY")
@@ -333,7 +333,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKACCOGLIENZA");
         });
 
-        modelBuilder.Entity<StatisticheEdificiMigliorati>(entity =>
+        modelBuilder.Entity<StatisticheEdificioMigliorato>(entity =>
         {
             entity.HasKey(e => new { e.Nome, e.LivelloMiglioramento })
                 .HasName("PRIMARY")
@@ -351,7 +351,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKNOME_STATISTICA_EDIFICIO");
         });
 
-        modelBuilder.Entity<StatisticheTruppeMigliorate>(entity =>
+        modelBuilder.Entity<StatisticheTruppaMigliorata>(entity =>
         {
             entity.HasKey(e => new { e.LivelloMiglioramento, e.Nome })
                 .HasName("PRIMARY")
@@ -377,7 +377,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKBONUS_MIGLIORAMENTO_TRUPPA_R");
         });
 
-        modelBuilder.Entity<TipiEdificio>(entity =>
+        modelBuilder.Entity<TipoEdificio>(entity =>
         {
             entity.HasKey(e => e.Nome).HasName("PRIMARY");
 
@@ -387,7 +387,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.Descrizione).HasMaxLength(500);
         });
 
-        modelBuilder.Entity<TipiTruppe>(entity =>
+        modelBuilder.Entity<TipoTruppa>(entity =>
         {
             entity.HasKey(e => e.Nome).HasName("PRIMARY");
 
@@ -397,7 +397,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.Descrizione).HasMaxLength(500);
         });
 
-        modelBuilder.Entity<TruppeInVillaggio>(entity =>
+        modelBuilder.Entity<TruppaInVillaggio>(entity =>
         {
             entity.HasKey(e => new { e.IdVillaggio, e.Nome })
                 .HasName("PRIMARY")
@@ -421,7 +421,7 @@ public partial class ClashOfClansContext : DbContext
                 .HasConstraintName("FKTIPOLOGIA_TRUPPA");
         });
 
-        modelBuilder.Entity<Villaggi>(entity =>
+        modelBuilder.Entity<Villaggio>(entity =>
         {
             entity.HasKey(e => e.IdVillaggio).HasName("PRIMARY");
 
@@ -432,7 +432,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.NumeroTrofei).HasColumnType("int(11)");
         });
 
-        modelBuilder.Entity<VillaggiAccount>(entity =>
+        modelBuilder.Entity<VillaggioAccount>(entity =>
         {
             entity.HasKey(e => e.IdAccount).HasName("PRIMARY");
 
@@ -443,12 +443,12 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.IdAccount).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.IdAccountNavigation).WithOne(p => p.VillaggiAccount)
-                .HasForeignKey<VillaggiAccount>(d => d.IdAccount)
+                .HasForeignKey<VillaggioAccount>(d => d.IdAccount)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_ACCOUNT_FK");
 
             entity.HasOne(d => d.IdVillaggioNavigation).WithOne(p => p.VillaggiAccount)
-                .HasForeignKey<VillaggiAccount>(d => d.IdVillaggio)
+                .HasForeignKey<VillaggioAccount>(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_VILLAGGIO_FK");
         });

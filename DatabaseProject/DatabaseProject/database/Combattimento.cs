@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class Combattimenti
+public partial class Combattimento
 {
     public Guid IdGuerra { get; set; }
 
@@ -19,5 +19,5 @@ public partial class Combattimenti
 
     public virtual Clan IdClanNavigation { get; set; } = null!;
 
-    public virtual Guerre IdGuerraNavigation { get; set; } = null!;
+    public virtual Guerra IdGuerraNavigation { get; set; } = null!;
 }

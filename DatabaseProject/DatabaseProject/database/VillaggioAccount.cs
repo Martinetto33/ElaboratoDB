@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class AccountDifensori
+public partial class VillaggioAccount
 {
-    public Guid IdAttacco { get; set; }
-
     public Guid IdAccount { get; set; }
+
+    public Guid IdVillaggio { get; set; }
 
     public virtual Account IdAccountNavigation { get; set; } = null!;
 
-    public virtual Attacchi IdAttaccoNavigation { get; set; } = null!;
+    public virtual Villaggio IdVillaggioNavigation { get; set; } = null!;
 }

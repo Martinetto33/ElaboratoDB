@@ -11,5 +11,5 @@ public partial class MiglioramentiTruppa
 
     public int LivelloMiglioramento { get; set; }
 
-    public virtual TruppeInVillaggio TruppeInVillaggio { get; set; } = null!;
+    public virtual TruppaInVillaggio TruppeInVillaggio { get; set; } = null!;
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class Giocatori
+public partial class Giocatore
 {
     public string Nome { get; set; } = null!;
 

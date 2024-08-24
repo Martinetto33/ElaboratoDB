@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class PartecipazioniClan
+public partial class PartecipazioneClan
 {
     public Guid IdClan { get; set; }
 

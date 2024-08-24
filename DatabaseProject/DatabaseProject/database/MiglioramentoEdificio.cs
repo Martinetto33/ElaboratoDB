@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class MiglioramentiEdificio
+public partial class MiglioramentoEdificio
 {
     public Guid IdVillaggio { get; set; }
 
@@ -19,5 +19,5 @@ public partial class MiglioramentiEdificio
 
     public int IdCostruttore { get; set; }
 
-    public virtual EdificiInVillaggio EdificiInVillaggio { get; set; } = null!;
+    public virtual EdificioInVillaggio EdificiInVillaggio { get; set; } = null!;
 }

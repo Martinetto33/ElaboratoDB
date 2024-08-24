@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class StatisticheTruppeMigliorate
+public partial class StatisticheTruppaMigliorata
 {
     public int LivelloMiglioramento { get; set; }
 
@@ -19,5 +19,5 @@ public partial class StatisticheTruppeMigliorate
 
     public string Nome { get; set; } = null!;
 
-    public virtual TipiTruppe NomeNavigation { get; set; } = null!;
+    public virtual TipoTruppa NomeNavigation { get; set; } = null!;
 }
