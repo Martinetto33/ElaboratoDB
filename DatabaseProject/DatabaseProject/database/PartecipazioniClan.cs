@@ -1,6 +1,9 @@
-﻿namespace DatabaseProject.database;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class PartecipazioneClan
+namespace DatabaseProject.database;
+
+public partial class PartecipazioniClan
 {
     public Guid IdClan { get; set; }
 

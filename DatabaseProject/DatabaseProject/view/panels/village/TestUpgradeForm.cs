@@ -17,7 +17,7 @@ namespace DatabaseProject.view.panels.village
         {
             InitializeComponent();
             var builder = new Builder(0);
-            var buildingToUpgrade = new Defense("123", "Cannone", 4, 100, 20.0, 1, 10);
+            var buildingToUpgrade = new Defense(123, "Cannone", 4, 100, 20.0, 1, 10);
             builder.UpgradeBuilding(buildingToUpgrade);
             this.Controls.Add(new UpgradingBuildingControl($"Costruttore {builder.GetObservableId()}: {builder.GetUpgradingObjectName()}", builder));
         }

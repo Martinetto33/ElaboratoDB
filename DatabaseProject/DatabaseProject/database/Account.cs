@@ -1,4 +1,7 @@
-﻿namespace DatabaseProject.database;
+﻿using System;
+using System.Collections.Generic;
+
+namespace DatabaseProject.database;
 
 public partial class Account
 {
@@ -8,17 +11,15 @@ public partial class Account
 
     public Guid IdAccount { get; set; }
 
-    public Guid IdVillaggio { get; set; }
-
     public Guid IdGiocatore { get; set; }
 
-    public virtual ICollection<AccountAttaccante> AccountAttaccanti { get; set; } = new List<AccountAttaccante>();
+    public virtual ICollection<AccountAttaccanti> AccountAttaccantis { get; set; } = new List<AccountAttaccanti>();
 
-    public virtual ICollection<AccountDifensore> AccountDifensori { get; set; } = new List<AccountDifensore>();
+    public virtual ICollection<AccountDifensori> AccountDifensoris { get; set; } = new List<AccountDifensori>();
 
-    public virtual Giocatore IdGiocatoreNavigation { get; set; } = null!;
+    public virtual Giocatori IdGiocatoreNavigation { get; set; } = null!;
 
-    public virtual Villaggio IdVillaggioNavigation { get; set; } = null!;
+    public virtual ICollection<PartecipazioniClan> PartecipazioniClans { get; set; } = new List<PartecipazioniClan>();
 
-    public virtual ICollection<PartecipazioneClan> PartecipazioniClan { get; set; } = new List<PartecipazioneClan>();
+    public virtual VillaggiAccount? VillaggiAccount { get; set; }
 }

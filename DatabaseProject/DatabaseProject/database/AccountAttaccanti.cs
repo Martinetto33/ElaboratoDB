@@ -3,15 +3,13 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class AccountDifensore
+public partial class AccountAttaccanti
 {
     public Guid IdAttacco { get; set; }
-
-    public int TrofeiOttenuti { get; set; }
 
     public Guid IdAccount { get; set; }
 
     public virtual Account IdAccountNavigation { get; set; } = null!;
 
-    public virtual Attacco IdAttaccoNavigation { get; set; } = null!;
+    public virtual Attacchi IdAttaccoNavigation { get; set; } = null!;
 }

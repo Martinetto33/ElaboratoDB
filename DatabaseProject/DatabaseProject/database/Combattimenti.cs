@@ -1,6 +1,9 @@
-﻿namespace DatabaseProject.database;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class Combattimento
+namespace DatabaseProject.database;
+
+public partial class Combattimenti
 {
     public Guid IdGuerra { get; set; }
 
@@ -16,5 +19,5 @@ public partial class Combattimento
 
     public virtual Clan IdClanNavigation { get; set; } = null!;
 
-    public virtual Guerra IdGuerraNavigation { get; set; } = null!;
+    public virtual Guerre IdGuerraNavigation { get; set; } = null!;
 }

@@ -1,6 +1,9 @@
-﻿namespace DatabaseProject.database;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class Giocatore
+namespace DatabaseProject.database;
+
+public partial class Giocatori
 {
     public string Nome { get; set; } = null!;
 

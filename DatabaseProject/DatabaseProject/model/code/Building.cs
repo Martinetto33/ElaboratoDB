@@ -1,5 +1,4 @@
 ﻿using DatabaseProject.config;
-using DatabaseProject.database;
 
 namespace DatabaseProject.model.code
 {
