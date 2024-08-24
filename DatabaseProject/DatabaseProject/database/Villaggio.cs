@@ -15,11 +15,11 @@ public partial class Villaggio
 
     public Guid IdVillaggio { get; set; }
 
-    public virtual ICollection<Costruttore> Costruttoris { get; set; } = new List<Costruttore>();
+    public virtual ICollection<Costruttore> Costruttori { get; set; } = new List<Costruttore>();
 
-    public virtual ICollection<EdificioInVillaggio> EdificiInVillaggios { get; set; } = new List<EdificioInVillaggio>();
+    public virtual ICollection<EdificioInVillaggio> EdificiInVillaggio { get; set; } = new List<EdificioInVillaggio>();
 
-    public virtual ICollection<TruppaInVillaggio> TruppeInVillaggios { get; set; } = new List<TruppaInVillaggio>();
+    public virtual ICollection<TruppaInVillaggio> TruppeInVillaggio { get; set; } = new List<TruppaInVillaggio>();
 
-    public virtual VillaggioAccount? VillaggiAccount { get; set; }
+    public virtual VillaggioAccount? VillaggioAccount { get; set; }
 }

@@ -1,42 +1,22 @@
 ﻿using DatabaseProject.config;
+using DatabaseProject.common;
 
 namespace DatabaseProject.model.code
 {
-    public enum BuildingType
-    {
-        Defense,
-        Resource,
-        Special
-    }
-
-    public enum ResourceType
-    {
-        Gold,
-        Elixir,
-        DarkElixir
-    }
-
-    public enum SpecialBuildingRole
-    {
-        TownHall,
-        ClanCastle,
-        Laboratory,
-        ArmyCamp
-    }
     public class BaseBuilding
     {
         public int BuildingId { get; }
         public string Name { get; }
         public int Level { get; set; }
         public int HealthPoints { get; set; }
-        public BuildingType BuildingType { get; }
+        public Enums.BuildingType BuildingType { get; }
 
         protected BaseBuilding(
             int buildingId,
             string name,
             int level,
             int healthPoints,
-            BuildingType type
+            Enums.BuildingType type
         )
         {
             BuildingId = buildingId;
@@ -72,7 +52,7 @@ namespace DatabaseProject.model.code
         double damagePerSecond,
         int targetsNumber,
         int attackRange
-    ) : BaseBuilding(buildingId, name, level, healthPoints, BuildingType.Defense)
+    ) : BaseBuilding(buildingId, name, level, healthPoints, Enums.BuildingType.Defense)
     {
         public double DamagePerSecond { get; set; } = damagePerSecond;
         public int TargetsNumber { get; set; } = targetsNumber;
@@ -103,11 +83,11 @@ namespace DatabaseProject.model.code
         string name,
         int level,
         int healthPoints,
-        ResourceType type,
+        Enums.ResourceType type,
         int productionRate
-    ) : BaseBuilding(buildingId, name, level, healthPoints, BuildingType.Resource)
+    ) : BaseBuilding(buildingId, name, level, healthPoints, Enums.BuildingType.Resource)
     {
-        public ResourceType ResourceType { get; } = type;
+        public Enums.ResourceType ResourceType { get; } = type;
         public int ProductionRate { get; set; } = productionRate;
         public async override Task UpgradeAsync(double upgradeTimeInSeconds)
         {
@@ -127,10 +107,10 @@ namespace DatabaseProject.model.code
         int level,
         int healthPoints,
         string description,
-        SpecialBuildingRole role
-    ) : BaseBuilding(buildingId, name, level, healthPoints, BuildingType.Special)
+        Enums.SpecialBuildingRole role
+    ) : BaseBuilding(buildingId, name, level, healthPoints, Enums.BuildingType.Special)
     {
         public string Description { get; } = description;
-        public SpecialBuildingRole Role { get; } = role;
+        public Enums.SpecialBuildingRole Role { get; } = role;
     }
 }

@@ -210,7 +210,7 @@ public partial class ClashOfClansContext : DbContext
 
             entity.Property(e => e.IdCostruttore).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Costruttoris)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.Costruttori)
                 .HasForeignKey(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOLLABORAZIONE");
@@ -238,12 +238,12 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.RuoloEdificioSpeciale).HasMaxLength(100);
             entity.Property(e => e.TipoRisorsa).HasMaxLength(30);
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.EdificiInVillaggios)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.EdificiInVillaggio)
                 .HasForeignKey(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOMPOSIZIONE");
 
-            entity.HasOne(d => d.StatisticheEdificiMigliorati).WithMany(p => p.EdificiInVillaggios)
+            entity.HasOne(d => d.StatisticheEdificioMigliorato).WithMany(p => p.EdificiInVillaggios)
                 .HasForeignKey(d => new { d.Nome, d.LivelloMiglioramento })
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCONFERIMENTO_STATISTICHE_EDIFICIO");
@@ -410,7 +410,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.Nome).HasMaxLength(50);
             entity.Property(e => e.Livello).HasColumnType("int(11)");
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.TruppeInVillaggios)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithMany(p => p.TruppeInVillaggio)
                 .HasForeignKey(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKDISPONIBILITA");
@@ -447,7 +447,7 @@ public partial class ClashOfClansContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_ACCOUNT_FK");
 
-            entity.HasOne(d => d.IdVillaggioNavigation).WithOne(p => p.VillaggiAccount)
+            entity.HasOne(d => d.IdVillaggioNavigation).WithOne(p => p.VillaggioAccount)
                 .HasForeignKey<VillaggioAccount>(d => d.IdVillaggio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_VILLAGGIO_FK");

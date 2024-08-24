@@ -33,5 +33,5 @@ public partial class EdificioInVillaggio
 
     public virtual ICollection<MiglioramentoEdificio> MiglioramentiEdificios { get; set; } = new List<MiglioramentoEdificio>();
 
-    public virtual StatisticheEdificioMigliorato StatisticheEdificiMigliorati { get; set; } = null!;
+    public virtual StatisticheEdificioMigliorato StatisticheEdificioMigliorato { get; set; } = null!;
 }

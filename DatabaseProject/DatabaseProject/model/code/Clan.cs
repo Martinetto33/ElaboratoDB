@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DatabaseProject.common;
 
 namespace DatabaseProject.model.code
 {
-    public enum ClanRole
-    {
-        Leader,
-        CoLeader,
-        Elder,
-        Member
-    }
     public class Clan(
         string clanId,
         string name,
-        IDictionary<string, ClanRole> membersAndRoles,
+        IDictionary<string, Enums.ClanRole> membersAndRoles,
         int totalTrophies,
         int totalStarsWon
     )
@@ -27,13 +16,13 @@ namespace DatabaseProject.model.code
         /// Only contains pairs of account IDs and their respective roles in the clan.
         /// This is done for the sake of performance.
         /// </summary>
-        public IDictionary<string, ClanRole> Members { get; } = membersAndRoles;
+        public IDictionary<string, Enums.ClanRole> Members { get; } = membersAndRoles;
         public int TotalTrophies { get; set; } = totalTrophies;
         public int TotalStarsWon { get; set; } = totalStarsWon;
-        public void AddMember(string accountId, ClanRole role = ClanRole.Member) => Members.Add(accountId, role);
+        public void AddMember(string accountId, Enums.ClanRole role = Enums.ClanRole.Member) => Members.Add(accountId, role);
         public void RemoveMember(string accountId)
         {
-            if (Members.Count(entry => entry.Value == ClanRole.Leader) == 1 && Members[accountId] == ClanRole.Leader)
+            if (Members.Count(entry => entry.Value == Enums.ClanRole.Leader) == 1 && Members[accountId] == Enums.ClanRole.Leader)
             {
                 Console.WriteLine($"Cannot remove the last leader from clan {Name}. First, demote account {accountId}.");
                 return;
@@ -43,20 +32,20 @@ namespace DatabaseProject.model.code
 
         public void PromoteMember(string accountId)
         {
-            if (Members.TryGetValue(accountId, out ClanRole value))
+            if (Members.TryGetValue(accountId, out Enums.ClanRole value))
             {
                 switch (value)
                 {
-                    case ClanRole.Member:
-                        Members[accountId] = ClanRole.Elder;
+                    case Enums.ClanRole.Member:
+                        Members[accountId] = Enums.ClanRole.Elder;
                         break;
-                    case ClanRole.Elder:
-                        Members[accountId] = ClanRole.CoLeader;
+                    case Enums.ClanRole.Elder:
+                        Members[accountId] = Enums.ClanRole.CoLeader;
                         break;
-                    case ClanRole.CoLeader:
-                        Members[accountId] = ClanRole.Leader;
+                    case Enums.ClanRole.CoLeader:
+                        Members[accountId] = Enums.ClanRole.Leader;
                         break;
-                    case ClanRole.Leader:
+                    case Enums.ClanRole.Leader:
                         Console.WriteLine("Cannot promote a leader.");
                         break;
                 }
@@ -69,20 +58,20 @@ namespace DatabaseProject.model.code
 
         public void DemoteMember(string accountId)
         {
-            if (Members.TryGetValue(accountId, out ClanRole value))
+            if (Members.TryGetValue(accountId, out Enums.ClanRole value))
             {
                 switch (value)
                 {
-                    case ClanRole.Leader:
-                        Members[accountId] = ClanRole.CoLeader;
+                    case Enums.ClanRole.Leader:
+                        Members[accountId] = Enums.ClanRole.CoLeader;
                         break;
-                    case ClanRole.CoLeader:
-                        Members[accountId] = ClanRole.Elder;
+                    case Enums.ClanRole.CoLeader:
+                        Members[accountId] = Enums.ClanRole.Elder;
                         break;
-                    case ClanRole.Elder:
-                        Members[accountId] = ClanRole.Member;
+                    case Enums.ClanRole.Elder:
+                        Members[accountId] = Enums.ClanRole.Member;
                         break;
-                    case ClanRole.Member:
+                    case Enums.ClanRole.Member:
                         Console.WriteLine("Cannot demote a accountId.");
                         break;
                 }
