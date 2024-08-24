@@ -99,18 +99,10 @@ namespace DatabaseProject.daos
 
         public static List<TruppaInVillaggio> CreateTroops(Guid villageGuid)
         {
-            List<TruppaInVillaggio> troops = [];
-            troops.Add(CreateBarbarian(villageGuid));
-            troops.Add(CreateArcher(villageGuid));
-            troops.Add(CreateGiant(villageGuid));
-            troops.Add(CreateGoblin(villageGuid));
-            troops.Add(CreateWallbreaker(villageGuid));
-            troops.Add(CreateBalloon(villageGuid));
-            troops.Add(CreateWizard(villageGuid));
-            troops.Add(CreateHealer(villageGuid));
-            troops.Add(CreateDragon(villageGuid));
-            troops.Add(CreatePekka(villageGuid));
-            return troops;
+            var troopNames = new List<string> { "Barbaro", 
+                "Arciere", "Gigante", "Goblin", "Spaccamuro", 
+                "Stregone", "Mongolfiera", "Guaritore", "Drago", "Pekka" };
+            return troopNames.Select(troopName => CreateTroop(villageGuid, troopName)).ToList();
         }
     }
 }

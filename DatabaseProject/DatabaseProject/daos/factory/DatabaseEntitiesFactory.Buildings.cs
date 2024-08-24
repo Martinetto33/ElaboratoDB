@@ -36,13 +36,12 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 Nome = "Laboratorio",
                 LivelloMiglioramento = 1,
-                Tipo = BuildingType.Special.ToString(),
+                Categoria = Enums.BuildingType.Special.ToString(),
                 DescrizioneFunzione = """
                 Il laboratorio è dove puoi migliorare le tue truppe. 
                 Migliorando il laboratorio, sbloccherai nuove truppe e potenziamenti.
                 """.Trim().Replace("\n", ""),
-                Ruolo = SpecialBuildingRole.Laboratory.ToString(),
-                Occupato = "F" // the stupid mySQL way to represent false
+                RuoloEdificioSpeciale = Enums.SpecialBuildingRole.Laboratory.ToString(),
             };
         }
 
@@ -52,14 +51,13 @@ namespace DatabaseProject.daos
             {
                 IdEdificio = buildingId,
                 IdVillaggio = villageGuid,
-                Nome = "Campo d'addestramento",
-                Livello = 1,
-                PuntiVita = 200,
-                Tipo = BuildingType.Special.ToString(),
+                Nome = "Accampamento",
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Special.ToString(),
                 DescrizioneFunzione = """
-                Il campo d'addestramento è dove le tue truppe si preparano per la battaglia. 
+                L'accampamento è dove le tue truppe si preparano per la battaglia. 
                 """.Trim().Replace("\n", ""),
-                Ruolo = SpecialBuildingRole.ArmyCamp.ToString()
+                RuoloEdificioSpeciale = Enums.SpecialBuildingRole.ArmyCamp.ToString()
             };
         }
 
@@ -70,16 +68,15 @@ namespace DatabaseProject.daos
                 IdEdificio = buildingId,
                 IdVillaggio = villageGuid,
                 Nome = "Castello del clan",
-                Livello = 1,
-                PuntiVita = 800,
-                Tipo = BuildingType.Special.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Special.ToString(),
                 DescrizioneFunzione = """
                 Il castello del clan porta i vessilli del tuo clan.
                 È il simbolo della tua partecipazione ad un gruppo di
                 grandiosi guerrieri. Miglioralo per ottenere benefici
                 per il tuo clan!
                 """.Trim().Replace("\n", ""),
-                Ruolo = SpecialBuildingRole.ClanCastle.ToString()
+                RuoloEdificioSpeciale = Enums.SpecialBuildingRole.ClanCastle.ToString()
             };
         }
 
@@ -90,9 +87,8 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Torre dell'arciere",
-                Livello = 1,
-                PuntiVita = 360,
-                Tipo = BuildingType.Defense.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Defense.ToString(),
                 DanniAlSecondo = 10,
                 NumeroBersagli = 1,
                 RaggioAzione = 10
@@ -106,9 +102,8 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Cannone",
-                Livello = 1,
-                PuntiVita = 500,
-                Tipo = BuildingType.Defense.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Defense.ToString(),
                 DanniAlSecondo = 20,
                 NumeroBersagli = 1,
                 RaggioAzione = 10
@@ -122,9 +117,8 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Arco-X",
-                Livello = 1,
-                PuntiVita = 800,
-                Tipo = BuildingType.Defense.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Defense.ToString(),
                 DanniAlSecondo = 50,
                 NumeroBersagli = 1,
                 RaggioAzione = 14
@@ -138,9 +132,8 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Torre infernale",
-                Livello = 1,
-                PuntiVita = 1000,
-                Tipo = BuildingType.Defense.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Defense.ToString(),
                 DanniAlSecondo = 100,
                 NumeroBersagli = 3,
                 RaggioAzione = 10
@@ -154,9 +147,8 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Torre dello stregone",
-                Livello = 1,
-                PuntiVita = 500,
-                Tipo = BuildingType.Defense.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Defense.ToString(),
                 DanniAlSecondo = 25,
                 NumeroBersagli = 10,
                 RaggioAzione = 8
@@ -170,9 +162,8 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Difesa aerea",
-                Livello = 1,
-                PuntiVita = 800,
-                Tipo = BuildingType.Defense.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Defense.ToString(),
                 DanniAlSecondo = 50,
                 NumeroBersagli = 1,
                 RaggioAzione = 10
@@ -186,10 +177,9 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Miniera d'oro",
-                Livello = 1,
-                PuntiVita = 200,
-                Tipo = BuildingType.Resource.ToString(),
-                TipoRisorsa = ResourceType.Gold.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Resource.ToString(),
+                TipoRisorsa = Enums.ResourceType.Gold.ToString(),
                 ProduzioneOraria = 100
             };
         }
@@ -201,10 +191,9 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Estrattore di elisir",
-                Livello = 1,
-                PuntiVita = 200,
-                Tipo = BuildingType.Resource.ToString(),
-                TipoRisorsa = ResourceType.Elixir.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Resource.ToString(),
+                TipoRisorsa = Enums.ResourceType.Elixir.ToString(),
                 ProduzioneOraria = 100
             };
         }
@@ -216,10 +205,9 @@ namespace DatabaseProject.daos
                 IdVillaggio = villageGuid,
                 IdEdificio = buildingId,
                 Nome = "Trivella per elisir nero",
-                Livello = 1,
-                PuntiVita = 200,
-                Tipo = BuildingType.Resource.ToString(),
-                TipoRisorsa = ResourceType.DarkElixir.ToString(),
+                LivelloMiglioramento = 1,
+                Categoria = Enums.BuildingType.Resource.ToString(),
+                TipoRisorsa = Enums.ResourceType.DarkElixir.ToString(),
                 ProduzioneOraria = 10
             };
         }
