@@ -30,3 +30,14 @@ Optionally, you can add a *-Force* flag to the previous command.
 - Create new database
 - Run population queries
 - Repeat the mapping with Scaffold-DbContext by running the appropriate command in the Package Manager console
+
+## So... you changed your database in the middle of the project, huh?
+I'm sorry for you, I've been there too and it sucks.
+If you were a good engineer, you hid all the database classes behind some interfaces and you can safely remove them without having to rewrite the whole code.
+You _were_ a good engineer, _right_?
+
+Well, I wasn't.
+So before running the Scaffold-DbContext again, make sure that all the other code compiles correctly. This means you also need to check the test projects, if you have any.
+Unfortunately, even with the *-Verbose* flag set, the command doesn't provide much information about what happens: it only told me a super generic and annoying "Build failed".
+
+Good luck, and really, anticipate change and use those interfaces!
