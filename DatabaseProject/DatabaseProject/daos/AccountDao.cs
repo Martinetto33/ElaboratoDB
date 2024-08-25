@@ -41,5 +41,13 @@ namespace DatabaseProject.daos
                 return [.. context.Accounts.Where(account => account.IdGiocatore == player.IdGiocatore)];
             }
         }
+
+        public static Account? GetAccountFromId(Guid accountId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return context.Accounts.Find(accountId);
+            }
+        }
     }
 }

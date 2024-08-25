@@ -17,6 +17,19 @@ namespace DatabaseProject.daos
             }
         }
 
+        public static Villaggio? GetVillageFromAccountId(Guid accountId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                Villaggio? village = (from vill in context.Villaggi
+                                      join accountsAndVillages in context.VillaggiAccount
+                                      on accountId equals accountsAndVillages.IdAccount
+                                      where vill.IdVillaggio == accountsAndVillages.IdVillaggio
+                                      select vill).First();
+                return village;
+            }
+        }
+
         public static void CreateVillageForAccount(Account account)
         {
             using (var context = new ClashOfClansContext())

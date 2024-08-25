@@ -27,5 +27,17 @@ namespace DatabaseProject.daos
                 return [.. context.Giocatori];
             }
         }
+
+        public static Giocatore GetPlayerFromAccountId(Guid accountId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return (from account in context.Accounts
+                        join player in context.Giocatori 
+                        on account.IdGiocatore equals player.IdGiocatore
+                        where account.IdAccount == accountId
+                        select player).First();
+            }
+        }
     }
 }
