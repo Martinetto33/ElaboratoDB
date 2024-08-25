@@ -155,7 +155,7 @@ public partial class ClashOfClansContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_ATTACCO_FK");
 
-            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.AttacchiEGuerres)
+            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.AttacchiEGuerre)
                 .HasForeignKey(d => d.IdGuerra)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_GUERRA");
@@ -189,12 +189,12 @@ public partial class ClashOfClansContext : DbContext
                 .HasMaxLength(1)
                 .IsFixedLength();
 
-            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.Combattimentis)
+            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.Combattimenti)
                 .HasForeignKey(d => d.IdClan)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOM_CLA");
 
-            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.Combattimentis)
+            entity.HasOne(d => d.IdGuerraNavigation).WithMany(p => p.Combattimenti)
                 .HasForeignKey(d => d.IdGuerra)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOM_GUE");
@@ -327,7 +327,7 @@ public partial class ClashOfClansContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKPERMANENZA");
 
-            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.PartecipazioniClans)
+            entity.HasOne(d => d.IdClanNavigation).WithMany(p => p.PartecipazioniClan)
                 .HasForeignKey(d => d.IdClan)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKACCOGLIENZA");

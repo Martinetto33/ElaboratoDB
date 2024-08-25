@@ -18,21 +18,10 @@ namespace DatabaseProject.daos
                     IdGiocatore = owner.IdGiocatore
                 };
                 var village = DatabaseEntitiesFactory.CreateVillage(account);
-                account.IdVillaggio = village.IdVillaggio;
+                var junctionTable = DatabaseEntitiesFactory.CreateAccountVillage(village.IdVillaggio, account.IdAccount);
                 context.Accounts.Add(account);
-                foreach (var builder in village.Costruttori)
-                {
-                    context.Costruttori.Add(builder);
-                }
-                foreach (var building in village.Edifici)
-                {
-                    context.Edifici.Add(building);
-                }
-                foreach (var troop in village.Truppe)
-                {
-                    context.Truppe.Add(troop);
-                }
                 context.Villaggi.Add(village);
+                context.VillaggiAccount.Add(junctionTable);
                 context.SaveChanges();
             }
         }
@@ -49,7 +38,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return context.Accounts.Where(account => account.IdGiocatore == player.IdGiocatore).ToList();
+                return [.. context.Accounts.Where(account => account.IdGiocatore == player.IdGiocatore)];
             }
         }
     }

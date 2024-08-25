@@ -1,4 +1,6 @@
-﻿namespace DatabaseProject.model.code
+﻿using DatabaseProject.daos;
+
+namespace DatabaseProject.model.code
 {
     public class Attack(string id, int attackerTrophies, int defenderTrophies)
     {
@@ -17,6 +19,8 @@
             // table.
             return false;
         }
+
+        public AttackTrophies GetAttackerAndDefenderTrophies() => new (_attackerTrophies, _defenderTrophies);
 
         public string GetAttackType(Account account) => IsAttacker(account) ? "Attack" : "Defense";
     }

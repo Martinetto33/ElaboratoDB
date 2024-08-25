@@ -1,4 +1,5 @@
-﻿using DatabaseProject.config;
+﻿using DatabaseProject.common;
+using DatabaseProject.config;
 using DatabaseProject.model.api;
 
 namespace DatabaseProject.model.code
@@ -9,7 +10,7 @@ namespace DatabaseProject.model.code
         int level,
         int healthPoints,
         string description
-    ) : SpecialBuilding(buildingId, name, level, healthPoints, description, SpecialBuildingRole.Laboratory), IUpgradeObservable<Troop>
+    ) : SpecialBuilding(buildingId, name, level, healthPoints, description, Enums.SpecialBuildingRole.Laboratory), IUpgradeObservable<Troop>
     {
         public bool IsBusy { get; set; } = false;
         public Troop? UpgradingTroop { get; set; } = null;
@@ -60,5 +61,10 @@ namespace DatabaseProject.model.code
         public string GetObservableId() => "Laboratory";
 
         bool IUpgradeObservable<Troop>.IsBusy() => IsBusy;
+
+        // TODO: add a method that returns a list of all the unlocked troops; create
+        // a map that associates laboratory levels to troops.
+        // Also, when upgrading a troop, you need to check that the new level
+        // is not higher than the laboratory level.
     }
 }
