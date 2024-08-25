@@ -1,5 +1,6 @@
 ﻿using DatabaseProject.daos;
-using DatabaseProject.database;
+using DatabaseProject.mapper;
+using DatabaseProject.model.code;
 using DatabaseProject.view.panels.account;
 using DatabaseProject.view.panels.initialmenu;
 
@@ -7,7 +8,7 @@ namespace DatabaseProject.view.panels.player
 {
     internal class PlayersPanel : UserControl
     {
-        private SearchBar<Giocatore> searchBar;
+        private SearchBar<Player> searchBar;
         public PlayersPanel()
         {
             InitializeComponent();
@@ -98,8 +99,7 @@ namespace DatabaseProject.view.panels.player
 
         private void AddPlayerButton_Click(object sender, EventArgs e)
         {
-            //PlayerDao.CreatePlayer("Alin", "Bordeianu");
-            //Console.WriteLine("Player added");
+            Console.WriteLine("Player added");
             ShowPlayerInsertionForm();
         }
 
@@ -121,15 +121,18 @@ namespace DatabaseProject.view.panels.player
 
         private void LoadPlayerButtons(Panel playerNamesPanel)
         {
-            List<Giocatore> players = [.. PlayerDao.GetAllPlayers().OrderBy(player => player.Cognome)];
-            searchBar = new SearchBar<Giocatore>(players);
+            List<Player> players = PlayerDao.GetAllPlayers()
+                .OrderBy(player => player.Cognome)
+                .Select(dbPlayer => DatabaseToModelMapper.Map(dbPlayer))
+                .ToList();
+            searchBar = new SearchBar<Player>(players);
             playerNamesPanel.Controls.Clear();
 
             foreach (var player in players)
             {
                 Button playerButton = new()
                 {
-                    Text = $"{player.Nome} {player.Cognome}",
+                    Text = $"{player.Name} {player.Surname}",
                     Dock = DockStyle.Top,
                     Height = 40,
                 };
@@ -140,7 +143,7 @@ namespace DatabaseProject.view.panels.player
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            searchBar.FilterEntries(e => $"{e.Nome} {e.Cognome}".ToLower().Contains(textBox1.Text.ToLower()));
+            searchBar.FilterEntries(e => $"{e.Name} {e.Surname}".ToLower().Contains(textBox1.Text.ToLower()));
             var filteredEntries = searchBar.GetFilteredEntries();
             playerNamesPanel.Controls.Clear();
 
@@ -148,7 +151,7 @@ namespace DatabaseProject.view.panels.player
             {
                 Button playerButton = new()
                 {
-                    Text = $"{entry.Nome} {entry.Cognome}",
+                    Text = $"{entry.Name} {entry.Surname}",
                     Dock = DockStyle.Top,
                     Height = 40,
                 };
@@ -157,10 +160,10 @@ namespace DatabaseProject.view.panels.player
             }
         }
 
-        private void PlayerButton_Click(Giocatore player)
+        private void PlayerButton_Click(Player player)
         {
             var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
-            //mainForm.LoadPanel(new AccountsPanel(player));
+            mainForm.LoadPanel(new AccountsPanel(player));
         }
 
         private Button AddPlayerButton;

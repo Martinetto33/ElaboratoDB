@@ -1,6 +1,8 @@
 ﻿using DatabaseProject.daos;
+using DatabaseProject.mapper;
 using DatabaseProject.model.code;
 using DatabaseProject.view.panels.player;
+using DatabaseProject.view.panels.village;
 
 namespace DatabaseProject.view.panels.account
 {
@@ -123,12 +125,12 @@ namespace DatabaseProject.view.panels.account
 
         private void AddAccountButton_Click(object sender, EventArgs e)
         {
-            //using var accountInsertionForm = new AccountInsertionForm(player);
-            //accountInsertionForm.ShowDialog();
-            //if (accountInsertionForm.DialogResult == DialogResult.OK)
-            //{
-            //    LoadAccountsButtons(accountUsernamesPanel);
-            //}
+            using var accountInsertionForm = new AccountInsertionForm(player);
+            accountInsertionForm.ShowDialog();
+            if (accountInsertionForm.DialogResult == DialogResult.OK)
+            {
+                LoadAccountsButtons(accountUsernamesPanel);
+            }
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -158,27 +160,35 @@ namespace DatabaseProject.view.panels.account
 
         private void LoadAccountsButtons(Panel accountsPanel)
         {
-            //List<Account> accounts = AccountDao.GetAccountsFromPlayer(player);
-            //searchBar = new SearchBar<Account>(accounts);
-            //accountsPanel.Controls.Clear();
+            List<Account> accounts = AccountDao.GetAccountsFromPlayer(DatabaseToModelMapper.Unmap(player))
+                .Select(dbAccount => DatabaseToModelMapper.Map(dbAccount))
+                .ToList();
+            searchBar = new SearchBar<Account>(accounts);
+            accountsPanel.Controls.Clear();
 
-            //foreach (var account in accounts)
-            //{
-            //    Button accountButton = new()
-            //    {
-            //        Text = $"{account.Username}",
-            //        Dock = DockStyle.Top,
-            //        Height = 40,
-            //    };
-            //    accountButton.Click += (sender, e) => AccountButton_Click(account);
-            //    accountsPanel.Controls.Add(accountButton);
-            //}
+            foreach (var account in accounts)
+            {
+                Button accountButton = new()
+                {
+                    Text = $"{account.Username}",
+                    Dock = DockStyle.Top,
+                    Height = 40,
+                };
+                accountButton.Click += (sender, e) => AccountButton_Click(account);
+                accountsPanel.Controls.Add(accountButton);
+            }
         }
 
         private void AccountButton_Click(Account account)
         {
             // Go to village page
-
+            var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
+            List<Attack> modelAttacksOfAccount = [];
+            AttackDao.GetAllAccountAttacks(DatabaseToModelMapper.Unmap(account))
+                .Concat(AttackDao.GetAllAccountDefenses(DatabaseToModelMapper.Unmap(account)))
+                .ToList()
+                .ForEach(dbAttack => modelAttacksOfAccount.Add(DatabaseToModelMapper.Map(dbAttack)));
+            mainForm.LoadPanel(new VillagePanel(account, modelAttacksOfAccount));
         }
 
         private void AdjustFontSizeToFit(Label label)

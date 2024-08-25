@@ -1,5 +1,6 @@
 ﻿using DatabaseProject.database;
 using DatabaseProject.context;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseProject.daos
 {
@@ -18,10 +19,11 @@ namespace DatabaseProject.daos
                     IdGiocatore = owner.IdGiocatore
                 };
                 var village = DatabaseEntitiesFactory.CreateVillage(account);
-                var junctionTable = DatabaseEntitiesFactory.CreateAccountVillage(village.IdVillaggio, account.IdAccount);
                 context.Accounts.Add(account);
                 context.Villaggi.Add(village);
-                context.VillaggiAccount.Add(junctionTable);
+                context.Costruttori.AddRange(village.Costruttori);
+                context.EdificiInVillaggio.AddRange(village.EdificiInVillaggio);
+                context.TruppeInVillaggio.AddRange(village.TruppeInVillaggio);
                 context.SaveChanges();
             }
         }

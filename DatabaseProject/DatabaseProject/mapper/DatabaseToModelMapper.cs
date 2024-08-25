@@ -33,8 +33,8 @@ namespace DatabaseProject.mapper
         {
             var village = VillageDao.GetVillageFromAccount(account);
             if (village is null)
-                return new model.code.Account(account.IdAccount.ToString(), account.Username, account.Email);
-            return new model.code.Account(account.IdAccount.ToString(), account.Username, account.Email)
+                return new model.code.Account(account.Username, account.Email, account.IdAccount.ToString());
+            return new model.code.Account(account.Username, account.Email, account.IdAccount.ToString())
             {
                 Village = Map(village)
             };
@@ -133,7 +133,7 @@ namespace DatabaseProject.mapper
         }
         public static SpecialBuilding MapSpecialBuilding(EdificioInVillaggio edificio)
         {
-            if (Enum.Parse<Enums.SpecialBuildingRole>(edificio.Categoria) != Enums.SpecialBuildingRole.Laboratory)
+            if (Enum.Parse<Enums.SpecialBuildingRole>(edificio.RuoloEdificioSpeciale!) != Enums.SpecialBuildingRole.Laboratory)
             {
                 // Then it's not the laboratory
                 var buildingHP = StatisticsDao.GetStatisticsForBuildingFromLevelAndName(edificio.LivelloMiglioramento, edificio.Nome);
@@ -144,7 +144,7 @@ namespace DatabaseProject.mapper
                         edificio.LivelloMiglioramento,
                         buildingHP.PuntiVita,
                         edificio.DescrizioneFunzione!,
-                        Enum.Parse<Enums.SpecialBuildingRole>(edificio.Categoria!)
+                        Enum.Parse<Enums.SpecialBuildingRole>(edificio.RuoloEdificioSpeciale!)
                     );
             }
             else

@@ -1,5 +1,6 @@
 ﻿using DatabaseProject.database;
 using DatabaseProject.context;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseProject.daos
 {
@@ -12,7 +13,11 @@ namespace DatabaseProject.daos
                 Villaggio? village = (from vill in context.Villaggi
                                       join accountsAndVillages in context.VillaggiAccount on vill.IdVillaggio equals accountsAndVillages.IdVillaggio
                                       where vill.IdVillaggio == accountsAndVillages.IdVillaggio
-                                      select vill).First();
+                                      select vill)
+                                      .Include(village => village.Costruttori) // The include directive should fetch all entities encapsulated in the virtual methods
+                                      .Include(village => village.EdificiInVillaggio)
+                                      .Include(village => village.TruppeInVillaggio)
+                                      .First();
                 return village;
             }
         }
@@ -25,7 +30,11 @@ namespace DatabaseProject.daos
                                       join accountsAndVillages in context.VillaggiAccount
                                       on accountId equals accountsAndVillages.IdAccount
                                       where vill.IdVillaggio == accountsAndVillages.IdVillaggio
-                                      select vill).First();
+                                      select vill)
+                                      .Include(village => village.Costruttori) // The include directive should fetch all other relevant data
+                                      .Include(village => village.EdificiInVillaggio)
+                                      .Include(village => village.TruppeInVillaggio)
+                                      .First();
                 return village;
             }
         }
