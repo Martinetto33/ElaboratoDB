@@ -33,6 +33,10 @@ namespace DatabaseProject.view.panels.village
             Player = DatabaseToModelMapper.Map(PlayerDao.GetPlayerFromAccountId(Guid.Parse(account.Id)));
             Village = account.Village ?? throw new NullReferenceException("Village was null!");
 #pragma warning restore S112 // General or reserved exceptions should never be thrown
+            Village.UpdateStrength(attacksMadeAndUndergone
+                .Where(attack => attack.GetAttackType(account) == Enums.AccountRoleInAttack.Attacker)
+                .ToList()
+                .Count);
             if (ClanDao.IsAccountInClan(Guid.Parse(account.Id)))
             {
                 Clan = DatabaseToModelMapper.Map(ClanDao.GetClanFromAccountId(Guid.Parse(account.Id))!);
@@ -87,6 +91,14 @@ namespace DatabaseProject.view.panels.village
                     };
                     this.listView3.Items.Add(listItem);
                 });
+            } 
+            else
+            {
+                this.clanNameLabel.Text = "Clan: Nessuno";
+                this.clanRoleLabel.Text = "Ruolo: Nessuno";
+                this.membersNumberLabel.Text = "Membri: Nessuno";
+                this.clanTrophiesLabel.Text = $"Trofei: Nessuno";
+                this.clanStarsLabel.Text = $"Stelle: Nessuna";
             }
         }
 
@@ -113,9 +125,9 @@ namespace DatabaseProject.view.panels.village
 
         private void UpdateMainLabels()
         {
-            playerNameLabel.Text = $"{Player.Name} {Player.Surname}";
-            accountUsernameLabel.Text = Account.Username;
-            forceLabel.Text = $"Forza: {Village.Strength * 100.0f}%";
+            playerNameLabel.Text = $"Giocatore: {Player.Name} {Player.Surname}";
+            accountUsernameLabel.Text = $"Account: {Account.Username}";
+            forceLabel.Text = $"Forza: {Village.Strength}%";
             trophiesLabel.Text = $"Trofei: {Village.Trophies}";
             starsLabel.Text = $"Stelle: {Village.WarStars}";
             xpLabel.Text = $"XP: {Village.ExperienceLevel}";
@@ -190,16 +202,16 @@ namespace DatabaseProject.view.panels.village
 
         public void UpdateBuildersPanel(List<IUpgradeObservable<BaseBuilding>> builders)
         {
-            Costruttori.Controls.Clear();
+            buildersFlowLayoutPanel.Controls.Clear();
             builders.ForEach(builder =>
             {
                 if (builder.IsBusy())
                 {
-                    Costruttori.Controls.Add(new UpgradingBuildingControl($"Costruttore {builder.GetObservableId()}: {builder.GetUpgradingObjectName()}", builder));
+                    buildersFlowLayoutPanel.Controls.Add(new UpgradingBuildingControl($"Costruttore {builder.GetObservableId()}: {builder.GetUpgradingObjectName()}", builder));
                 }
                 else
                 {
-                    Costruttori.Controls.Add(new Label()
+                    buildersFlowLayoutPanel.Controls.Add(new Label()
                     {
                         Text = $"Costruttore {builder.GetObservableId()}: Libero",
                         AutoSize = false,

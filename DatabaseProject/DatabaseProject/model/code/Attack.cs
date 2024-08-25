@@ -1,4 +1,5 @@
-﻿using DatabaseProject.daos;
+﻿using DatabaseProject.common;
+using DatabaseProject.daos;
 
 namespace DatabaseProject.model.code
 {
@@ -22,6 +23,7 @@ namespace DatabaseProject.model.code
 
         public AttackTrophies GetAttackerAndDefenderTrophies() => new (_attackerTrophies, _defenderTrophies);
 
-        public string GetAttackType(Account account) => IsAttacker(account) ? "Attack" : "Defense";
+        public Enums.AccountRoleInAttack GetAttackType(Account account) => 
+            IsAttacker(account) ? Enums.AccountRoleInAttack.Attacker : Enums.AccountRoleInAttack.Defender;
     }
 }

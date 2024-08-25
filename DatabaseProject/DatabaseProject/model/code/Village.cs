@@ -19,7 +19,7 @@
         It's used by the simulator to determine the probability of winning a war attack.
          */
         private double _strength = 0.0;
-        public double Strength { get { return _strength; } }
+        public double Strength { get { return _strength * 100.0f; } }
         public int ExperienceLevel { get; set; } = experienceLevel;
         public int Trophies { get; set; } = trophies;
         public int WarStars { get; set; } = warStars;

@@ -43,9 +43,9 @@
 
         private void InitializeComponent()
         {
-            ListViewGroup listViewGroup1 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup2 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup3 = new ListViewGroup("Difese", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup4 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup5 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup6 = new ListViewGroup("Difese", HorizontalAlignment.Left);
             leftSplitContainer = new SplitContainer();
             leftPanelsSplitContainer = new SplitContainer();
             accountUsernameLabel = new Label();
@@ -84,6 +84,7 @@
             columnHeader6 = new ColumnHeader();
             columnHeader7 = new ColumnHeader();
             troopsListView = new ListView();
+            buildersFlowLayoutPanel = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
@@ -96,6 +97,7 @@
             buildersAndLaboratorySplitContainer.Panel1.SuspendLayout();
             buildersAndLaboratorySplitContainer.Panel2.SuspendLayout();
             buildersAndLaboratorySplitContainer.SuspendLayout();
+            Costruttori.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)rightSplitContainer).BeginInit();
             rightSplitContainer.Panel1.SuspendLayout();
             rightSplitContainer.Panel2.SuspendLayout();
@@ -202,6 +204,7 @@
             // 
             // Costruttori
             // 
+            Costruttori.Controls.Add(buildersFlowLayoutPanel);
             Costruttori.Dock = DockStyle.Fill;
             Costruttori.Location = new Point(0, 0);
             Costruttori.Name = "Costruttori";
@@ -342,13 +345,13 @@
             // listView1
             // 
             listView1.Dock = DockStyle.Fill;
-            listViewGroup1.Header = "Edifici Speciali";
-            listViewGroup1.Name = "specialBuildingsListViewGroup";
-            listViewGroup2.Header = "Estrattori di Risorse";
-            listViewGroup2.Name = "resourcesExtractorsListViewGroup";
-            listViewGroup3.Header = "Difese";
-            listViewGroup3.Name = "defensesListViewGroup";
-            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            listViewGroup4.Header = "Edifici Speciali";
+            listViewGroup4.Name = "specialBuildingsListViewGroup";
+            listViewGroup5.Header = "Estrattori di Risorse";
+            listViewGroup5.Name = "resourcesExtractorsListViewGroup";
+            listViewGroup6.Header = "Difese";
+            listViewGroup6.Name = "defensesListViewGroup";
+            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup4, listViewGroup5, listViewGroup6 });
             listView1.Location = new Point(3, 3);
             listView1.Name = "listView1";
             listView1.Size = new Size(537, 481);
@@ -527,6 +530,15 @@
             troopsListView.TabIndex = 0;
             troopsListView.UseCompatibleStateImageBehavior = false;
             // 
+            // buildersFlowLayoutPanel
+            // 
+            buildersFlowLayoutPanel.Dock = DockStyle.Fill;
+            buildersFlowLayoutPanel.FlowDirection = FlowDirection.TopDown;
+            buildersFlowLayoutPanel.Location = new Point(3, 19);
+            buildersFlowLayoutPanel.Name = "buildersFlowLayoutPanel";
+            buildersFlowLayoutPanel.Size = new Size(208, 291);
+            buildersFlowLayoutPanel.TabIndex = 0;
+            // 
             // VillagePanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -547,6 +559,7 @@
             buildersAndLaboratorySplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)buildersAndLaboratorySplitContainer).EndInit();
             buildersAndLaboratorySplitContainer.ResumeLayout(false);
+            Costruttori.ResumeLayout(false);
             rightSplitContainer.Panel1.ResumeLayout(false);
             rightSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)rightSplitContainer).EndInit();
@@ -569,5 +582,7 @@
             flowLayoutPanel2.PerformLayout();
             ResumeLayout(false);
         }
+
+        private FlowLayoutPanel buildersFlowLayoutPanel;
     }
 }

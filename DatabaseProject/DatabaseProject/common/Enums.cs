@@ -31,5 +31,11 @@
             Elder,
             Member
         }
+
+        public enum AccountRoleInAttack
+        {
+            Attacker,
+            Defender
+        }
     }
 }
