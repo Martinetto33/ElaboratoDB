@@ -4,6 +4,7 @@ using DatabaseProject.mapper;
 using DatabaseProject.model.api;
 using DatabaseProject.model.code;
 using DatabaseProject.view.images;
+using DatabaseProject.view.panels.account;
 
 namespace DatabaseProject.view.panels.village
 {
@@ -56,7 +57,13 @@ namespace DatabaseProject.view.panels.village
             UpdateBuildersPanel(Builders);
             UpdateLaboratoryPanel(Laboratory);
             UpdateMainLabels();
-            // TODO: finish initialising the panels and the list views; manage the case of a null Clan.
+
+            // Inserting the images in the buildings and troops panel
+            this.buildingsListView.LargeImageList = ImageLoader.GetBuildingsImageList(new Size(50, 50));
+            this.troopsListView.LargeImageList = ImageLoader.GetTroopsImageList(new Size(50, 50));
+
+            UpdateBuildingsPanel();
+            UpdateTroopsPanel();
             UpdateAttacksPanel();
             UpdateClanPanel();
         }
@@ -148,24 +155,41 @@ namespace DatabaseProject.view.panels.village
             var imageIndex = ImageLoader.GetIndexFromDatabaseBuildingName(building.Name);
             var listItem = new ListViewItem
             {
-                Text = building.Name,
-                ImageIndex = (int)imageIndex
+                Text = $"{building.Name} - Lv{building.Level}",
+                ImageIndex = (int)imageIndex,
             };
             Enums.BuildingType type = building.BuildingType;
             switch (type)
             {
                 case Enums.BuildingType.Defense:
-                    listItem.Group = listView1.Groups[2];
+                    listItem.Group = buildingsListView.Groups[2];
+                    listItem.ToolTipText = 
+                        $"Punti vita: {building.HealthPoints}" +
+                        $"\nLivello: {building.Level}" +
+                        $"\nDanni al secondo: {((Defense)building).DamagePerSecond}" +
+                        $"\nNumero di bersagli: {((Defense)building).TargetsNumber}" +
+                        $"\nRaggio d'attacco: {((Defense)building).AttackRange}";
                     break;
                 case Enums.BuildingType.Resource:
-                    listItem.Group = listView1.Groups[1];
+                    listItem.Group = buildingsListView.Groups[1];
+                    listItem.ToolTipText =
+                        $"Punti vita: {building.HealthPoints}" +
+                        $"\nLivello: {building.Level}" +
+                        $"\nProduzione oraria: {((ResourceExtractor)building).ProductionRate}" +
+                        $"\nTipo risorsa: {((ResourceExtractor)building).ResourceType}";
                     break;
                 case Enums.BuildingType.Special:
-                    listItem.Group = listView1.Groups[0];
+                    listItem.Group = buildingsListView.Groups[0];
+                    listItem.ToolTipText =
+                        $"Punti vita: {building.HealthPoints}" +
+                        $"\nLivello: {building.Level}" +
+                        $"\nRuolo: {((SpecialBuilding)building).Role}" +
+                        $"\nDescrizione funzione: " + ((SpecialBuilding)building).Description;
                     break;
             }
-            listView1.Items.Add(listItem);
+            buildingsListView.Items.Add(listItem);
         }
+
 
         /// <summary>
         /// Looks for an ImageIndex in the ImageList of the ListView control that corresponds to the name of the troop.
@@ -178,9 +202,14 @@ namespace DatabaseProject.view.panels.village
             var imageIndex = ImageLoader.GetIndexFromDatabaseTroopName(troop.Name);
             var listItem = new ListViewItem
             {
-                Text = troop.Name,
+                Text = $"{troop.Name} - Lv{troop.Level}",
                 ImageIndex = (int)imageIndex
             };
+            listItem.ToolTipText =
+                $"Punti vita: {troop.HealthPoints}" +
+                $"\nLivello: {troop.Level}" +
+                $"\nDanni al secondo: {troop.DamagePerSecond}" +
+                $"\nDescrizione: {troop.Description}";
             troopsListView.Items.Add(listItem);
         }
 
@@ -238,12 +267,24 @@ namespace DatabaseProject.view.panels.village
             }
         }
 
+        private void UpdateBuildingsPanel()
+        {
+            Village.SpecialBuildings.ToList().ForEach(specialBuilding => AddBuildingToView(specialBuilding));
+            Village.Extractors.ToList().ForEach(extractor => AddBuildingToView(extractor));
+            Village.Defenses.ToList().ForEach(defense => AddBuildingToView(defense));
+        }
+
+        private void UpdateTroopsPanel()
+        {
+            Village.Troops.ToList().ForEach(troop => AddTroopToView(troop));
+        }
+
         // Navigation methods
         private void backButton_Click(object sender, EventArgs e)
         {
             this.ClearObservers();
             var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
-            //mainForm.LoadPanel(new AccountsPanel(Player)); TODO: need to switch to model entities!
+            mainForm.LoadPanel(new AccountsPanel(Player));
         }
     }
 }

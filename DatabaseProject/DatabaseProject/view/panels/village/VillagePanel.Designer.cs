@@ -19,7 +19,7 @@
         private Button backButton;
         private Label playerNameLabel;
         private Label accountUsernameLabel;
-        private ListView listView1;
+        private ListView buildingsListView;
         private ListView listView2;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
@@ -43,9 +43,9 @@
 
         private void InitializeComponent()
         {
-            ListViewGroup listViewGroup4 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup5 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup6 = new ListViewGroup("Difese", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup1 = new ListViewGroup("Edifici Speciali", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup2 = new ListViewGroup("Estrattori di Risorse", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup3 = new ListViewGroup("Difese", HorizontalAlignment.Left);
             leftSplitContainer = new SplitContainer();
             leftPanelsSplitContainer = new SplitContainer();
             accountUsernameLabel = new Label();
@@ -53,6 +53,7 @@
             backButton = new Button();
             buildersAndLaboratorySplitContainer = new SplitContainer();
             Costruttori = new GroupBox();
+            buildersFlowLayoutPanel = new FlowLayoutPanel();
             Laboratorio = new GroupBox();
             rightSplitContainer = new SplitContainer();
             centralSplitContainer = new SplitContainer();
@@ -63,7 +64,7 @@
             xpLabel = new Label();
             tabControl1 = new TabControl();
             villageTab = new TabPage();
-            listView1 = new ListView();
+            buildingsListView = new ListView();
             attacksTab = new TabPage();
             listView2 = new ListView();
             columnHeader1 = new ColumnHeader();
@@ -84,7 +85,6 @@
             columnHeader6 = new ColumnHeader();
             columnHeader7 = new ColumnHeader();
             troopsListView = new ListView();
-            buildersFlowLayoutPanel = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
@@ -213,6 +213,15 @@
             Costruttori.TabStop = false;
             Costruttori.Text = "Costruttori";
             // 
+            // buildersFlowLayoutPanel
+            // 
+            buildersFlowLayoutPanel.Dock = DockStyle.Fill;
+            buildersFlowLayoutPanel.FlowDirection = FlowDirection.TopDown;
+            buildersFlowLayoutPanel.Location = new Point(3, 19);
+            buildersFlowLayoutPanel.Name = "buildersFlowLayoutPanel";
+            buildersFlowLayoutPanel.Size = new Size(208, 291);
+            buildersFlowLayoutPanel.TabIndex = 0;
+            // 
             // Laboratorio
             // 
             Laboratorio.Dock = DockStyle.Fill;
@@ -333,7 +342,7 @@
             // 
             // villageTab
             // 
-            villageTab.Controls.Add(listView1);
+            villageTab.Controls.Add(buildingsListView);
             villageTab.Location = new Point(4, 24);
             villageTab.Name = "villageTab";
             villageTab.Padding = new Padding(3);
@@ -342,21 +351,22 @@
             villageTab.Text = "Villaggio";
             villageTab.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // buildingsListView
             // 
-            listView1.Dock = DockStyle.Fill;
-            listViewGroup4.Header = "Edifici Speciali";
-            listViewGroup4.Name = "specialBuildingsListViewGroup";
-            listViewGroup5.Header = "Estrattori di Risorse";
-            listViewGroup5.Name = "resourcesExtractorsListViewGroup";
-            listViewGroup6.Header = "Difese";
-            listViewGroup6.Name = "defensesListViewGroup";
-            listView1.Groups.AddRange(new ListViewGroup[] { listViewGroup4, listViewGroup5, listViewGroup6 });
-            listView1.Location = new Point(3, 3);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(537, 481);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
+            buildingsListView.Dock = DockStyle.Fill;
+            listViewGroup1.Header = "Edifici Speciali";
+            listViewGroup1.Name = "specialBuildingsListViewGroup";
+            listViewGroup2.Header = "Estrattori di Risorse";
+            listViewGroup2.Name = "resourcesExtractorsListViewGroup";
+            listViewGroup3.Header = "Difese";
+            listViewGroup3.Name = "defensesListViewGroup";
+            buildingsListView.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            buildingsListView.Location = new Point(3, 3);
+            buildingsListView.Name = "buildingsListView";
+            buildingsListView.ShowItemToolTips = true;
+            buildingsListView.Size = new Size(537, 481);
+            buildingsListView.TabIndex = 0;
+            buildingsListView.UseCompatibleStateImageBehavior = false;
             // 
             // attacksTab
             // 
@@ -526,18 +536,10 @@
             troopsListView.Dock = DockStyle.Fill;
             troopsListView.Location = new Point(0, 0);
             troopsListView.Name = "troopsListView";
+            troopsListView.ShowItemToolTips = true;
             troopsListView.Size = new Size(227, 600);
             troopsListView.TabIndex = 0;
             troopsListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // buildersFlowLayoutPanel
-            // 
-            buildersFlowLayoutPanel.Dock = DockStyle.Fill;
-            buildersFlowLayoutPanel.FlowDirection = FlowDirection.TopDown;
-            buildersFlowLayoutPanel.Location = new Point(3, 19);
-            buildersFlowLayoutPanel.Name = "buildersFlowLayoutPanel";
-            buildersFlowLayoutPanel.Size = new Size(208, 291);
-            buildersFlowLayoutPanel.TabIndex = 0;
             // 
             // VillagePanel
             // 
@@ -584,5 +586,6 @@
         }
 
         private FlowLayoutPanel buildersFlowLayoutPanel;
+        private System.ComponentModel.IContainer components;
     }
 }

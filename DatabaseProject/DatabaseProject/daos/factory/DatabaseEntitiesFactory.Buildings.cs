@@ -17,7 +17,7 @@ namespace DatabaseProject.daos
                 DescrizioneFunzione = """
                 Il municipio è il cuore del tuo villaggio. 
                 Quando lo avrai migliorato, sbloccherai nuove strutture e difese.
-                """.Trim().Replace("\n", ""),
+                """.Replace("\n", " ").Trim(),
                 RuoloEdificioSpeciale = Enums.SpecialBuildingRole.TownHall.ToString()
             };
         }
@@ -40,7 +40,7 @@ namespace DatabaseProject.daos
                 DescrizioneFunzione = """
                 Il laboratorio è dove puoi migliorare le tue truppe. 
                 Migliorando il laboratorio, sbloccherai nuove truppe e potenziamenti.
-                """.Trim().Replace("\n", ""),
+                """.Replace("\n", " ").Trim(),
                 RuoloEdificioSpeciale = Enums.SpecialBuildingRole.Laboratory.ToString(),
             };
         }
@@ -56,7 +56,7 @@ namespace DatabaseProject.daos
                 Categoria = Enums.BuildingType.Special.ToString(),
                 DescrizioneFunzione = """
                 L'accampamento è dove le tue truppe si preparano per la battaglia. 
-                """.Trim().Replace("\n", ""),
+                """.Replace("\n", " ").Trim(),
                 RuoloEdificioSpeciale = Enums.SpecialBuildingRole.ArmyCamp.ToString()
             };
         }
@@ -70,12 +70,10 @@ namespace DatabaseProject.daos
                 Nome = "Castello del clan",
                 LivelloMiglioramento = 1,
                 Categoria = Enums.BuildingType.Special.ToString(),
-                DescrizioneFunzione = """
-                Il castello del clan porta i vessilli del tuo clan.
-                È il simbolo della tua partecipazione ad un gruppo di
-                grandiosi guerrieri. Miglioralo per ottenere benefici
-                per il tuo clan!
-                """.Trim().Replace("\n", ""),
+                DescrizioneFunzione = "Il castello del clan porta i vessilli del tuo clan." +
+                "È il simbolo della tua partecipazione ad un gruppo di " +
+                "grandiosi guerrieri. Miglioralo per ottenere benefici " +
+                "per il tuo clan!".Replace("\n", " ").Trim(),
                 RuoloEdificioSpeciale = Enums.SpecialBuildingRole.ClanCastle.ToString()
             };
         }
