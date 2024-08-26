@@ -2,6 +2,7 @@
 using DatabaseProject.context;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
+using System.Diagnostics;
 
 namespace DatabaseProject.daos
 {
@@ -33,7 +34,7 @@ namespace DatabaseProject.daos
                     try
                     {
                         //context.ChangeTracker.Clear(); // this should clear the cached entities, forcing a new query
-                        village = (from vill in context.Villaggi.AsNoTracking()
+                        village = (from vill in context.Villaggi
                                    join accountsAndVillages in context.VillaggiAccount
                                    on accountId equals accountsAndVillages.IdAccount
                                    where vill.IdVillaggio == accountsAndVillages.IdVillaggio
@@ -61,6 +62,14 @@ namespace DatabaseProject.daos
                         Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                         transaction.Rollback();
                         throw;
+                    }
+                }
+                if (village != null)
+                {
+                    context.Entry(village).Collection(v => v.EdificiInVillaggio).Load();
+                    foreach (var building in village.EdificiInVillaggio)
+                    {
+                        context.Entry(building).Reload();
                     }
                 }
                 return village;
