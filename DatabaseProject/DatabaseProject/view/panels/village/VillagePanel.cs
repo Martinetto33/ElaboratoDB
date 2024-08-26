@@ -92,12 +92,18 @@ namespace DatabaseProject.view.panels.village
                     //        Guid.Parse(this.Account.Id)
                     //    )
                     //);
-                    UpgradesDao.RegisterBuildingUpgrade(
+                    //UpgradesDao.RegisterBuildingUpgrade(
+                    //    DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
+                    //    Guid.Parse(this.Village.VillageId),
+                    //    Int32.Parse(builder.GetObservableId())
+                    //    );
+                    Transactions.RegisterBuildingUpgradeWithCallback
+                    (
                         DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
                         Guid.Parse(this.Village.VillageId),
-                        Int32.Parse(builder.GetObservableId())
-                        );
-
+                        Int32.Parse(builder.GetObservableId()),
+                        () => RefreshVillagePanel()
+                    );
                     // Before refreshing, we need to make sure that no other upgrades are in progress!
                     RefreshVillagePanel();
                 });
@@ -278,6 +284,12 @@ namespace DatabaseProject.view.panels.village
 
         public void UpdateBuildersPanel(List<IUpgradeObservable<BaseBuilding>> builders)
         {
+            if (buildersFlowLayoutPanel.InvokeRequired)
+            {
+                // Allows calls from other threads
+                buildersFlowLayoutPanel.Invoke(new Action(() => UpdateBuildersPanel(builders)));
+                return;
+            }
             buildersFlowLayoutPanel.Controls.Clear();
             builders.ForEach(builder =>
             {
@@ -299,6 +311,12 @@ namespace DatabaseProject.view.panels.village
 
         public void UpdateLaboratoryPanel(IUpgradeObservable<Troop> laboratory)
         {
+            if (laboratoryFlowLayout.InvokeRequired)
+            {
+                // Allows calls from other threads
+                laboratoryFlowLayout.Invoke(new Action(() => UpdateLaboratoryPanel(laboratory)));
+                return;
+            }
             laboratoryFlowLayout.Controls.Clear();
             if (laboratory.IsBusy())
             {
@@ -317,16 +335,32 @@ namespace DatabaseProject.view.panels.village
 
         private void UpdateBuildingsPanel()
         {
-            buildingsListView.Items.Clear();
-            Village.SpecialBuildings.ToList().ForEach(specialBuilding => AddBuildingToView(specialBuilding));
-            Village.Extractors.ToList().ForEach(extractor => AddBuildingToView(extractor));
-            Village.Defenses.ToList().ForEach(defense => AddBuildingToView(defense));
+            if (buildingsListView.InvokeRequired)
+            {
+                // Used to handle calls from other threads
+                buildingsListView.Invoke(new Action(UpdateBuildingsPanel));
+            }
+            else
+            {
+                buildingsListView.Items.Clear();
+                Village.SpecialBuildings.ToList().ForEach(specialBuilding => AddBuildingToView(specialBuilding));
+                Village.Extractors.ToList().ForEach(extractor => AddBuildingToView(extractor));
+                Village.Defenses.ToList().ForEach(defense => AddBuildingToView(defense));
+            }
         }
 
         private void UpdateTroopsPanel()
         {
-            troopsListView.Items.Clear();
-            Village.Troops.ToList().ForEach(troop => AddTroopToView(troop));
+            if (troopsListView.InvokeRequired)
+            {
+                // Used to handle calls from other threads
+                troopsListView.Invoke(new Action(UpdateTroopsPanel));
+            }
+            else
+            {
+                troopsListView.Items.Clear();
+                Village.Troops.ToList().ForEach(troop => AddTroopToView(troop));
+            }
         }
 
         // Navigation methods
