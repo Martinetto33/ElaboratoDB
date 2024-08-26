@@ -321,7 +321,7 @@ public partial class ClashOfClansContext : DbContext
             entity.HasIndex(e => e.IdAccount, "FKPERMANENZA");
 
             entity.Property(e => e.DataInizio)
-                .ValueGeneratedOnAddOrUpdate()
+                //.ValueGeneratedOnAddOrUpdate()
                 .HasDefaultValueSql("current_timestamp(3)")
                 .HasColumnType("timestamp(3)");
             entity.Property(e => e.DataFine).HasColumnType("timestamp(3)");
