@@ -76,5 +76,51 @@ namespace DatabaseProject.daos
                 }
             }
         }
+
+        public static void ChangeClanMemberRole(Guid accountId, Guid clanId, Enums.ClanRole newRole)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                // First we end the current member's participation in the clan
+                var currentParticipation = context.PartecipazioniClan
+                    .First(participation => participation.IdAccount.Equals(accountId) && participation.IdClan.Equals(clanId));
+                currentParticipation.DataFine = DateOnly.FromDateTime(DateTime.Now);
+                // Now we create the new participation
+                context.PartecipazioniClan.Add(new PartecipazioneClan
+                {
+                    IdAccount = accountId,
+                    IdClan = clanId,
+                    DataInizio = DateOnly.FromDateTime(DateTime.Now),
+                    Ruolo = newRole.ToString()
+                });
+                context.SaveChanges();
+            }
+        }
+
+        public static void AddMemberToClan(Guid accountId, Guid clanId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                context.PartecipazioniClan.Add(new PartecipazioneClan
+                {
+                    IdAccount = accountId,
+                    IdClan = clanId,
+                    DataInizio = DateOnly.FromDateTime(DateTime.Now),
+                    Ruolo = Enums.ClanRole.Member.ToString()
+                });
+                context.SaveChanges();
+            }
+        }
+
+        public static void RemoveMemberFromClan(Guid accountId, Guid clanId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                var currentParticipation = context.PartecipazioniClan
+                    .First(participation => participation.IdAccount.Equals(accountId) && participation.IdClan.Equals(clanId));
+                currentParticipation.DataFine = DateOnly.FromDateTime(DateTime.Now);
+                context.SaveChanges();
+            }
+        }
     }
 }

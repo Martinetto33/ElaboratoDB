@@ -37,5 +37,17 @@
             Attacker,
             Defender
         }
+
+        public enum ClanOperationResult
+        {
+            Success,
+            CoLeaderPromotion,
+            LeaderDemotionAttempt,
+            LeaderPromotionAttempt,
+            NoSuchMember,
+            LeaderRemovalAttempt,
+            MemberDemotionAttempt,
+            UnknownError
+        }
     }
 }

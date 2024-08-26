@@ -1,4 +1,5 @@
-﻿using DatabaseProject.daos;
+﻿using DatabaseProject.common;
+using DatabaseProject.daos;
 using DatabaseProject.mapper;
 using DatabaseProject.model.code;
 using DatabaseProject.view.panels.player;
@@ -8,11 +9,22 @@ namespace DatabaseProject.view.panels.clandetails
     public partial class ClanDetailsPanel : UserControl
     {
         private List<AccountDataRepresentation> _accounts = [];
+        private string? _selectedAccountId = null;
         private Clan Clan { get; set; }
         public ClanDetailsPanel(Clan clan)
         {
             InitializeComponent();
             this.Clan = clan;
+            FetchAccountData();
+            UpdateMainLabels();
+            AddAccountsToListView();
+        }
+
+        /****** VIEW ELEMENTS *******/
+        private void RefreshPanel()
+        {
+            _accounts.Clear();
+            this.membersListView.Items.Clear();
             FetchAccountData();
             UpdateMainLabels();
             AddAccountsToListView();
@@ -54,11 +66,140 @@ namespace DatabaseProject.view.panels.clandetails
             }
         }
 
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.membersListView.SelectedItems.Count > 0)
+            {
+                var selectedAccount = _accounts
+                    .First(accountData => accountData.Account.Username == membersListView.SelectedItems[0].Text).Account;
+                this._selectedAccountId = selectedAccount.Id;
+                Console.WriteLine($"Selected account id: {this._selectedAccountId}, username: {selectedAccount.Username}");
+            }
+            else if (this.membersListView.SelectedItems.Count == 0)
+            {
+                this._selectedAccountId = null;
+                Console.WriteLine("No account selected");
+            }
+        }
+
+        /****** BUTTONS LOGIC *******/
+        private void AddMemberButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RemoveMemberButton_Click(object sender, EventArgs e)
+        {
+            if (this._selectedAccountId != null)
+            {
+                if (this.Clan.RemoveMember(this._selectedAccountId))
+                {
+                    //ClanDao.RemoveMemberFromClan(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId));
+                    this.RefreshPanel();
+                }
+                else
+                {
+                    if (this.Clan.Members.Count() > 1)
+                    {
+                        MessageBox.Show("Prima di rimuovere il Capo, promuovi uno degli altri membri a Capo");
+                    }
+                    else
+                    {
+                        DialogResult result = MessageBox.Show("Stai per rimuovere l'ultimo membro del clan, " +
+                            "che rimarrà senza un Capo. Vuoi davvero procedere?",
+                            null,
+                            MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Warning);
+                        if (result == DialogResult.OK)
+                        {
+                            this.Clan.ForceLeaderRemoval();
+                            //ClanDao.RemoveMemberFromClan(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId));
+                            this.RefreshPanel();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void PromoteMemberButton_Click(object sender, EventArgs e)
+        {
+            if (this._selectedAccountId != null)
+            {
+                Console.WriteLine($"Promoting account {_selectedAccountId}");
+                Enums.ClanOperationResult opRes = Clan.PromoteMember(this._selectedAccountId);
+                if (opRes != Enums.ClanOperationResult.Success)
+                {
+                    ShowMessageBoxWithClanOperationResult(opRes);
+                }
+                switch (opRes)
+                {
+                    case Enums.ClanOperationResult.Success:
+                        var newRole = this.Clan.Members[this._selectedAccountId];
+                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), newRole);
+                        this.RefreshPanel();
+                        break;
+                    case Enums.ClanOperationResult.CoLeaderPromotion:
+                        string previousLeaderId = this.Clan.GetAndConsumeDemotedLeaderId()!;
+                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(previousLeaderId), Enums.ClanRole.CoLeader);
+                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), Enums.ClanRole.Leader);
+                        this.RefreshPanel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void DemoteMemberButton_Click(object sender, EventArgs e)
+        {
+            if (this._selectedAccountId != null)
+            {
+                Console.WriteLine($"Demoting account {_selectedAccountId}");
+                Enums.ClanOperationResult opRes = Clan.DemoteMember(this._selectedAccountId);
+                if (opRes != Enums.ClanOperationResult.Success)
+                {
+                    ShowMessageBoxWithClanOperationResult(opRes);
+                }
+                switch (opRes)
+                {
+                    case Enums.ClanOperationResult.Success:
+                        var newRole = this.Clan.Members[this._selectedAccountId];
+                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), newRole);
+                        this.RefreshPanel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private static void ShowMessageBoxWithClanOperationResult(Enums.ClanOperationResult opRes)
+        {
+            if (opRes != Enums.ClanOperationResult.Success)
+            {
+                string stringToShow = opRes switch
+                {
+                    Enums.ClanOperationResult.Success => "Operazione completata con successo.",
+                    Enums.ClanOperationResult.CoLeaderPromotion => "Un Co-Capo è stato promosso a Capo. Il Capo precedente sarà retrocesso a Co-Capo.",
+                    Enums.ClanOperationResult.LeaderPromotionAttempt => "Impossibile promuovere un Capo.",
+                    Enums.ClanOperationResult.NoSuchMember => "Membro non trovato nel clan.",
+                    Enums.ClanOperationResult.LeaderDemotionAttempt => "Impossibile retrocedere un Capo.",
+                    Enums.ClanOperationResult.MemberDemotionAttempt => "Impossibile retrocedere un Membro.",
+                    Enums.ClanOperationResult.UnknownError => "Errore sconosciuto.",
+                    _ => "Errore sconosciuto."
+                };
+                MessageBox.Show(stringToShow, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Navigation button
         private void BackButton_Click(object sender, EventArgs e)
         {
             var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
             mainForm.LoadPanel(new ClanPanel());
         }
+
+        
     }
 
     internal class AccountDataRepresentation(Account account, int accountTrophies, int accountStars)

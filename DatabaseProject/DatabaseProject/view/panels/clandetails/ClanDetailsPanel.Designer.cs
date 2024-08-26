@@ -29,9 +29,9 @@ namespace DatabaseProject.view.panels.clandetails
             trophiesLabel = new Label();
             starsLabel = new Label();
             button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
+            removeMemberButton = new Button();
+            promoteMemberButton = new Button();
+            demoteMemberButton = new Button();
             membersListView = new ListView();
             clanMemberColumn = new ColumnHeader();
             clanRoleColumn = new ColumnHeader();
@@ -100,43 +100,50 @@ namespace DatabaseProject.view.panels.clandetails
             button1.TabIndex = 4;
             button1.Text = "Nuovo membro";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += AddMemberButton_Click;
             // 
-            // button2
+            // removeMemberButton
             // 
-            button2.Location = new Point(169, 95);
-            button2.Name = "button2";
-            button2.Size = new Size(120, 27);
-            button2.TabIndex = 5;
-            button2.Text = "Rimuovi membro";
-            button2.UseVisualStyleBackColor = true;
+            removeMemberButton.Location = new Point(169, 95);
+            removeMemberButton.Name = "removeMemberButton";
+            removeMemberButton.Size = new Size(120, 27);
+            removeMemberButton.TabIndex = 5;
+            removeMemberButton.Text = "Rimuovi membro";
+            removeMemberButton.UseVisualStyleBackColor = true;
+            removeMemberButton.Click += RemoveMemberButton_Click;
             // 
-            // button3
+            // promoteMemberButton
             // 
-            button3.Location = new Point(295, 95);
-            button3.Name = "button3";
-            button3.Size = new Size(120, 27);
-            button3.TabIndex = 6;
-            button3.Text = "Promuovi membro";
-            button3.UseVisualStyleBackColor = true;
+            promoteMemberButton.Location = new Point(295, 95);
+            promoteMemberButton.Name = "promoteMemberButton";
+            promoteMemberButton.Size = new Size(120, 27);
+            promoteMemberButton.TabIndex = 6;
+            promoteMemberButton.Text = "Promuovi membro";
+            promoteMemberButton.UseVisualStyleBackColor = true;
+            promoteMemberButton.Click += PromoteMemberButton_Click;
             // 
-            // button4
+            // demoteMemberButton
             // 
-            button4.Location = new Point(421, 95);
-            button4.Name = "button4";
-            button4.Size = new Size(120, 27);
-            button4.TabIndex = 7;
-            button4.Text = "Retrocedi membro";
-            button4.UseVisualStyleBackColor = true;
+            demoteMemberButton.Location = new Point(421, 95);
+            demoteMemberButton.Name = "demoteMemberButton";
+            demoteMemberButton.Size = new Size(120, 27);
+            demoteMemberButton.TabIndex = 7;
+            demoteMemberButton.Text = "Retrocedi membro";
+            demoteMemberButton.UseVisualStyleBackColor = true;
+            demoteMemberButton.Click += DemoteMemberButton_Click;
             // 
             // membersListView
             // 
             membersListView.Columns.AddRange(new ColumnHeader[] { clanMemberColumn, clanRoleColumn, trophiesColumn });
+            membersListView.FullRowSelect = true;
+            membersListView.GridLines = true;
             membersListView.Location = new Point(22, 137);
             membersListView.Name = "membersListView";
             membersListView.Size = new Size(540, 303);
             membersListView.TabIndex = 8;
             membersListView.UseCompatibleStateImageBehavior = false;
             membersListView.View = View.Details;
+            membersListView.SelectedIndexChanged += ListView1_SelectedIndexChanged;
             // 
             // clanMemberColumn
             // 
@@ -153,17 +160,17 @@ namespace DatabaseProject.view.panels.clandetails
             trophiesColumn.Text = "Trofei";
             trophiesColumn.Width = 100;
             // 
-            // UseThisFormAsCanvas
+            // ClanDetailsPanel
             // 
-            ClientSize = new Size(584, 461);
             Controls.Add(membersListView);
             Controls.Add(button1);
-            Controls.Add(button2);
-            Controls.Add(button3);
-            Controls.Add(button4);
+            Controls.Add(removeMemberButton);
+            Controls.Add(promoteMemberButton);
+            Controls.Add(demoteMemberButton);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(BackButton);
-            Name = "UseThisFormAsCanvas";
+            Name = "ClanDetailsPanel";
+            Size = new Size(584, 461);
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
@@ -175,9 +182,9 @@ namespace DatabaseProject.view.panels.clandetails
         private Label trophiesLabel;
         private Label starsLabel;
         private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
+        private Button removeMemberButton;
+        private Button promoteMemberButton;
+        private Button demoteMemberButton;
         private ListView membersListView;
         private ColumnHeader clanMemberColumn;
         private ColumnHeader clanRoleColumn;
