@@ -19,7 +19,6 @@
         private Button backButton;
         private Label playerNameLabel;
         private Label accountUsernameLabel;
-        private ListView buildingsListView;
         private ListView listView2;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
@@ -40,6 +39,7 @@
         private GroupBox Costruttori;
         private GroupBox Laboratorio;
         private ListView troopsListView;
+        private ListView buildingsListView;
 
         private void InitializeComponent()
         {
@@ -85,6 +85,7 @@
             columnHeader6 = new ColumnHeader();
             columnHeader7 = new ColumnHeader();
             troopsListView = new ListView();
+            laboratoryFlowLayout = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)leftSplitContainer).BeginInit();
             leftSplitContainer.Panel1.SuspendLayout();
             leftSplitContainer.Panel2.SuspendLayout();
@@ -98,6 +99,7 @@
             buildersAndLaboratorySplitContainer.Panel2.SuspendLayout();
             buildersAndLaboratorySplitContainer.SuspendLayout();
             Costruttori.SuspendLayout();
+            Laboratorio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)rightSplitContainer).BeginInit();
             rightSplitContainer.Panel1.SuspendLayout();
             rightSplitContainer.Panel2.SuspendLayout();
@@ -199,7 +201,7 @@
             // 
             buildersAndLaboratorySplitContainer.Panel2.Controls.Add(Laboratorio);
             buildersAndLaboratorySplitContainer.Size = new Size(214, 480);
-            buildersAndLaboratorySplitContainer.SplitterDistance = 313;
+            buildersAndLaboratorySplitContainer.SplitterDistance = 275;
             buildersAndLaboratorySplitContainer.TabIndex = 0;
             // 
             // Costruttori
@@ -208,7 +210,7 @@
             Costruttori.Dock = DockStyle.Fill;
             Costruttori.Location = new Point(0, 0);
             Costruttori.Name = "Costruttori";
-            Costruttori.Size = new Size(214, 313);
+            Costruttori.Size = new Size(214, 275);
             Costruttori.TabIndex = 0;
             Costruttori.TabStop = false;
             Costruttori.Text = "Costruttori";
@@ -219,15 +221,16 @@
             buildersFlowLayoutPanel.FlowDirection = FlowDirection.TopDown;
             buildersFlowLayoutPanel.Location = new Point(3, 19);
             buildersFlowLayoutPanel.Name = "buildersFlowLayoutPanel";
-            buildersFlowLayoutPanel.Size = new Size(208, 291);
+            buildersFlowLayoutPanel.Size = new Size(208, 253);
             buildersFlowLayoutPanel.TabIndex = 0;
             // 
             // Laboratorio
             // 
+            Laboratorio.Controls.Add(laboratoryFlowLayout);
             Laboratorio.Dock = DockStyle.Fill;
             Laboratorio.Location = new Point(0, 0);
             Laboratorio.Name = "Laboratorio";
-            Laboratorio.Size = new Size(214, 163);
+            Laboratorio.Size = new Size(214, 201);
             Laboratorio.TabIndex = 0;
             Laboratorio.TabStop = false;
             Laboratorio.Text = "Laboratorio";
@@ -367,6 +370,7 @@
             buildingsListView.Size = new Size(537, 481);
             buildingsListView.TabIndex = 0;
             buildingsListView.UseCompatibleStateImageBehavior = false;
+            buildingsListView.MouseClick += BuildingsListView_MouseClick;
             // 
             // attacksTab
             // 
@@ -540,6 +544,15 @@
             troopsListView.Size = new Size(227, 600);
             troopsListView.TabIndex = 0;
             troopsListView.UseCompatibleStateImageBehavior = false;
+            troopsListView.MouseClick += TroopsListView_MouseClick;
+            // 
+            // laboratoryFlowLayout
+            // 
+            laboratoryFlowLayout.Dock = DockStyle.Fill;
+            laboratoryFlowLayout.Location = new Point(3, 19);
+            laboratoryFlowLayout.Name = "laboratoryFlowLayout";
+            laboratoryFlowLayout.Size = new Size(208, 179);
+            laboratoryFlowLayout.TabIndex = 0;
             // 
             // VillagePanel
             // 
@@ -562,6 +575,7 @@
             ((System.ComponentModel.ISupportInitialize)buildersAndLaboratorySplitContainer).EndInit();
             buildersAndLaboratorySplitContainer.ResumeLayout(false);
             Costruttori.ResumeLayout(false);
+            Laboratorio.ResumeLayout(false);
             rightSplitContainer.Panel1.ResumeLayout(false);
             rightSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)rightSplitContainer).EndInit();
@@ -587,5 +601,6 @@
 
         private FlowLayoutPanel buildersFlowLayoutPanel;
         private System.ComponentModel.IContainer components;
+        private FlowLayoutPanel laboratoryFlowLayout;
     }
 }

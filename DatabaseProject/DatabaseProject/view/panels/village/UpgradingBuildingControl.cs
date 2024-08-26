@@ -38,6 +38,5 @@ namespace DatabaseProject.view.panels.village
             long remaining = this.upgradePerformer.GetRemainingUpgradeTime();
             return interval > 0 ? (int)((interval - remaining) * MAX_PROGRESS / interval) : MAX_PROGRESS;
         }
-
     }
 }

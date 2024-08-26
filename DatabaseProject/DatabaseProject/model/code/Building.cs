@@ -39,7 +39,6 @@ namespace DatabaseProject.model.code
 
                 // Perform the upgrade
                 Level++;
-                HealthPoints += 100; // Example: Increase health points on upgrade
             }
         }
     }
@@ -64,7 +63,6 @@ namespace DatabaseProject.model.code
             {
                 await Task.Delay((int)(upgradeTimeInSeconds * 1000));
                 Level++;
-                HealthPoints += 100;
                 DamagePerSecond += 100.0;
                 if (Random.Shared.Next(0, 2) == 0)
                 {
@@ -95,7 +93,6 @@ namespace DatabaseProject.model.code
             {
                 await Task.Delay((int)(upgradeTimeInSeconds * 1000));
                 Level++;
-                HealthPoints += 100;
                 ProductionRate += 100;
             }
         }

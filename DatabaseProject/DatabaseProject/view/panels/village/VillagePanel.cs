@@ -12,11 +12,11 @@ namespace DatabaseProject.view.panels.village
     {
         public Account Account { get; }
         public Player Player { get; }
-        public Village Village { get; }
+        public Village Village { get; set; }
         public List<Attack> Attacks { get; }
         public Clan? Clan { get; }
-        public List<IUpgradeObservable<BaseBuilding>> Builders { get; } = [];
-        public IUpgradeObservable<Troop> Laboratory { get; }
+        public List<IUpgradeObservable<BaseBuilding>> Builders { get; set; } = [];
+        public IUpgradeObservable<Troop> Laboratory { get; set; }
         private UpgradeObserverImpl<Troop> laboratoryObserver = null!;
         private List<UpgradeObserverImpl<BaseBuilding>> builderObservers = null!;
 
@@ -41,7 +41,7 @@ namespace DatabaseProject.view.panels.village
             if (ClanDao.IsAccountInClan(Guid.Parse(account.Id)))
             {
                 Clan = DatabaseToModelMapper.Map(ClanDao.GetClanFromAccountId(Guid.Parse(account.Id))!);
-            } 
+            }
             else
             {
                 Clan = null;
@@ -68,6 +68,80 @@ namespace DatabaseProject.view.panels.village
             UpdateClanPanel();
         }
 
+        private void CreateAndRegisterObservers()
+        {
+            laboratoryObserver = new UpgradeObserverImpl<Troop>(upgradedTroop =>
+            {
+                UpgradesDao.RegisterTroopUpgrade(DatabaseToModelMapper.Unmap(upgradedTroop), Guid.Parse(this.Village.VillageId));
+                // Before refreshing, we need to make sure that no other upgrades are in progress!
+                RefreshVillagePanel();
+            });
+            Laboratory.RegisterObserver(laboratoryObserver);
+            builderObservers = [];
+            foreach (var builder in Builders)
+            {
+                var builderObserver = new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
+                {
+                    //this.Village = DatabaseToModelMapper.Map
+                    //(
+                    //    Transactions.UpgradeBuildingAndRetrieveVillage
+                    //    (
+                    //        DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
+                    //        Guid.Parse(this.Village.VillageId),
+                    //        Int32.Parse(builder.GetObservableId()),
+                    //        Guid.Parse(this.Account.Id)
+                    //    )
+                    //);
+                    UpgradesDao.RegisterBuildingUpgrade(
+                        DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
+                        Guid.Parse(this.Village.VillageId),
+                        Int32.Parse(builder.GetObservableId())
+                        );
+
+                    // Before refreshing, we need to make sure that no other upgrades are in progress!
+                    RefreshVillagePanel();
+                });
+                builder.RegisterObserver(builderObserver);
+                builderObservers.Add(builderObserver);
+            }
+        }
+
+        // Call this method when moving to another panel
+        private void ClearObservers()
+        {
+            Laboratory.RemoveObserver(laboratoryObserver);
+            foreach (var builder in Builders)
+            {
+                builderObservers.ForEach(observer => builder.RemoveObserver(observer));
+            }
+        }
+
+        private void RefreshVillagePanel()
+        {
+            ClearObservers();
+            this.Village = DatabaseToModelMapper.Map(VillageDao.GetVillageFromAccountId(Guid.Parse(Account.Id))!);
+
+            // Debug, throw away
+            foreach (var item in Village.SpecialBuildings)
+            {
+                Console.WriteLine($"Building: {item.Name}, Level: {item.Level}");
+            }
+            // end debug
+
+            this.Builders.Clear();
+            foreach (var item in Village.Builders)
+            {
+                this.Builders.Add(item);
+            }
+            this.Laboratory = Village.Laboratory;
+            CreateAndRegisterObservers();
+            UpdateBuildingsPanel();
+            UpdateBuildersPanel(Builders);
+            UpdateLaboratoryPanel(Laboratory);
+            UpdateTroopsPanel();
+            UpdateMainLabels();
+        }
+
         private void UpdateClanPanel()
         {
             if (this.Clan != null)
@@ -86,7 +160,7 @@ namespace DatabaseProject.view.panels.village
                     var v2 = DatabaseToModelMapper.Map(VillageDao.GetVillageFromAccountId(Guid.Parse(m2))!);
                     return v2.Trophies.CompareTo(v1.Trophies);
                 });
-                clanMembersList.Select(accountIdString 
+                clanMembersList.Select(accountIdString
                     => DatabaseToModelMapper.Map(AccountDao.GetAccountFromId(Guid.Parse(accountIdString))!))
                     .ToList()
                     .ForEach(member =>
@@ -98,7 +172,7 @@ namespace DatabaseProject.view.panels.village
                     };
                     this.listView3.Items.Add(listItem);
                 });
-            } 
+            }
             else
             {
                 this.clanNameLabel.Text = "Clan: Nessuno";
@@ -111,25 +185,6 @@ namespace DatabaseProject.view.panels.village
 
         private void UpdateAttacksPanel() => Attacks.ForEach(attack => AddAttackToView(attack));
 
-        private void CreateAndRegisterObservers()
-        {
-            laboratoryObserver = new UpgradeObserverImpl<Troop>(upgradedTroop =>
-            {
-                AddTroopToView(upgradedTroop);
-            });
-            Laboratory.RegisterObserver(laboratoryObserver);
-            builderObservers = [];
-            foreach (var builder in Builders)
-            {
-                var builderObserver = new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
-                {
-                    UpdateBuildersPanel(Builders);
-                });
-                builder.RegisterObserver(builderObserver);
-                builderObservers.Add(builderObserver);
-            }
-        }
-
         private void UpdateMainLabels()
         {
             playerNameLabel.Text = $"Giocatore: {Player.Name} {Player.Surname}";
@@ -138,16 +193,6 @@ namespace DatabaseProject.view.panels.village
             trophiesLabel.Text = $"Trofei: {Village.Trophies}";
             starsLabel.Text = $"Stelle: {Village.WarStars}";
             xpLabel.Text = $"XP: {Village.ExperienceLevel}";
-        }
-
-        // TODO: Call this method when moving to another panel
-        private void ClearObservers()
-        {
-            Laboratory.RemoveObserver(laboratoryObserver);
-            foreach (var builder in Builders)
-            {
-                builderObservers.ForEach(observer => builder.RemoveObserver(observer));
-            }
         }
 
         public void AddBuildingToView(BaseBuilding building)
@@ -163,7 +208,7 @@ namespace DatabaseProject.view.panels.village
             {
                 case Enums.BuildingType.Defense:
                     listItem.Group = buildingsListView.Groups[2];
-                    listItem.ToolTipText = 
+                    listItem.ToolTipText =
                         $"Punti vita: {building.HealthPoints}" +
                         $"\nLivello: {building.Level}" +
                         $"\nDanni al secondo: {((Defense)building).DamagePerSecond}" +
@@ -188,6 +233,7 @@ namespace DatabaseProject.view.panels.village
                     break;
             }
             buildingsListView.Items.Add(listItem);
+            CreateBuildingMenuStrip(listItem, building);
         }
 
 
@@ -211,6 +257,7 @@ namespace DatabaseProject.view.panels.village
                 $"\nDanni al secondo: {troop.DamagePerSecond}" +
                 $"\nDescrizione: {troop.Description}";
             troopsListView.Items.Add(listItem);
+            CreateTroopMenuStrip(listItem, troop);
         }
 
         /// <summary>
@@ -252,13 +299,14 @@ namespace DatabaseProject.view.panels.village
 
         public void UpdateLaboratoryPanel(IUpgradeObservable<Troop> laboratory)
         {
+            laboratoryFlowLayout.Controls.Clear();
             if (laboratory.IsBusy())
             {
-                Laboratorio.Controls.Add(new UpgradingTroopControl($"Laboratorio: {laboratory.GetUpgradingObjectName()}", laboratory));
+                laboratoryFlowLayout.Controls.Add(new UpgradingTroopControl($"Laboratorio: {laboratory.GetUpgradingObjectName()}", laboratory));
             }
             else
             {
-                Laboratorio.Controls.Add(new Label()
+                laboratoryFlowLayout.Controls.Add(new Label()
                 {
                     Text = "Laboratorio: Libero",
                     AutoSize = false,
@@ -269,6 +317,7 @@ namespace DatabaseProject.view.panels.village
 
         private void UpdateBuildingsPanel()
         {
+            buildingsListView.Items.Clear();
             Village.SpecialBuildings.ToList().ForEach(specialBuilding => AddBuildingToView(specialBuilding));
             Village.Extractors.ToList().ForEach(extractor => AddBuildingToView(extractor));
             Village.Defenses.ToList().ForEach(defense => AddBuildingToView(defense));
@@ -276,6 +325,7 @@ namespace DatabaseProject.view.panels.village
 
         private void UpdateTroopsPanel()
         {
+            troopsListView.Items.Clear();
             Village.Troops.ToList().ForEach(troop => AddTroopToView(troop));
         }
 

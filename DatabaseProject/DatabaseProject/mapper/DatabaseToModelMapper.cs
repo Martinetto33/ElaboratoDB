@@ -326,6 +326,17 @@ namespace DatabaseProject.mapper
             };
         }
 
+        public static EdificioInVillaggio Unmap(BaseBuilding building, Village village)
+        {
+            return building.BuildingType switch
+            {
+                Enums.BuildingType.Special => Unmap((SpecialBuilding)building, village),
+                Enums.BuildingType.Resource => Unmap((ResourceExtractor)building, village),
+                Enums.BuildingType.Defense => Unmap((Defense)building, village),
+                _ => throw new ArgumentException($"Invalid building type: {building.BuildingType}."),
+            };
+        }
+
         /// <summary>
         /// Warning: this method can't set the village id, since in the model
         /// buildings do not have a reference to the village containing them!

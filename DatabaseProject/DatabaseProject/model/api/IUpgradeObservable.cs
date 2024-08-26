@@ -10,5 +10,6 @@
         public string? GetUpgradingObjectName();
         public string GetObservableId();
         public bool IsBusy();
+        public bool CanUpgrade(T elementToUpgrade);
     }
 }

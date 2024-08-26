@@ -48,7 +48,11 @@ namespace DatabaseProject.model.code
             }
         }
 
-        public long GetRemainingUpgradeTime() => _upgradeEndTimestamp - GetCurrentTimeInMilliseconds();
+        public long GetRemainingUpgradeTime()
+        {
+            var remainingTime = _upgradeEndTimestamp - GetCurrentTimeInMilliseconds();
+            return remainingTime > 0 ? remainingTime : 0;
+        }
 
         private long GetCurrentTimeInMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
@@ -59,5 +63,11 @@ namespace DatabaseProject.model.code
         public string GetObservableId() => BuilderId.ToString();
 
         bool IUpgradeObservable<BaseBuilding>.IsBusy() => IsBusy;
+
+        public bool CanUpgrade(BaseBuilding elementToUpgrade)
+        {
+            // TODO: Add logic to check the town hall level
+            return !IsBusy && elementToUpgrade.Level < Configuration.MAX_LEVEL;
+        }
     }
 }

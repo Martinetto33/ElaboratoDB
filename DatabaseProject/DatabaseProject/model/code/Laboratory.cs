@@ -52,7 +52,11 @@ namespace DatabaseProject.model.code
         }
 
         private long GetCurrentTimeInMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        public long GetRemainingUpgradeTime() => _upgradeEndTimestamp - GetCurrentTimeInMilliseconds();
+        public long GetRemainingUpgradeTime()
+        {
+            var remainingTime = _upgradeEndTimestamp - GetCurrentTimeInMilliseconds();
+            return remainingTime > 0 ? remainingTime : 0;
+        }
 
         public long GetUpgradeTime() => _upgradeEndTimestamp - _upgradeStartTimestamp;
 
@@ -66,5 +70,11 @@ namespace DatabaseProject.model.code
         // a map that associates laboratory levels to troops.
         // Also, when upgrading a troop, you need to check that the new level
         // is not higher than the laboratory level.
+        public bool CanUpgrade(Troop troop)
+        {
+            return troop.Level <= Level 
+                && troop.Level < Configuration.MAX_LEVEL
+                && !this.IsBusy;
+        }
     }
 }
