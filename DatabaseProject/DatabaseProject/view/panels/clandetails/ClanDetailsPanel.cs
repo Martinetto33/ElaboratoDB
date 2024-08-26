@@ -85,7 +85,12 @@ namespace DatabaseProject.view.panels.clandetails
         /****** BUTTONS LOGIC *******/
         private void AddMemberButton_Click(object sender, EventArgs e)
         {
-
+            using var AddMemberForm = new AddMemberForm(Guid.Parse(this.Clan.ClanId));
+            var result = AddMemberForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                this.RefreshPanel();
+            }
         }
 
         private void RemoveMemberButton_Click(object sender, EventArgs e)
@@ -94,7 +99,7 @@ namespace DatabaseProject.view.panels.clandetails
             {
                 if (this.Clan.RemoveMember(this._selectedAccountId))
                 {
-                    //ClanDao.RemoveMemberFromClan(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId));
+                    ClanDao.RemoveMemberFromClan(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId));
                     this.RefreshPanel();
                 }
                 else
@@ -113,7 +118,7 @@ namespace DatabaseProject.view.panels.clandetails
                         if (result == DialogResult.OK)
                         {
                             this.Clan.ForceLeaderRemoval();
-                            //ClanDao.RemoveMemberFromClan(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId));
+                            ClanDao.RemoveMemberFromClan(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId));
                             this.RefreshPanel();
                         }
                     }
@@ -135,13 +140,13 @@ namespace DatabaseProject.view.panels.clandetails
                 {
                     case Enums.ClanOperationResult.Success:
                         var newRole = this.Clan.Members[this._selectedAccountId];
-                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), newRole);
+                        ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), newRole);
                         this.RefreshPanel();
                         break;
                     case Enums.ClanOperationResult.CoLeaderPromotion:
                         string previousLeaderId = this.Clan.GetAndConsumeDemotedLeaderId()!;
-                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(previousLeaderId), Enums.ClanRole.CoLeader);
-                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), Enums.ClanRole.Leader);
+                        ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(previousLeaderId), Enums.ClanRole.CoLeader);
+                        ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), Enums.ClanRole.Leader);
                         this.RefreshPanel();
                         break;
                     default:
@@ -164,7 +169,7 @@ namespace DatabaseProject.view.panels.clandetails
                 {
                     case Enums.ClanOperationResult.Success:
                         var newRole = this.Clan.Members[this._selectedAccountId];
-                        //ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), newRole);
+                        ClanDao.ChangeClanMemberRole(Guid.Parse(this.Clan.ClanId), Guid.Parse(this._selectedAccountId), newRole);
                         this.RefreshPanel();
                         break;
                     default:
