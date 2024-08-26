@@ -1,7 +1,7 @@
 ﻿using DatabaseProject.daos;
 using DatabaseProject.mapper;
 using DatabaseProject.model.code;
-using DatabaseProject.view.panels.account;
+using DatabaseProject.view.panels.clandetails;
 using DatabaseProject.view.panels.initialmenu;
 
 namespace DatabaseProject.view.panels.player
@@ -160,7 +160,7 @@ namespace DatabaseProject.view.panels.player
         private void ClanButton_Click(Clan clan)
         {
             var mainForm = (ClashOfClansDatabaseApplication)ParentForm!;
-            //mainForm.LoadPanel(new ClanDetailsPanel(clan));
+            mainForm.LoadPanel(new ClanDetailsPanel(clan));
         }
 
         private Button AddClanButton;

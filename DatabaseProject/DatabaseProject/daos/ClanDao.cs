@@ -35,7 +35,9 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return [.. context.Clan];
+                return [.. context.Clan
+                    .Include(clan => clan.PartecipazioniClan)
+                    .Include(clan => clan.Combattimenti)];
             }
         }
 

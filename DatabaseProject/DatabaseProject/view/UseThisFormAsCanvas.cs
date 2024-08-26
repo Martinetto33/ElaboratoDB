@@ -7,8 +7,6 @@ namespace DatabaseProject
 {
     public partial class UseThisFormAsCanvas : Form
     {
-        public Panel PanelContainer { get; set; }
-
         public UseThisFormAsCanvas()
         {
             InitializeComponent();

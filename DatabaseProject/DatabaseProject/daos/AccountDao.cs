@@ -1,6 +1,7 @@
 ﻿using DatabaseProject.database;
 using DatabaseProject.context;
 using Microsoft.EntityFrameworkCore;
+using DatabaseProject.common;
 
 namespace DatabaseProject.daos
 {
@@ -36,6 +37,14 @@ namespace DatabaseProject.daos
             }
         }
 
+        public static List<Account> GetAllAccountsFromAccountIds(List<Guid> accountIds)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return [.. context.Accounts.Where(account => accountIds.Contains(account.IdAccount))];
+            }
+        }
+
         public static List<Account> GetAccountsFromPlayer(Giocatore player)
         {
             using (var context = new ClashOfClansContext())
@@ -64,6 +73,38 @@ namespace DatabaseProject.daos
                                 ).Contains(account.IdAccount)
                         select account).ToList();
             }
+        }
+
+        public static Dictionary<Account, Enums.ClanRole> GetAllAccountsInClan(Guid clanId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return (from account in context.Accounts
+                       join partecipazioni in context.PartecipazioniClan on account.IdAccount equals partecipazioni.IdAccount
+                       where partecipazioni.IdClan == clanId && partecipazioni.DataFine == null
+                       select new // The C# way to select multiple columns
+                       {
+                           Account = account,
+                           Role = Enum.Parse<Enums.ClanRole>(partecipazioni.Ruolo)
+                       }).ToDictionary(pair => pair.Account, pair => pair.Role);
+            }
+        }
+
+        public static Dictionary<Account, KeyValuePair<int, int>> GetStarsAndTrophiesFromAccounts(List<Account> accounts)
+        {
+            using var context = new ClashOfClansContext();
+            return (from account in accounts
+                    join accountsVillage in context.VillaggiAccount
+                    on account.IdAccount equals accountsVillage.IdAccount
+                    join village in context.Villaggi
+                    on accountsVillage.IdVillaggio equals village.IdVillaggio
+                    orderby village.NumeroTrofei descending
+                    select new
+                    {
+                        Account = account,
+                        Stars = village.NumeroStelleGuerra,
+                        Trophies = village.NumeroTrofei
+                    }).ToDictionary(pair => pair.Account, pair => new KeyValuePair<int, int>(pair.Trophies, pair.Stars));
         }
     }
 }
