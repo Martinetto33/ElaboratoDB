@@ -13,7 +13,6 @@ namespace DatabaseProject.daos
 
         public static AttackTrophies GetTrophiesFromAttack(Attacco attack)
         {
-            using var ctx = new ClashOfClansContext();
             return new AttackTrophies
                 (
                     attack.TrofeiAttaccante,

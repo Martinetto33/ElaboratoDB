@@ -51,5 +51,19 @@ namespace DatabaseProject.daos
                 return context.Accounts.Find(accountId);
             }
         }
+
+        public static List<Account> GetAccountsWithoutAClan()
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return (from account in context.Accounts
+                        where !( // LINQ equivalent of NOT IN
+                                from participations in context.PartecipazioniClan
+                                where participations.DataFine == null
+                                select participations.IdAccount
+                                ).Contains(account.IdAccount)
+                        select account).ToList();
+            }
+        }
     }
 }

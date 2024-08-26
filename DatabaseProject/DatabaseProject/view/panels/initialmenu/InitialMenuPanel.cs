@@ -102,8 +102,8 @@ namespace DatabaseProject.view.panels.initialmenu
 
         private void clansButton_Click(object sender, EventArgs e)
         {
-            /*ClansMenu clansMenu = new ClansMenu();
-            clansMenu.Show();*/
+            var mainForm = (ClashOfClansDatabaseApplication)Parent!;
+            mainForm.LoadPanel(new ClanPanel());
             Console.WriteLine("Clans button clicked");
         }
 
