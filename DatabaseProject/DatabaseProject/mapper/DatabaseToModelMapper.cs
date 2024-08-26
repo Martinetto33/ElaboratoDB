@@ -14,7 +14,7 @@ namespace DatabaseProject.mapper
         // MAPPERS
 
         /// <summary>
-        /// Accounts for this player may not have their villages set, if the village
+        /// Account for this player may not have their villages set, if the village
         /// was not present in the database.
         /// </summary>
         /// <param name="giocatore"></param>

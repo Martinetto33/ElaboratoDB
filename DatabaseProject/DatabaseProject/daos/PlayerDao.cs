@@ -32,7 +32,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return (from account in context.Accounts
+                return (from account in context.Account
                         join player in context.Giocatori 
                         on account.IdGiocatore equals player.IdGiocatore
                         where account.IdAccount == accountId

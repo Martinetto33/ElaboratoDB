@@ -61,7 +61,7 @@ namespace DatabaseProject.daos
                     {
                         IdAccount = clanChief.IdAccount,
                         IdClan = clanGuid,
-                        DataInizio = DateOnly.FromDateTime(DateTime.Now),
+                        DataInizio = DateTime.Now,
                         Ruolo = Enums.ClanRole.Leader.ToString()
                     });
                     context.SaveChanges();
@@ -84,13 +84,13 @@ namespace DatabaseProject.daos
                 // First we end the current member's participation in the clan
                 var currentParticipation = context.PartecipazioniClan
                     .First(participation => participation.IdAccount.Equals(accountId) && participation.IdClan.Equals(clanId));
-                currentParticipation.DataFine = DateOnly.FromDateTime(DateTime.Now);
+                currentParticipation.DataFine = DateTime.Now;
                 // Now we create the new participation
                 context.PartecipazioniClan.Add(new PartecipazioneClan
                 {
                     IdAccount = accountId,
                     IdClan = clanId,
-                    DataInizio = DateOnly.FromDateTime(DateTime.Now),
+                    DataInizio = DateTime.Now,
                     Ruolo = newRole.ToString()
                 });
                 context.SaveChanges();
@@ -105,7 +105,7 @@ namespace DatabaseProject.daos
                 {
                     IdAccount = accountId,
                     IdClan = clanId,
-                    DataInizio = DateOnly.FromDateTime(DateTime.Now),
+                    DataInizio = DateTime.Now,
                     Ruolo = Enums.ClanRole.Member.ToString()
                 });
                 context.SaveChanges();
@@ -118,7 +118,7 @@ namespace DatabaseProject.daos
             {
                 var currentParticipation = context.PartecipazioniClan
                     .First(participation => participation.IdAccount.Equals(accountId) && participation.IdClan.Equals(clanId));
-                currentParticipation.DataFine = DateOnly.FromDateTime(DateTime.Now);
+                currentParticipation.DataFine = DateTime.Now;
                 context.SaveChanges();
             }
         }

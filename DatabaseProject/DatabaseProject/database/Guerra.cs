@@ -9,7 +9,7 @@ public partial class Guerra
 
     public string InCorso { get; set; } = null!;
 
-    public virtual ICollection<AttacchiEGuerre> AttacchiEGuerre { get; set; } = new List<AttacchiEGuerre>();
+    public virtual ICollection<AttacchiEGuerre> AttacchiEGuerres { get; set; } = new List<AttacchiEGuerre>();
 
-    public virtual ICollection<Combattimento> Combattimenti { get; set; } = new List<Combattimento>();
+    public virtual ICollection<Combattimento> Combattimentis { get; set; } = new List<Combattimento>();
 }

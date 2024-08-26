@@ -38,7 +38,7 @@ namespace DatabaseProject
             ClientSize = new Size(720, 461);
             MinimumSize = new Size(600, 500);
             Name = "InitialMenu";
-            Text = "Clash of Clans Database";
+            Text = "Clash of Clan Database";
             Load += Form1_Load;
             ResumeLayout(false);
         }

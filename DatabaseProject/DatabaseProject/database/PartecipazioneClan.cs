@@ -9,9 +9,9 @@ public partial class PartecipazioneClan
 
     public Guid IdAccount { get; set; }
 
-    public DateOnly DataInizio { get; set; }
+    public DateTime DataInizio { get; set; }
 
-    public DateOnly? DataFine { get; set; }
+    public DateTime? DataFine { get; set; }
 
     public string Ruolo { get; set; } = null!;
 

@@ -20,7 +20,7 @@ namespace DatabaseProject.daos
                     IdGiocatore = owner.IdGiocatore
                 };
                 var village = DatabaseEntitiesFactory.CreateVillage(account);
-                context.Accounts.Add(account);
+                context.Account.Add(account);
                 context.Villaggi.Add(village);
                 context.Costruttori.AddRange(village.Costruttori);
                 context.EdificiInVillaggio.AddRange(village.EdificiInVillaggio);
@@ -33,7 +33,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return [.. context.Accounts];
+                return [.. context.Account];
             }
         }
 
@@ -41,7 +41,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return [.. context.Accounts.Where(account => accountIds.Contains(account.IdAccount))];
+                return [.. context.Account.Where(account => accountIds.Contains(account.IdAccount))];
             }
         }
 
@@ -49,7 +49,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return [.. context.Accounts.Where(account => account.IdGiocatore == player.IdGiocatore)];
+                return [.. context.Account.Where(account => account.IdGiocatore == player.IdGiocatore)];
             }
         }
 
@@ -57,7 +57,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return context.Accounts.Find(accountId);
+                return context.Account.Find(accountId);
             }
         }
 
@@ -65,7 +65,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return (from account in context.Accounts
+                return (from account in context.Account
                         where !( // LINQ equivalent of NOT IN
                                 from participations in context.PartecipazioniClan
                                 where participations.DataFine == null
@@ -79,7 +79,7 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return (from account in context.Accounts
+                return (from account in context.Account
                        join partecipazioni in context.PartecipazioniClan on account.IdAccount equals partecipazioni.IdAccount
                        where partecipazioni.IdClan == clanId && partecipazioni.DataFine == null
                        select new // The C# way to select multiple columns
