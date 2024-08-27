@@ -30,6 +30,11 @@ namespace DatabaseProject.view.panels.clandetails
             AddAccountsToListView();
         }
 
+        private void ReloadClanFromDB()
+        {
+            this.Clan = DatabaseToModelMapper.Map(ClanDao.GetClan(Guid.Parse(this.Clan.ClanId))!);
+        }
+
         private void FetchAccountData()
         {
             List<Guid> parsedIds = this.Clan.Members.Keys.Select(id => Guid.Parse(id)).ToList();
@@ -89,6 +94,7 @@ namespace DatabaseProject.view.panels.clandetails
             var result = AddMemberForm.ShowDialog();
             if (result == DialogResult.OK)
             {
+                this.ReloadClanFromDB();
                 this.RefreshPanel();
             }
         }
@@ -148,8 +154,11 @@ namespace DatabaseProject.view.panels.clandetails
                         this.RefreshPanel();
                         break;
                     case Enums.ClanOperationResult.CoLeaderPromotion:
-                        string previousLeaderId = this.Clan.GetAndConsumeDemotedLeaderId()!;
-                        ClanDao.ChangeClanMemberRole(Guid.Parse(previousLeaderId), Guid.Parse(this.Clan.ClanId), Enums.ClanRole.CoLeader);
+                        string? previousLeaderId = this.Clan.GetAndConsumeDemotedLeaderId();
+                        if (previousLeaderId != null)
+                        {
+                            ClanDao.ChangeClanMemberRole(Guid.Parse(previousLeaderId), Guid.Parse(this.Clan.ClanId), Enums.ClanRole.CoLeader);
+                        }
                         ClanDao.ChangeClanMemberRole(Guid.Parse(this._selectedAccountId), Guid.Parse(this.Clan.ClanId), Enums.ClanRole.Leader);
                         this.RefreshPanel();
                         break;

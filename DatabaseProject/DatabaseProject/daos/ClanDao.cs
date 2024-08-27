@@ -15,7 +15,9 @@ namespace DatabaseProject.daos
                         join participation in context.PartecipazioniClan
                         on clan.IdClan equals participation.IdClan
                         where participation.DataFine == null && participation.IdAccount.Equals(accountId)
-                        select clan).First();
+                        select clan)
+                        .Include(clan => clan.PartecipazioniClan)
+                        .First();
             }
         }
 
@@ -83,7 +85,9 @@ namespace DatabaseProject.daos
             {
                 // First we end the current member's participation in the clan
                 var currentParticipation = context.PartecipazioniClan
-                    .First(participation => participation.IdAccount.Equals(accountId) && participation.IdClan.Equals(clanId));
+                    .First(participation => participation.IdAccount.Equals(accountId)
+                        && participation.IdClan.Equals(clanId)
+                        && participation.DataFine == null);
                 currentParticipation.DataFine = DateTime.Now;
                 // Now we create the new participation
                 context.PartecipazioniClan.Add(new PartecipazioneClan
@@ -120,11 +124,22 @@ namespace DatabaseProject.daos
                     .Include(clan => clan.PartecipazioniClan)
                     .First(clan => clan.IdClan.Equals(clanId));
                 var currentParticipation = clan.PartecipazioniClan
-                    .First(participation => participation.IdAccount.Equals(accountId) 
-                        && participation.IdClan.Equals(clanId) 
+                    .First(participation => participation.IdAccount.Equals(accountId)
+                        && participation.IdClan.Equals(clanId)
                         && participation.DataFine == null);
                 currentParticipation.DataFine = DateTime.Now;
                 context.SaveChanges();
+            }
+        }
+
+        public static Clan GetClan(Guid clanId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return context.Clan
+                    .Include(clan => clan.PartecipazioniClan)
+                    .Include(clan => clan.Combattimenti)
+                    .First(clan => clan.IdClan.Equals(clanId));
             }
         }
     }

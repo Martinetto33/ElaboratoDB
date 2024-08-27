@@ -46,10 +46,13 @@ namespace DatabaseProject.model.code
                         Members[accountId] = Enums.ClanRole.CoLeader;
                         return Enums.ClanOperationResult.Success;
                     case Enums.ClanRole.CoLeader:
-                        var previousLeader = Members.First(entry => entry.Value == Enums.ClanRole.Leader);
-                        Members[previousLeader.Key] = Enums.ClanRole.CoLeader;
+                        if (Members.Count(member => member.Value == Enums.ClanRole.Leader) == 1)
+                        {
+                            var previousLeader = Members.FirstOrDefault(entry => entry.Value == Enums.ClanRole.Leader);
+                            Members[previousLeader.Key] = Enums.ClanRole.CoLeader;
+                            this._demotedLeaderId = previousLeader.Key;
+                        }
                         Members[accountId] = Enums.ClanRole.Leader;
-                        this._demotedLeaderId = previousLeader.Key;
                         return Enums.ClanOperationResult.CoLeaderPromotion;
                     case Enums.ClanRole.Leader:
                         Console.WriteLine("Cannot promote a leader.");
