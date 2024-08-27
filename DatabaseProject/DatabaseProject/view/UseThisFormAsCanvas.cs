@@ -2,6 +2,7 @@
 using DatabaseProject.database;
 using DatabaseProject.model.code;
 using DatabaseProject.view.images;
+using DatabaseProject.view.panels.initialmenu;
 
 namespace DatabaseProject
 {
@@ -14,8 +15,13 @@ namespace DatabaseProject
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            //PanelContainer.Controls.Clear();
-            //PanelContainer.Controls.Add(new InitialMenuPanel());
+            var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
+            mainForm.LoadPanel(new InitialMenuPanel());
+        }
+
+        private void ConfirmButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

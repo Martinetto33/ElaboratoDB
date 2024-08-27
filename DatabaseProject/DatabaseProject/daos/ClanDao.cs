@@ -1,6 +1,7 @@
 ﻿using DatabaseProject.common;
 using DatabaseProject.context;
 using DatabaseProject.database;
+using DatabaseProject.simulator;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseProject.daos
@@ -110,8 +111,9 @@ namespace DatabaseProject.daos
                     IdAccount = accountId,
                     IdClan = clanId,
                     DataInizio = DateTime.Now,
-                    Ruolo = Enums.ClanRole.Member.ToString()
+                    Ruolo = Enums.ClanRole.Member.ToString(),
                 });
+                context.Clan.Find(clanId)!.NumeroMembri++;
                 context.SaveChanges();
             }
         }
@@ -128,6 +130,7 @@ namespace DatabaseProject.daos
                         && participation.IdClan.Equals(clanId)
                         && participation.DataFine == null);
                 currentParticipation.DataFine = DateTime.Now;
+                context.Clan.Find(clanId)!.NumeroMembri--;
                 context.SaveChanges();
             }
         }
@@ -140,6 +143,31 @@ namespace DatabaseProject.daos
                     .Include(clan => clan.PartecipazioniClan)
                     .Include(clan => clan.Combattimenti)
                     .First(clan => clan.IdClan.Equals(clanId));
+            }
+        }
+
+        /// <summary>
+        /// Clans suitable for war must not be already in another war, and
+        /// must have at least 5 members each.
+        /// </summary>
+        /// <returns></returns>
+        public static List<Clan> GetClansSuitableForWar()
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                return (from clan in context.Clan
+                        where !(from clan2 in context.Clan // find all clans currently fighting, and choose the clans that
+                                join combat in context.Combattimenti // are not in this list
+                                on clan2.IdClan equals combat.IdClan
+                                join wars in context.Guerre
+                                on combat.IdGuerra equals wars.IdGuerra
+                                where wars.InCorso == "1"
+                                select clan2).Contains(clan)
+                        where clan.NumeroMembri >= 5
+                        select clan)
+                        .Include(clan => clan.PartecipazioniClan)
+                        .Include(clan => clan.Combattimenti)
+                        .ToList();
             }
         }
     }

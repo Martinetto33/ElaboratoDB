@@ -1,4 +1,5 @@
 ﻿using DatabaseProject.view.panels.player;
+using DatabaseProject.view.panels.warmenu;
 
 namespace DatabaseProject.view.panels.initialmenu
 {
@@ -109,8 +110,8 @@ namespace DatabaseProject.view.panels.initialmenu
 
         private void warsButton_Click(object sender, EventArgs e)
         {
-            /*WarsMenu warsMenu = new WarsMenu();
-            warsMenu.Show();*/
+            var mainForm = (ClashOfClansDatabaseApplication)Parent!;
+            mainForm.LoadPanel(new WarMenuPanel());
             Console.WriteLine("Wars button clicked");
         }
     }

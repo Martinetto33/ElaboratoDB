@@ -1,10 +1,13 @@
 ﻿using DatabaseProject.Properties;
-using DatabaseProject.view.images;
-using DatabaseProject.view.panels.player;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DatabaseProject
+namespace DatabaseProject.view.panels.warmenu.clanselection
 {
-    partial class UseThisFormAsCanvas
+    public partial class ClanSelectionPanel
     {
         /// <summary>
         /// Required designer variable.
@@ -31,11 +34,14 @@ namespace DatabaseProject
             label1 = new Label();
             clansGroupBox = new GroupBox();
             confirmButton = new Button();
+            unselectedClanLabelsFlowLayoutPanel = new FlowLayoutPanel();
+            clansGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // BackButton
             // 
-            BackButton.Image = Resources.back_arrow;
+            BackButton.BackgroundImage = Resources.back_arrow;
+            BackButton.BackgroundImageLayout = ImageLayout.Zoom;
             BackButton.Location = new Point(18, 12);
             BackButton.Name = "BackButton";
             BackButton.Size = new Size(50, 50);
@@ -73,6 +79,7 @@ namespace DatabaseProject
             // 
             // clansGroupBox
             // 
+            clansGroupBox.Controls.Add(unselectedClanLabelsFlowLayoutPanel);
             clansGroupBox.Location = new Point(38, 171);
             clansGroupBox.Name = "clansGroupBox";
             clansGroupBox.Size = new Size(509, 237);
@@ -92,16 +99,25 @@ namespace DatabaseProject
             confirmButton.UseVisualStyleBackColor = false;
             confirmButton.Click += ConfirmButton_Click;
             // 
-            // UseThisFormAsCanvas
+            // unselectedClanLabelsFlowLayoutPanel
             // 
-            ClientSize = new Size(584, 461);
+            unselectedClanLabelsFlowLayoutPanel.Dock = DockStyle.Fill;
+            unselectedClanLabelsFlowLayoutPanel.Location = new Point(3, 19);
+            unselectedClanLabelsFlowLayoutPanel.Name = "unselectedClanLabelsFlowLayoutPanel";
+            unselectedClanLabelsFlowLayoutPanel.Size = new Size(503, 215);
+            unselectedClanLabelsFlowLayoutPanel.TabIndex = 0;
+            // 
+            // ClanSelectionPanel
+            // 
             Controls.Add(confirmButton);
             Controls.Add(clansGroupBox);
             Controls.Add(label1);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(titleLabel);
             Controls.Add(BackButton);
-            Name = "UseThisFormAsCanvas";
+            Name = "ClanSelectionPanel";
+            Size = new Size(584, 461);
+            clansGroupBox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -112,5 +128,6 @@ namespace DatabaseProject
         private Label label1;
         private GroupBox clansGroupBox;
         private Button confirmButton;
+        private FlowLayoutPanel unselectedClanLabelsFlowLayoutPanel;
     }
 }

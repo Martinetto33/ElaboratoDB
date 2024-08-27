@@ -53,9 +53,12 @@ namespace DatabaseProject.daos
             using var ctx = new ClashOfClansContext();
             var war = ctx.Guerre.Find(warId);
             war!.InCorso = "0";
-            ctx.Combattimenti
+            if (winnerClan != null)
+            {
+                ctx.Combattimenti
                 .First(combat => combat.IdGuerra == warId && combat.IdClan == winnerClan)!
                 .Vincitore = "1";
+            }
             ctx.SaveChanges();
         }
 
