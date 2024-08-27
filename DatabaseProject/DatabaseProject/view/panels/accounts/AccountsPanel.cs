@@ -147,14 +147,14 @@ namespace DatabaseProject.view.panels.account
 
             foreach (var entry in filteredEntries)
             {
-                Button playerButton = new()
+                Button accountButton = new()
                 {
                     Text = $"{entry.Username}",
                     Dock = DockStyle.Top,
                     Height = 40,
                 };
-                playerButton.Click += (sender, e) => AccountButton_Click(entry);
-                accountUsernamesPanel.Controls.Add(playerButton);
+                accountButton.Click += (sender, e) => AccountButton_Click(entry);
+                accountUsernamesPanel.Controls.Add(accountButton);
             }
         }
 

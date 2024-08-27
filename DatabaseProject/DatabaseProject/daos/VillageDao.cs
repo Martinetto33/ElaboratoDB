@@ -12,8 +12,10 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                Villaggio? village = (from vill in context.Villaggi
-                                      join accountsAndVillages in context.VillaggiAccount on vill.IdVillaggio equals accountsAndVillages.IdVillaggio
+                Villaggio? village = (from dbAccount in context.Account
+                                      join accountsAndVillages in context.VillaggiAccount on dbAccount.IdAccount equals accountsAndVillages.IdAccount
+                                      join vill in context.Villaggi on accountsAndVillages.IdVillaggio equals vill.IdVillaggio
+                                      where dbAccount.IdAccount == account.IdAccount
                                       where vill.IdVillaggio == accountsAndVillages.IdVillaggio
                                       select vill)
                                       .Include(village => village.Costruttori) // The include directive should fetch all entities encapsulated in the virtual methods
@@ -29,48 +31,32 @@ namespace DatabaseProject.daos
             using (var context = new ClashOfClansContext())
             {
                 Villaggio? village = null;
-                using (var transaction = context.Database.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        //context.ChangeTracker.Clear(); // this should clear the cached entities, forcing a new query
-                        village = (from vill in context.Villaggi
-                                   join accountsAndVillages in context.VillaggiAccount
-                                   on accountId equals accountsAndVillages.IdAccount
-                                   where vill.IdVillaggio == accountsAndVillages.IdVillaggio
-                                   select vill)
-                                       .Include(village => village.Costruttori) // The include directive should fetch all other relevant data
-                                       .Include(village => village.EdificiInVillaggio)
-                                       .Include(village => village.TruppeInVillaggio)
-                                       .First();
-                        transaction.Commit();
-                    }
-                    catch (DbException ex)
-                    {
-                        Console.WriteLine("An error occurred while retrieving the village from the database.");
-                        Console.WriteLine($"Exception Message: {ex.Message}");
-                        Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-                        Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-                        transaction.Rollback();
-                        throw;
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        Console.WriteLine("An error occurred while retrieving the village from the database.");
-                        Console.WriteLine($"Exception Message: {ex.Message}");
-                        Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-                        Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-                        transaction.Rollback();
-                        throw;
-                    }
+                    //context.ChangeTracker.Clear(); // this should clear the cached entities, forcing a new query
+                    village = (from vill in context.Villaggi
+                               where vill.VillaggioAccount!.IdAccount == accountId
+                               select vill)
+                                   .Include(village => village.Costruttori) // The include directive should fetch all other relevant data
+                                   .Include(village => village.EdificiInVillaggio)
+                                   .Include(village => village.TruppeInVillaggio)
+                                   .First();
                 }
-                if (village != null)
+                catch (DbException ex)
                 {
-                    context.Entry(village).Collection(v => v.EdificiInVillaggio).Load();
-                    foreach (var building in village.EdificiInVillaggio)
-                    {
-                        context.Entry(building).Reload();
-                    }
+                    Console.WriteLine("An error occurred while retrieving the village from the database.");
+                    Console.WriteLine($"Exception Message: {ex.Message}");
+                    Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                    Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    throw;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine("An error occurred while retrieving the village from the database.");
+                    Console.WriteLine($"Exception Message: {ex.Message}");
+                    Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                    Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    throw;
                 }
                 return village;
             }

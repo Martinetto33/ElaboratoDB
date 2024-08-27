@@ -49,7 +49,9 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                return [.. context.Account.Where(account => account.IdGiocatore == player.IdGiocatore)];
+                return [.. context.Account
+                    .Where(account => account.IdGiocatore == player.IdGiocatore)
+                    .Include(account => account.VillaggiAccount)];
             }
         }
 
