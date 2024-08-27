@@ -124,6 +124,10 @@ namespace DatabaseProject.view.panels.clandetails
                     }
                 }
             }
+            else
+            {
+                MessageBox.Show("Seleziona un membro da rimuovere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void PromoteMemberButton_Click(object sender, EventArgs e)
@@ -153,6 +157,10 @@ namespace DatabaseProject.view.panels.clandetails
                         break;
                 }
             }
+            else
+            {
+                MessageBox.Show("Seleziona un membro da promuovere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void DemoteMemberButton_Click(object sender, EventArgs e)
@@ -176,6 +184,10 @@ namespace DatabaseProject.view.panels.clandetails
                         break;
                 }
             }
+            else
+            {
+                MessageBox.Show("Seleziona un membro da retrocedere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private static void ShowMessageBoxWithClanOperationResult(Enums.ClanOperationResult opRes)
@@ -193,7 +205,7 @@ namespace DatabaseProject.view.panels.clandetails
                     Enums.ClanOperationResult.UnknownError => "Errore sconosciuto.",
                     _ => "Errore sconosciuto."
                 };
-                MessageBox.Show(stringToShow, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(stringToShow, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

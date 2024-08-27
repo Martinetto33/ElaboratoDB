@@ -134,6 +134,7 @@ namespace DatabaseProject.view.panels.clandetails
             // 
             // membersListView
             // 
+            membersListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             membersListView.Columns.AddRange(new ColumnHeader[] { clanMemberColumn, clanRoleColumn, trophiesColumn });
             membersListView.FullRowSelect = true;
             membersListView.GridLines = true;

@@ -116,8 +116,13 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                var currentParticipation = context.PartecipazioniClan
-                    .First(participation => participation.IdAccount.Equals(accountId) && participation.IdClan.Equals(clanId));
+                var clan = context.Clan
+                    .Include(clan => clan.PartecipazioniClan)
+                    .First(clan => clan.IdClan.Equals(clanId));
+                var currentParticipation = clan.PartecipazioniClan
+                    .First(participation => participation.IdAccount.Equals(accountId) 
+                        && participation.IdClan.Equals(clanId) 
+                        && participation.DataFine == null);
                 currentParticipation.DataFine = DateTime.Now;
                 context.SaveChanges();
             }
