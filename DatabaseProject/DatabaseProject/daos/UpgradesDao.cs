@@ -8,6 +8,7 @@ namespace DatabaseProject.daos
 {
     public static class UpgradesDao
     {
+        private static readonly object _lockObject = new object();
         public static void RegisterTroopUpgrade(TruppaInVillaggio troop, Guid villageGuid)
         {
             using (var context = new ClashOfClansContext())
@@ -41,10 +42,10 @@ namespace DatabaseProject.daos
 
         public static void RegisterBuildingUpgrade(EdificioInVillaggio building, Guid villageGuid, int builderId)
         {
-            int xp = GenerateXPForBuildingUpgrade(building.LivelloMiglioramento);
-            using (var context = new ClashOfClansContext())
+            lock (_lockObject)
             {
-                using (var transaction = context.Database.BeginTransaction())
+                int xp = GenerateXPForBuildingUpgrade(building.LivelloMiglioramento);
+                using (var context = new ClashOfClansContext())
                 {
                     try
                     {
@@ -78,7 +79,6 @@ namespace DatabaseProject.daos
                                 throw new ArgumentException($"No suitable building type found for {building.Nome} with type: {building.Categoria}");
                         }
                         context.SaveChanges();
-                        transaction.Commit();
                     }
                     catch (DbUpdateException ex)
                     {
@@ -86,7 +86,6 @@ namespace DatabaseProject.daos
                         Console.WriteLine($"Exception Message: {ex.Message}");
                         Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
                         Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-                        transaction.Rollback();
                         throw;
                     }
                 }
