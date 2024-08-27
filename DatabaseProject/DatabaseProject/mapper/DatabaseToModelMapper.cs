@@ -295,7 +295,7 @@ namespace DatabaseProject.mapper
                 IdAttacco = Guid.Parse(attack.Id),
                 PercentualeDistruzione = attack.ObtainedPercentage!.Value,
                 StelleOttenute = attack.ObtainedStars!.Value,
-                TempoImpiegato = attack.TimeTakenMS!.Value,
+                TempoImpiegato = Utils.GetFloatTimeFromMillis(attack.TimeTakenMS!.Value),
                 TrofeiAttaccante = attack.GetAttackerAndDefenderTrophies().AttackerTrophies,
                 TrofeiDifensore = attack.GetAttackerAndDefenderTrophies().DefenderTrophies
             };

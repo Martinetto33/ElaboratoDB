@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DatabaseProject.database;
 
-public partial class AttacchiEGuerre
+public partial class AttaccoEGuerra
 {
     public Guid IdAttacco { get; set; }
 

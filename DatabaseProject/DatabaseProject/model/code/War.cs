@@ -63,5 +63,10 @@ namespace DatabaseProject.model.code
         {
             return (float)this.Clans[clan].Select(attack => attack.TimeTakenMS ?? 0).Average();
         }
+
+        public int GetAttacksNumber(Account account)
+        {
+            return Clans.Values.SelectMany(attacks => attacks).Count(attack => attack.IsAttacker(account));
+        }
     }
 }

@@ -25,7 +25,7 @@ public partial class ClashOfClansContext : DbContext
 
     public virtual DbSet<Attacco> Attacchi { get; set; }
 
-    public virtual DbSet<AttacchiEGuerre> AttacchiEGuerre { get; set; }
+    public virtual DbSet<AttaccoEGuerra> AttacchiEGuerre { get; set; }
 
     public virtual DbSet<Clan> Clan { get; set; }
 
@@ -140,7 +140,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.TrofeiDifensore).HasColumnType("int(11)");
         });
 
-        modelBuilder.Entity<AttacchiEGuerre>(entity =>
+        modelBuilder.Entity<AttaccoEGuerra>(entity =>
         {
             entity.HasKey(e => e.IdAttacco).HasName("PRIMARY");
 
@@ -151,7 +151,7 @@ public partial class ClashOfClansContext : DbContext
             entity.Property(e => e.IdAttacco).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.IdAttaccoNavigation).WithOne(p => p.AttacchiEGuerre)
-                .HasForeignKey<AttacchiEGuerre>(d => d.IdAttacco)
+                .HasForeignKey<AttaccoEGuerra>(d => d.IdAttacco)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKIDENTIFICAZIONE_ATTACCO_FK");
 

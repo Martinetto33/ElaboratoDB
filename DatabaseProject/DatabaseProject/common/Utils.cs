@@ -20,5 +20,7 @@
             double seconds = (time - minutes) * 60;
             return (long)(minutes * 60000 + seconds * 1000);
         }
+
+        public static float GetFloatTimeFromMillis(long millis) => millis / 60000f;
     }
 }

@@ -21,5 +21,5 @@ public partial class Attacco
 
     public virtual AccountDifensore? AccountDifensori { get; set; }
 
-    public virtual AttacchiEGuerre? AttacchiEGuerre { get; set; }
+    public virtual AttaccoEGuerra? AttacchiEGuerre { get; set; }
 }

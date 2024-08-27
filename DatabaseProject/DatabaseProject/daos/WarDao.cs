@@ -87,5 +87,75 @@ namespace DatabaseProject.daos
             using var ctx = new ClashOfClansContext();
             return [.. ctx.Guerre];
         }
+
+        /**
+         * The war dao needs to:
+         * - add the attack in the attack table
+         * - update the combat table (obtained stars, number of performed attacks of the attacker clan, average attack time).
+         * - update the village with obtained trophies and stars, and also the strength
+         */
+        public static void CreateWarAttack(
+            Attacco attack, 
+            Account attacker,
+            float newAttackerStrength,
+            Account defender, 
+            Clan attackerClan,
+            Clan defenderClan,
+            float averageAttacksTimeOfAttackerClan, 
+            Guid warId)
+        {
+            using (var context = new ClashOfClansContext())
+            {
+                // Updating attacker clan combat
+                Combattimento combat = context.Combattimenti.Find(attackerClan.IdClan, warId)!;
+                combat.AttacchiEffettuati++;
+                combat.StelleOttenute += attack.StelleOttenute;
+                combat.TempoMedioAttacco = averageAttacksTimeOfAttackerClan;
+                
+                // Updating clans
+                Clan attackerClanInContext = context.Clan.Find(attackerClan.IdClan)!;
+                attackerClanInContext.StelleGuerraTotali += attack.StelleOttenute;
+                int possibleNewTrophiesAttackerClan = attackerClanInContext.TrofeiTotali + attack.TrofeiAttaccante;
+                attackerClanInContext.TrofeiTotali = possibleNewTrophiesAttackerClan >= 0 ? possibleNewTrophiesAttackerClan : 0;
+                Clan defenderClanInContext = context.Clan.Find(defenderClan.IdClan)!;
+                int possibleNewTrophiesDefenderClan = defenderClanInContext.TrofeiTotali + attack.TrofeiDifensore;
+                defenderClanInContext.TrofeiTotali = possibleNewTrophiesDefenderClan >= 0 ? possibleNewTrophiesDefenderClan : 0;
+
+                // Updating account villages
+                Villaggio attackerVillage = context.Villaggi.Find(context.VillaggiAccount.Find(attacker.IdAccount)!.IdVillaggio)!;
+                attackerVillage.NumeroStelleGuerra += attack.StelleOttenute;
+                int possibleNewTrophiesAttacker = attackerVillage.NumeroTrofei + attack.TrofeiAttaccante;
+                attackerVillage.NumeroTrofei = possibleNewTrophiesAttacker >= 0 ? possibleNewTrophiesAttacker : 0;
+                attackerVillage.Forza = newAttackerStrength;
+
+                Villaggio defenderVillage = context.Villaggi.Find(context.VillaggiAccount.Find(defender.IdAccount)!.IdVillaggio)!;
+                int possibleNewTrophiesDefender = defenderVillage.NumeroTrofei + attack.TrofeiDifensore;
+                defenderVillage.NumeroTrofei = possibleNewTrophiesDefender >= 0 ? possibleNewTrophiesDefender : 0;
+
+                // Updating attacks
+                context.Attacchi.Add(attack);
+
+                // Updating AttacksInWar
+                context.AttacchiEGuerre.Add(new AttaccoEGuerra
+                {
+                    IdAttacco = attack.IdAttacco,
+                    IdGuerra = warId
+                });
+
+                // Creating attackerAccounts and defenderAccounts entities (representing an attack and a defense relative to this attack)
+                context.AccountAttaccanti.Add(new AccountAttaccante
+                {
+                    IdAccount = attacker.IdAccount,
+                    IdAttacco = attack.IdAttacco
+                });
+                context.AccountDifensori.Add(new AccountDifensore
+                {
+                    IdAccount = defender.IdAccount,
+                    IdAttacco = attack.IdAttacco
+                });
+
+                context.SaveChanges();
+            }
+        }
     }
 }

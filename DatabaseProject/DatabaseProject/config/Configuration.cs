@@ -25,5 +25,7 @@
         public static readonly int WIZARD_TOWERS_NUMBER = 4; // the number of wizard towers available to the player
 
         public static readonly int AIR_DEFENSES_NUMBER = 4; // the number of air defenses available to the player
+
+        public static readonly int ATTACKS_PER_PLAYER_IN_WAR = 2; // the number of attacks each player can perform in a war
     }
 }

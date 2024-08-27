@@ -1,6 +1,8 @@
 ﻿using DatabaseProject.common;
+using DatabaseProject.config;
+using DatabaseProject.daos;
+using DatabaseProject.mapper;
 using DatabaseProject.model.code;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Diagnostics;
 
 namespace DatabaseProject.simulator
@@ -13,7 +15,7 @@ namespace DatabaseProject.simulator
             List<Account> clan2Members
         )
     {
-        private War _war = new(Guid.NewGuid().ToString(),
+        private readonly War _war = new(Guid.NewGuid().ToString(),
             new Dictionary<Clan, ISet<Attack>>()
             {
                 {clan1, new HashSet<Attack>()},
@@ -31,7 +33,7 @@ namespace DatabaseProject.simulator
             {clan1, new ClanScore { Stars = 0, AverageAttackTime = 0.0f } },
             {clan2, new ClanScore { Stars = 0, AverageAttackTime = 0.0f } }
         };
-        private Random random = new Random();
+        private readonly Random random = new();
 
         public bool CanStartWar()
         {
@@ -43,22 +45,68 @@ namespace DatabaseProject.simulator
             return areThereEnoughMembers && areThereTheSameNumberOfAccounts && areMembersAMultipleOf5;
         }
 
-        public void StartWar()
+        public void LaunchSimulation()
         {
             if (CanStartWar())
             {
                 _war.StartWar();
+                SimulateWar();
+                Clan? winner = GetWinner();
+                _war.EndWar(winner != null ? Guid.Parse(winner.ClanId) : null);
             }
         }
 
-        private void BeginSimulation()
+        public WarRecap GetWarRecap()
         {
-            int clan1RemainingAttacks, clan2RemainingAttacks = _clansAndAccounts.First().Value.Count * 2;
+            return new
+                (
+                    Guid.Parse(_war.WarId), 
+                    clan1.Name, 
+                    clan2.Name, 
+                    _clanScores[clan1].Stars, 
+                    _clanScores[clan2].Stars, 
+                    _clanScores[clan1].AverageAttackTime, 
+                    _clanScores[clan2].AverageAttackTime
+                );
+        }
 
+        private void SimulateWar()
+        {
+            int clan1RemainingAttacks = _clansAndAccounts.First().Value.Count * Configuration.ATTACKS_PER_PLAYER_IN_WAR;
+            int clan2RemainingAttacks = _clansAndAccounts.Last().Value.Count * Configuration.ATTACKS_PER_PLAYER_IN_WAR;
+            while (clan1RemainingAttacks-- > 0)
+            {
+                Account nextAttacker = FilterAccountsThatCanStillAttack(clan1)[0];
+                Account target = ChooseTarget(clan2);
+                PerformAttack(clan1, nextAttacker, target);
+            }
+            while (clan2RemainingAttacks-- > 0)
+            {
+                Account nextAttacker = FilterAccountsThatCanStillAttack(clan2)[0];
+                Account target = ChooseTarget(clan1);
+                PerformAttack(clan2, nextAttacker, target);
+            }
+        }
+
+        private Clan? GetWinner()
+        {
+            if (_clanScores[clan1].Stars > _clanScores[clan2].Stars)
+            {
+                return clan1;
+            }
+            else if (_clanScores[clan1].Stars < _clanScores[clan2].Stars)
+            {
+                return clan2;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private Account ChooseTarget(Clan enemyClan)
         {
+            // Prioritise accounts that have not been attacked yet to maximise the number of stars obtained.
             List<Account> notYetAttackedAccounts = _clansAndAccounts[enemyClan]
                 .Where(account => !_war.WasTargetAttacked(account))
                 .ToList();
@@ -78,7 +126,9 @@ namespace DatabaseProject.simulator
         {
             Debug.Assert(attacker.Village != null && target.Village != null);
             int stars = (int)Math.Round(random.Next(3) + attacker.Village.Strength);
+            
             Console.WriteLine($"Attacker {attacker.Username} attacked target {target.Username} and got {stars} stars.");
+            
             DetermineAttackResult(out int percentage, out float attackTime, out int attackerTrophies, out int defenderTrophies, in stars);
             var attack = new Attack(Guid.NewGuid().ToString(), attackerTrophies, defenderTrophies, attacker, target)
             {
@@ -86,26 +136,56 @@ namespace DatabaseProject.simulator
                 ObtainedStars = stars,
                 TimeTakenMS = Utils.GetMillisFromFloatTimeInMinutes(attackTime)
             };
+            
             _war.AddAttack(attackerClan, attack);
+            
+            // Update scores in the simulator
             _clanScores[attackerClan].Stars += stars;
             _clanScores[attackerClan].AverageAttackTime = CalculateAverageAttackTimeForClan(attackerClan);
+            
+            UpdateVillageStrengthAfterAttack(attacker, attack);
+            
+            WriteDataToDatabase
+                (
+                    newAttack: attack,
+                    attackerClan: attackerClan,
+                    defenderClan: _war.GetEnemyOf(attackerClan),
+                    attacker: attacker,
+                    defender: target,
+                    averageAttacksTimeOfAttackerClan: _clanScores[attackerClan].AverageAttackTime,
+                    attackerStrength: (float)attacker.Village!.Strength
+                );
+        }
+
+        private void UpdateVillageStrengthAfterAttack(Account attackerVillageOwner, Attack attack)
+        {
+            int attacksDone = AttackDao.GetAllAccountAttacks(DatabaseToModelMapper.Unmap(attackerVillageOwner)).Count + 1;
+            attackerVillageOwner.Village!.WarStars += attack.ObtainedStars!.Value;
+            attackerVillageOwner.Village!.UpdateStrength(attacksDone);
         }
 
         private void WriteDataToDatabase
             (
                 Attack newAttack,
                 Clan attackerClan,
+                Clan defenderClan,
                 Account attacker,
-                Account target
+                Account defender,
+                float averageAttacksTimeOfAttackerClan,
+                float attackerStrength
             )
         {
-            // warDao.AddAttack(newAttack, attacker, target, attackerClan);
-            /**
-             * The war dao needs to:
-             * - add the attack in the attack table
-             * - update the combat table (obtained stars, number of performed attacks of the attacker clan, average attack time).
-             * - update the village with obtained trophies and stars, and also the strength
-             */
+            WarDao.CreateWarAttack
+                (
+                    DatabaseToModelMapper.Unmap(newAttack),
+                    DatabaseToModelMapper.Unmap(attacker),
+                    attackerStrength,
+                    DatabaseToModelMapper.Unmap(defender),
+                    DatabaseToModelMapper.Unmap(attackerClan),
+                    DatabaseToModelMapper.Unmap(defenderClan),
+                    averageAttacksTimeOfAttackerClan,
+                    Guid.Parse(_war.WarId)
+                );
         }
 
         private void DetermineAttackResult(
@@ -150,6 +230,15 @@ namespace DatabaseProject.simulator
         {
             return this._war.GetAverageAttackTime(clan);
         }
+
+        private int GetAttacksNumberPerformedByAccountInThisWar(Account account) => this._war.GetAttacksNumber(account);
+
+        private List<Account> FilterAccountsThatCanStillAttack(Clan clan)
+        {
+            return _clansAndAccounts[clan]
+                .Where(account => GetAttacksNumberPerformedByAccountInThisWar(account) < Configuration.ATTACKS_PER_PLAYER_IN_WAR)
+                .ToList();
+        }
     }
 
     internal class ClanScore
@@ -157,4 +246,15 @@ namespace DatabaseProject.simulator
         public int Stars { get; set; }
         public float AverageAttackTime { get; set; }
     }
+
+    public record WarRecap
+        (
+            Guid WarId,
+            string Clan1Name,
+            string Clan2Name,
+            int Clan1Stars,
+            int Clan2Stars,
+            float Clan1AverageAttackTime,
+            float Clan2AverageAttackTime
+        );
 }

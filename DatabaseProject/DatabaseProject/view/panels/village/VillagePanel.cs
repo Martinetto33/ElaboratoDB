@@ -193,12 +193,19 @@ namespace DatabaseProject.view.panels.village
 
         private void UpdateMainLabels()
         {
-            playerNameLabel.Text = $"Giocatore: {Player.Name} {Player.Surname}";
-            accountUsernameLabel.Text = $"Account: {Account.Username}";
-            forceLabel.Text = $"Forza: {Village.Strength}%";
-            trophiesLabel.Text = $"Trofei: {Village.Trophies}";
-            starsLabel.Text = $"Stelle: {Village.WarStars}";
-            xpLabel.Text = $"XP: {Village.ExperienceLevel}";
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(UpdateMainLabels));
+            }
+            else
+            {
+                playerNameLabel.Text = $"Giocatore: {Player.Name} {Player.Surname}";
+                accountUsernameLabel.Text = $"Account: {Account.Username}";
+                forceLabel.Text = $"Forza: {Village.Strength}%";
+                trophiesLabel.Text = $"Trofei: {Village.Trophies}";
+                starsLabel.Text = $"Stelle: {Village.WarStars}";
+                xpLabel.Text = $"XP: {Village.ExperienceLevel}";
+            }
         }
 
         public void AddBuildingToView(BaseBuilding building)
