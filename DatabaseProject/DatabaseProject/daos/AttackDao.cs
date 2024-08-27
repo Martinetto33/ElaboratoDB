@@ -1,5 +1,7 @@
 ﻿using DatabaseProject.context;
 using DatabaseProject.database;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace DatabaseProject.daos
 {
@@ -45,13 +47,21 @@ namespace DatabaseProject.daos
         public static Account GetAttacker(Attacco attack)
         {
             using var ctx = new ClashOfClansContext();
-            return ctx.AccountAttaccanti.First(attacker => attacker.IdAttacco == attack.IdAttacco).IdAccountNavigation;
+            AccountAttaccante attackingAccount = ctx.AccountAttaccanti
+                .Include(attAcc => attAcc.IdAccountNavigation)
+                .First(attacker => attacker.IdAttacco.Equals(attack.IdAttacco));
+            Debug.Assert(attackingAccount.IdAccountNavigation != null);
+            return attackingAccount.IdAccountNavigation;
         }
 
         public static Account GetDefender(Attacco attack)
         {
             using var ctx = new ClashOfClansContext();
-            return ctx.AccountDifensori.First(defender => defender.IdAttacco == attack.IdAttacco).IdAccountNavigation;
+            AccountDifensore defendingAccount = ctx.AccountDifensori
+                .Include(defAcc => defAcc.IdAccountNavigation)
+                .First(defender => defender.IdAttacco.Equals(attack.IdAttacco));
+            Debug.Assert(defendingAccount.IdAccountNavigation != null);
+            return defendingAccount.IdAccountNavigation;
         }
     }
 

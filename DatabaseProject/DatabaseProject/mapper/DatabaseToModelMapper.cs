@@ -104,7 +104,7 @@ namespace DatabaseProject.mapper
                     defenderAccount
                 )
             {
-                TimeTakenMS = (long)attack.TempoImpiegato,
+                TimeTakenMS = Utils.GetMillisFromFloatTimeInMinutes(attack.TempoImpiegato),
                 ObtainedPercentage = attack.PercentualeDistruzione,
                 ObtainedStars = attack.StelleOttenute
             };

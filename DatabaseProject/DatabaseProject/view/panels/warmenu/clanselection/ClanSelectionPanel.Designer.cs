@@ -33,8 +33,8 @@ namespace DatabaseProject.view.panels.warmenu.clanselection
             flowLayoutPanel1 = new FlowLayoutPanel();
             label1 = new Label();
             clansGroupBox = new GroupBox();
-            confirmButton = new Button();
             unselectedClanLabelsFlowLayoutPanel = new FlowLayoutPanel();
+            confirmButton = new Button();
             clansGroupBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -61,6 +61,7 @@ namespace DatabaseProject.view.panels.warmenu.clanselection
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel1.BackColor = Color.FromArgb(255, 192, 128);
             flowLayoutPanel1.Location = new Point(38, 90);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -79,6 +80,7 @@ namespace DatabaseProject.view.panels.warmenu.clanselection
             // 
             // clansGroupBox
             // 
+            clansGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             clansGroupBox.Controls.Add(unselectedClanLabelsFlowLayoutPanel);
             clansGroupBox.Location = new Point(38, 171);
             clansGroupBox.Name = "clansGroupBox";
@@ -87,8 +89,17 @@ namespace DatabaseProject.view.panels.warmenu.clanselection
             clansGroupBox.TabStop = false;
             clansGroupBox.Text = "Clan disponibili";
             // 
+            // unselectedClanLabelsFlowLayoutPanel
+            // 
+            unselectedClanLabelsFlowLayoutPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            unselectedClanLabelsFlowLayoutPanel.Location = new Point(3, 19);
+            unselectedClanLabelsFlowLayoutPanel.Name = "unselectedClanLabelsFlowLayoutPanel";
+            unselectedClanLabelsFlowLayoutPanel.Size = new Size(503, 215);
+            unselectedClanLabelsFlowLayoutPanel.TabIndex = 0;
+            // 
             // confirmButton
             // 
+            confirmButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             confirmButton.BackColor = Color.FromArgb(0, 192, 0);
             confirmButton.ForeColor = SystemColors.ButtonFace;
             confirmButton.Location = new Point(395, 421);
@@ -98,14 +109,6 @@ namespace DatabaseProject.view.panels.warmenu.clanselection
             confirmButton.Text = "Conferma";
             confirmButton.UseVisualStyleBackColor = false;
             confirmButton.Click += ConfirmButton_Click;
-            // 
-            // unselectedClanLabelsFlowLayoutPanel
-            // 
-            unselectedClanLabelsFlowLayoutPanel.Dock = DockStyle.Fill;
-            unselectedClanLabelsFlowLayoutPanel.Location = new Point(3, 19);
-            unselectedClanLabelsFlowLayoutPanel.Name = "unselectedClanLabelsFlowLayoutPanel";
-            unselectedClanLabelsFlowLayoutPanel.Size = new Size(503, 215);
-            unselectedClanLabelsFlowLayoutPanel.TabIndex = 0;
             // 
             // ClanSelectionPanel
             // 

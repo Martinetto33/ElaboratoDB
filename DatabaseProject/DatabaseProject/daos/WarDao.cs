@@ -110,20 +110,11 @@ namespace DatabaseProject.daos
             using (var context = new ClashOfClansContext())
             {
                 // Updating attacker clan combat
-                Combattimento combat = context.Combattimenti.Find(attackerClan.IdClan, warId)!;
+                Combattimento combat = context.Combattimenti.Find(warId, attackerClan.IdClan)!;
                 combat.AttacchiEffettuati++;
                 combat.StelleOttenute += attack.StelleOttenute;
                 combat.TempoMedioAttacco = averageAttacksTimeOfAttackerClan;
                 
-                // Updating clans
-                Clan attackerClanInContext = context.Clan.Find(attackerClan.IdClan)!;
-                attackerClanInContext.StelleGuerraTotali += attack.StelleOttenute;
-                int possibleNewTrophiesAttackerClan = attackerClanInContext.TrofeiTotali + attack.TrofeiAttaccante;
-                attackerClanInContext.TrofeiTotali = possibleNewTrophiesAttackerClan >= 0 ? possibleNewTrophiesAttackerClan : 0;
-                Clan defenderClanInContext = context.Clan.Find(defenderClan.IdClan)!;
-                int possibleNewTrophiesDefenderClan = defenderClanInContext.TrofeiTotali + attack.TrofeiDifensore;
-                defenderClanInContext.TrofeiTotali = possibleNewTrophiesDefenderClan >= 0 ? possibleNewTrophiesDefenderClan : 0;
-
                 // Updating account villages
                 Villaggio attackerVillage = context.Villaggi.Find(context.VillaggiAccount.Find(attacker.IdAccount)!.IdVillaggio)!;
                 attackerVillage.NumeroStelleGuerra += attack.StelleOttenute;
@@ -134,6 +125,51 @@ namespace DatabaseProject.daos
                 Villaggio defenderVillage = context.Villaggi.Find(context.VillaggiAccount.Find(defender.IdAccount)!.IdVillaggio)!;
                 int possibleNewTrophiesDefender = defenderVillage.NumeroTrofei + attack.TrofeiDifensore;
                 defenderVillage.NumeroTrofei = possibleNewTrophiesDefender >= 0 ? possibleNewTrophiesDefender : 0;
+
+                // Updating clans
+                Clan attackerClanInContext = context.Clan.Find(attackerClan.IdClan)!;
+                attackerClanInContext.StelleGuerraTotali += attack.StelleOttenute;
+                int newAttackerClanTrophies = 
+                    (
+                        from village in context.Villaggi
+                        where
+                        (
+                            from accountVillage in context.VillaggiAccount
+                            where
+                            (
+                                from account in context.Account
+                                join participation in context.PartecipazioniClan
+                                on account.IdAccount equals participation.IdAccount
+                                where participation.DataFine == null && participation.IdClan == attackerClan.IdClan
+                                select account.IdAccount
+                            ).Contains(accountVillage.IdAccount)
+                            select accountVillage.IdVillaggio
+                        ).Contains(village.IdVillaggio)
+                        select village.NumeroTrofei
+                    )
+                    .Sum();
+                attackerClanInContext.TrofeiTotali = newAttackerClanTrophies;
+                Clan defenderClanInContext = context.Clan.Find(defenderClan.IdClan)!;
+                int newDefenderClanTrophies =
+                    (
+                        from village in context.Villaggi
+                        where
+                        (
+                            from accountVillage in context.VillaggiAccount
+                            where
+                            (
+                                from account in context.Account
+                                join participation in context.PartecipazioniClan
+                                on account.IdAccount equals participation.IdAccount
+                                where participation.DataFine == null && participation.IdClan == defenderClan.IdClan
+                                select account.IdAccount
+                            ).Contains(accountVillage.IdAccount)
+                            select accountVillage.IdVillaggio
+                        ).Contains(village.IdVillaggio)
+                        select village.NumeroTrofei
+                    )
+                    .Sum();
+                defenderClanInContext.TrofeiTotali = newDefenderClanTrophies >= 0 ? newDefenderClanTrophies : 0;
 
                 // Updating attacks
                 context.Attacchi.Add(attack);

@@ -281,10 +281,28 @@ namespace DatabaseProject.view.panels.village
         /// <param name="attackType">A string describing if this attack was actually an attack or a defense.</param>
         public void AddAttackToView(Attack attack)
         {
+            int attackTrophies;
+            string attackType;
+            if (attack.GetAttackType(Account) == Enums.AccountRoleInAttack.Attacker)
+            {
+                attackTrophies = attack.GetAttackerAndDefenderTrophies().AttackerTrophies;
+                attackType = "Attacco";
+            }
+            else
+            {
+                attackTrophies = attack.GetAttackerAndDefenderTrophies().DefenderTrophies;
+                attackType = "Difesa";
+            }
             var listItem = new ListViewItem
             {
                 Text = attack.ObtainedStars.ToString(),
-                //SubItems = { attack.ObtainedPercentage.ToString(), attack.TimeTakenMS.ToString(), attack.ObtainedTrophies.ToString()/*TODO: , attack.GetAttackTypeFromAccountPerspective(this.Account)*/ }
+                SubItems = 
+                { 
+                    attack.ObtainedPercentage.ToString(), 
+                    Utils.MapMillisToTime(attack.TimeTakenMS!.Value), 
+                    attackTrophies.ToString(),
+                    attackType
+                }
             };
             listView2.Items.Add(listItem);
         }

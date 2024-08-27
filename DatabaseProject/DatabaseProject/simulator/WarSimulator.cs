@@ -125,7 +125,7 @@ namespace DatabaseProject.simulator
         private void PerformAttack(Clan attackerClan, Account attacker, Account target)
         {
             Debug.Assert(attacker.Village != null && target.Village != null);
-            int stars = (int)Math.Round(random.Next(3) + attacker.Village.Strength);
+            int stars = (int)Math.Round(random.Next(3) + (attacker.Village.Strength / 100.0));
             
             Console.WriteLine($"Attacker {attacker.Username} attacked target {target.Username} and got {stars} stars.");
             
