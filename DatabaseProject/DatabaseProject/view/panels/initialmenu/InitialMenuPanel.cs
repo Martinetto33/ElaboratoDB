@@ -77,7 +77,7 @@ namespace DatabaseProject.view.panels.initialmenu
             ClientSize = new Size(720, 461);
             MinimumSize = new Size(600, 500);
             Name = "InitialMenu";
-            Text = "Clash of Clans Database";
+            Text = "Clash of Clan Database";
 
             Controls.Add(ExitButton);
             Controls.Add(PlayersButton);
@@ -102,9 +102,9 @@ namespace DatabaseProject.view.panels.initialmenu
 
         private void clansButton_Click(object sender, EventArgs e)
         {
-            /*ClansMenu clansMenu = new ClansMenu();
-            clansMenu.Show();*/
-            Console.WriteLine("Clans button clicked");
+            var mainForm = (ClashOfClansDatabaseApplication)Parent!;
+            mainForm.LoadPanel(new ClanPanel());
+            Console.WriteLine("Clan button clicked");
         }
 
         private void warsButton_Click(object sender, EventArgs e)

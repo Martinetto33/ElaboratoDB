@@ -17,7 +17,7 @@ public partial class ClashOfClansContext : DbContext
     {
     }
 
-    public virtual DbSet<Account> Accounts { get; set; }
+    public virtual DbSet<Account> Account { get; set; }
 
     public virtual DbSet<AccountAttaccante> AccountAttaccanti { get; set; }
 
@@ -49,9 +49,9 @@ public partial class ClashOfClansContext : DbContext
 
     public virtual DbSet<StatisticheTruppaMigliorata> StatisticheTruppeMigliorate { get; set; }
 
-    public virtual DbSet<TipoEdificio> TipiEdifici { get; set; }
+    public virtual DbSet<TipoEdificio> TipiEdificio { get; set; }
 
-    public virtual DbSet<TipoTruppa> TipiTruppe { get; set; }
+    public virtual DbSet<TipoTruppa> TipiTruppa { get; set; }
 
     public virtual DbSet<TruppaInVillaggio> TruppeInVillaggio { get; set; }
 
@@ -61,9 +61,7 @@ public partial class ClashOfClansContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder
-        .UseMySql("server=localhost;port=3306;database=clash_of_clans_v2;user=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.32-mariadb"))
-        .EnableSensitiveDataLogging();
+        => optionsBuilder.UseMySql("server=localhost;port=3306;database=clash_of_clans_v2;user=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.32-mariadb"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -245,7 +243,7 @@ public partial class ClashOfClansContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCOMPOSIZIONE");
 
-            entity.HasOne(d => d.StatisticheEdificioMigliorato).WithMany(p => p.EdificiInVillaggios)
+            entity.HasOne(d => d.StatisticheEdificiMigliorati).WithMany(p => p.EdificiInVillaggios)
                 .HasForeignKey(d => new { d.Nome, d.LivelloMiglioramento })
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKCONFERIMENTO_STATISTICHE_EDIFICIO");
@@ -322,6 +320,11 @@ public partial class ClashOfClansContext : DbContext
 
             entity.HasIndex(e => e.IdAccount, "FKPERMANENZA");
 
+            entity.Property(e => e.DataInizio)
+                //.ValueGeneratedOnAddOrUpdate()
+                .HasDefaultValueSql("current_timestamp(3)")
+                .HasColumnType("timestamp(3)");
+            entity.Property(e => e.DataFine).HasColumnType("timestamp(3)");
             entity.Property(e => e.Ruolo).HasMaxLength(20);
 
             entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.PartecipazioniClans)

@@ -57,25 +57,25 @@ namespace DatabaseProject.view.panels.player
             textBox1.TabIndex = 2;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
-            // searchPlayerLabel
+            // searchClanLabel
             // 
             searchPlayerLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             searchPlayerLabel.AutoSize = true;
             searchPlayerLabel.Font = new Font("Segoe UI", 12F);
             searchPlayerLabel.Location = new Point(107, 135);
-            searchPlayerLabel.Name = "searchPlayerLabel";
+            searchPlayerLabel.Name = "searchClanLabel";
             searchPlayerLabel.Size = new Size(118, 21);
             searchPlayerLabel.TabIndex = 3;
             searchPlayerLabel.Text = "Cerca giocatore";
             // 
-            // playerNamesPanel
+            // clanNamesPanel
             // 
             playerNamesPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             playerNamesPanel.AutoScroll = true;
             playerNamesPanel.BackColor = Color.White;
             playerNamesPanel.BorderStyle = BorderStyle.FixedSingle;
             playerNamesPanel.Location = new Point(108, 231);
-            playerNamesPanel.Name = "playerNamesPanel";
+            playerNamesPanel.Name = "clanNamesPanel";
             playerNamesPanel.Padding = new Padding(10);
             playerNamesPanel.Size = new Size(645, 323);
             playerNamesPanel.TabIndex = 4;

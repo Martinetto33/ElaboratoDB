@@ -14,7 +14,7 @@ namespace DatabaseProject.daos
         {
             using (var ctx = new ClashOfClansContext())
             {
-                return (from troopPrototype in ctx.TipiTruppe
+                return (from troopPrototype in ctx.TipiTruppa
                         where troopPrototype.Nome == name
                         select troopPrototype).Any();
             }
@@ -28,7 +28,7 @@ namespace DatabaseProject.daos
             }
             using (var ctx = new ClashOfClansContext())
             {
-                return (from troopPrototype in ctx.TipiTruppe
+                return (from troopPrototype in ctx.TipiTruppa
                         where troopPrototype.Nome == name
                         select troopPrototype.Descrizione).First();
             }

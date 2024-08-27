@@ -13,7 +13,6 @@ namespace DatabaseProject.daos
 
         public static AttackTrophies GetTrophiesFromAttack(Attacco attack)
         {
-            using var ctx = new ClashOfClansContext();
             return new AttackTrophies
                 (
                     attack.TrofeiAttaccante,
@@ -41,6 +40,18 @@ namespace DatabaseProject.daos
                                where defender.IdAccount == accountId
                                select attack;
             return defensesDone?.ToList() ?? [];
+        }
+
+        public static Account GetAttacker(Attacco attack)
+        {
+            using var ctx = new ClashOfClansContext();
+            return ctx.AccountAttaccanti.First(attacker => attacker.IdAttacco == attack.IdAttacco).IdAccountNavigation;
+        }
+
+        public static Account GetDefender(Attacco attack)
+        {
+            using var ctx = new ClashOfClansContext();
+            return ctx.AccountDifensori.First(defender => defender.IdAttacco == attack.IdAttacco).IdAccountNavigation;
         }
     }
 

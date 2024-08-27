@@ -1,9 +1,10 @@
 ﻿using DatabaseProject.common;
 using DatabaseProject.daos;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DatabaseProject.model.code
 {
-    public class Attack(string id, int attackerTrophies, int defenderTrophies)
+    public class Attack(string id, int attackerTrophies, int defenderTrophies, Account attacker, Account defender)
     {
         public string Id { get; } = id;
         public int? ObtainedPercentage { get; set; } = null;
@@ -11,15 +12,14 @@ namespace DatabaseProject.model.code
         public long? TimeTakenMS { get; set; } = null;
         private readonly int _attackerTrophies = attackerTrophies;
         private readonly int _defenderTrophies = defenderTrophies;
+        private readonly Account _attacker = attacker;
+        private readonly Account _defender = defender;
         public int GetObtainedTrophies(Account account) => 
             IsAttacker(account) ? _attackerTrophies : _defenderTrophies;
 
-        private bool IsAttacker(Account account)
-        {
-            // TODO: unmap this account and query the database to see if it is contained in the AccountAttaccante
-            // table.
-            return false;
-        }
+        public bool IsAttacker(Account account) => _attacker.Equals(account);
+
+        public bool IsDefender(Account account) => _defender.Equals(account);
 
         public AttackTrophies GetAttackerAndDefenderTrophies() => new (_attackerTrophies, _defenderTrophies);
 

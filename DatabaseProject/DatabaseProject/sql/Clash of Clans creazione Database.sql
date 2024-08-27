@@ -109,8 +109,8 @@ create table MIGLIORAMENTI_TRUPPA (
 create table PARTECIPAZIONI_CLAN (
      IdClan char(36) not null,
      IdAccount char(36) not null,
-     DataInizio date not null,
-     DataFine date,
+     DataInizio timestamp(3) not null,
+     DataFine TIMESTAMP(3) NULL DEFAULT NULL, -- mannaggia a te DBMain
      Ruolo varchar(20) not null,
      constraint IDPARTECIPAZIONE_CLAN primary key (IdClan, IdAccount, DataInizio));
 

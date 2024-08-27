@@ -1,4 +1,7 @@
-﻿namespace DatabaseProject.database;
+﻿using System;
+using System.Collections.Generic;
+
+namespace DatabaseProject.database;
 
 public partial class MiglioramentoEdificio
 {
