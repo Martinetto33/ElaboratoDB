@@ -93,7 +93,16 @@ namespace DatabaseProject.mapper
         public static Attack Map(Attacco attack)
         {
             AttackTrophies attackTrophies = AttackDao.GetTrophiesFromAttack(attack);
-            return new Attack(attack.IdAttacco.ToString(), attackTrophies.AttackerTrophies, attackTrophies.DefenderTrophies)
+            model.code.Account attackerAccount = Map(AttackDao.GetAttacker(attack));
+            model.code.Account defenderAccount = Map(AttackDao.GetDefender(attack));
+            return new Attack
+                (
+                    attack.IdAttacco.ToString(), 
+                    attackTrophies.AttackerTrophies, 
+                    attackTrophies.DefenderTrophies,
+                    attackerAccount,
+                    defenderAccount
+                )
             {
                 TimeTakenMS = (long)attack.TempoImpiegato,
                 ObtainedPercentage = attack.PercentualeDistruzione,

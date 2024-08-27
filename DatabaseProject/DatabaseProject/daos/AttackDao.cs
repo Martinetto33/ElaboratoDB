@@ -41,6 +41,18 @@ namespace DatabaseProject.daos
                                select attack;
             return defensesDone?.ToList() ?? [];
         }
+
+        public static Account GetAttacker(Attacco attack)
+        {
+            using var ctx = new ClashOfClansContext();
+            return ctx.AccountAttaccanti.First(attacker => attacker.IdAttacco == attack.IdAttacco).IdAccountNavigation;
+        }
+
+        public static Account GetDefender(Attacco attack)
+        {
+            using var ctx = new ClashOfClansContext();
+            return ctx.AccountDifensori.First(defender => defender.IdAttacco == attack.IdAttacco).IdAccountNavigation;
+        }
     }
 
     public class AttackTrophies(int attackerTrophies, int defenderTrophies)

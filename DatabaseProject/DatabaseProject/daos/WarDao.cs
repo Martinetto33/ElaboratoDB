@@ -5,19 +5,57 @@ namespace DatabaseProject.daos
 {
     public static class WarDao
     {
-        public static void StartWar(Guid warId)
+        public static void CreateWar(Guid warId, Guid clan1, Guid clan2)
         {
             using var ctx = new ClashOfClansContext();
-            var war = ctx.Guerre.Find(warId);
-            war!.InCorso = "T";
+            var war = new Guerra
+            {
+                IdGuerra = warId,
+                InCorso = "1"
+            };
+            ctx.Guerre.Add(war);
+            var combat1 = new Combattimento
+            {
+                IdClan = clan1,
+                IdGuerra = war.IdGuerra,
+                StelleOttenute = 0,
+                AttacchiEffettuati = 0,
+                TempoMedioAttacco = 0.0f,
+                Vincitore = "0"
+            };
+            var combat2 = new Combattimento
+            {
+                IdClan = clan2,
+                IdGuerra = war.IdGuerra,
+                StelleOttenute = 0,
+                AttacchiEffettuati = 0,
+                TempoMedioAttacco = 0.0f,
+                Vincitore = "0"
+            };
+            ctx.Add(combat1);
+            ctx.Add(combat2);
             ctx.SaveChanges();
         }
 
-        public static void EndWar(Guid warId)
+        public static List<Combattimento> GetCombatsFromWar(Guid warId)
+        {
+            using var context = new ClashOfClansContext();
+            return [.. context.Combattimenti.Where(combat => combat.IdGuerra == warId)];
+        }
+
+        /// <summary>
+        /// WinnerClan is nullable because wars may end in a draw.
+        /// </summary>
+        /// <param name="warId"></param>
+        /// <param name="winnerClan"></param>
+        public static void EndWar(Guid warId, Guid? winnerClan)
         {
             using var ctx = new ClashOfClansContext();
             var war = ctx.Guerre.Find(warId);
-            war!.InCorso = "F";
+            war!.InCorso = "0";
+            ctx.Combattimenti
+                .First(combat => combat.IdGuerra == warId && combat.IdClan == winnerClan)!
+                .Vincitore = "1";
             ctx.SaveChanges();
         }
 
@@ -25,8 +63,8 @@ namespace DatabaseProject.daos
         {
             using var ctx = new ClashOfClansContext();
             return ctx.Combattimenti
-                .Where(attack => attack.IdGuerra == warId)
-                .Select(attack => attack.IdClanNavigation)
+                .Where(combat => combat.IdGuerra == warId)
+                .Select(combat => combat.IdClanNavigation)
                 .Distinct()
                 .Take(2)
                 .ToList();
