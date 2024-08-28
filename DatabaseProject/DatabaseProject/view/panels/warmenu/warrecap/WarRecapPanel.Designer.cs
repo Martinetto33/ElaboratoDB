@@ -1,10 +1,13 @@
 ﻿using DatabaseProject.Properties;
-using DatabaseProject.view.images;
-using DatabaseProject.view.panels.player;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DatabaseProject
+namespace DatabaseProject.view.panels.warmenu.warrecap
 {
-    partial class UseThisFormAsCanvas
+    public partial class WarRecapPanel
     {
         /// <summary>
         /// Required designer variable.
@@ -202,13 +205,13 @@ namespace DatabaseProject
             tableLayoutPanel1.Size = new Size(540, 340);
             tableLayoutPanel1.TabIndex = 6;
             // 
-            // UseThisFormAsCanvas
+            // WarRecapPanel
             // 
-            ClientSize = new Size(615, 479);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(titleLabel);
             Controls.Add(BackButton);
-            Name = "UseThisFormAsCanvas";
+            Name = "WarRecapPanel";
+            Size = new Size(615, 479);
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();

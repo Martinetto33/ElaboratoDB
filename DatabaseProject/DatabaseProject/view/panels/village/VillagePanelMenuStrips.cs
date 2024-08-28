@@ -131,7 +131,9 @@ namespace DatabaseProject.view.panels.village
             }
             else
             {
-                MessageBox.Show("Laboratorio occupato o truppa già al livello massimo.");
+                MessageBox.Show("Laboratorio occupato o truppa già al livello massimo. " +
+                    "Ricorda: le truppe possono essere migliorate al massimo fino ad un livello sopra" +
+                    " a quello del laboratorio!");
             }
         }
     }

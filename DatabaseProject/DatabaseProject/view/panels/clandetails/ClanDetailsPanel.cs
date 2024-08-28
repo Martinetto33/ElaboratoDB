@@ -97,6 +97,7 @@ namespace DatabaseProject.view.panels.clandetails
                 this.ReloadClanFromDB();
                 this.RefreshPanel();
             }
+            this._selectedAccountId = null;
         }
 
         private void RemoveMemberButton_Click(object sender, EventArgs e)
@@ -134,6 +135,7 @@ namespace DatabaseProject.view.panels.clandetails
             {
                 MessageBox.Show("Seleziona un membro da rimuovere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this._selectedAccountId = null;
         }
 
         private void PromoteMemberButton_Click(object sender, EventArgs e)
@@ -170,6 +172,7 @@ namespace DatabaseProject.view.panels.clandetails
             {
                 MessageBox.Show("Seleziona un membro da promuovere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this._selectedAccountId = null;
         }
 
         private void DemoteMemberButton_Click(object sender, EventArgs e)
@@ -197,6 +200,7 @@ namespace DatabaseProject.view.panels.clandetails
             {
                 MessageBox.Show("Seleziona un membro da retrocedere.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this._selectedAccountId = null;
         }
 
         private static void ShowMessageBoxWithClanOperationResult(Enums.ClanOperationResult opRes)

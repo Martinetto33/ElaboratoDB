@@ -84,24 +84,36 @@ namespace DatabaseProject.daos
         {
             using (var context = new ClashOfClansContext())
             {
-                // First we end the current member's participation in the clan
-                var currentParticipation = context.PartecipazioniClan
-                    .First(participation => participation.IdAccount.Equals(accountId)
-                        && participation.IdClan.Equals(clanId)
-                        && participation.DataFine == null);
-                currentParticipation.DataFine = DateTime.Now;
-                // Now we create the new participation
-                context.PartecipazioniClan.Add(new PartecipazioneClan
+                try
                 {
-                    IdAccount = accountId,
-                    IdClan = clanId,
-                    DataInizio = DateTime.Now,
-                    Ruolo = newRole.ToString()
-                });
-                context.SaveChanges();
+                    // First we end the current member's participation in the clan
+                    var currentParticipation = context.PartecipazioniClan
+                        .First(participation => participation.IdAccount.Equals(accountId)
+                            && participation.IdClan.Equals(clanId)
+                            && participation.DataFine == null);
+                    currentParticipation.DataFine = DateTime.Now;
+                    // Now we create the new participation
+                    DateTime debugDateTime = DateTime.Now;
+                    Console.WriteLine($"Debug DateTime: {debugDateTime} ms: {debugDateTime.Millisecond}");
+                    context.PartecipazioniClan.Add(new PartecipazioneClan
+                    {
+                        IdAccount = accountId,
+                        IdClan = clanId,
+                        DataInizio = debugDateTime,
+                        Ruolo = newRole.ToString()
+                    });
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine("An error occurred while updating the database (role change).");
+                    Console.WriteLine($"Exception Message: {ex.Message}");
+                    Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                    Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    throw;
+                }
             }
         }
-
         public static void AddMemberToClan(Guid accountId, Guid clanId)
         {
             using (var context = new ClashOfClansContext())

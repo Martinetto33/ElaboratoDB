@@ -82,21 +82,6 @@ namespace DatabaseProject.view.panels.village
             {
                 var builderObserver = new UpgradeObserverImpl<BaseBuilding>(upgradedBuilding =>
                 {
-                    //this.Village = DatabaseToModelMapper.Map
-                    //(
-                    //    Transactions.UpgradeBuildingAndRetrieveVillage
-                    //    (
-                    //        DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
-                    //        Guid.Parse(this.Village.VillageId),
-                    //        Int32.Parse(builder.GetObservableId()),
-                    //        Guid.Parse(this.Account.Id)
-                    //    )
-                    //);
-                    //UpgradesDao.RegisterBuildingUpgrade(
-                    //    DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
-                    //    Guid.Parse(this.Village.VillageId),
-                    //    Int32.Parse(builder.GetObservableId())
-                    //    );
                     Transactions.RegisterBuildingUpgradeWithCallback
                     (
                         DatabaseToModelMapper.Unmap(upgradedBuilding, this.Village),
@@ -126,13 +111,6 @@ namespace DatabaseProject.view.panels.village
         {
             ClearObservers();
             this.Village = DatabaseToModelMapper.Map(VillageDao.GetVillageFromAccountId(Guid.Parse(Account.Id))!);
-
-            // Debug, throw away
-            foreach (var item in Village.SpecialBuildings)
-            {
-                Console.WriteLine($"Building: {item.Name}, Level: {item.Level}");
-            }
-            // end debug
 
             this.Builders.Clear();
             foreach (var item in Village.Builders)

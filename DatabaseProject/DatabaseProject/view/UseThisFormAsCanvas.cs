@@ -18,10 +18,5 @@ namespace DatabaseProject
             var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
             mainForm.LoadPanel(new InitialMenuPanel());
         }
-
-        private void ConfirmButton_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

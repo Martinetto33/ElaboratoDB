@@ -4,6 +4,7 @@ using DatabaseProject.model.code;
 using DatabaseProject.simulator;
 using DatabaseProject.view.panels.initialmenu;
 using DatabaseProject.view.panels.warmenu.clanselection.clanlabels;
+using DatabaseProject.view.panels.warmenu.warrecap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,8 +105,14 @@ namespace DatabaseProject.view.panels.warmenu.clanselection
                 WarSimulator simulator = new(clan1, clan2, clan1Warriors, clan2Warriors);
                 if (!simulator.CanStartWar()) throw new InvalidOperationException("War could not be started.");
                 simulator.LaunchSimulation();
-                // simulator.GetWarRecap();
+                NavigateToRecapPanel(simulator.GetWarRecap());
             }
+        }
+
+        private void NavigateToRecapPanel(WarRecap recap)
+        {
+            var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
+            mainForm.LoadPanel(new WarRecapPanel(recap));
         }
     }
 }

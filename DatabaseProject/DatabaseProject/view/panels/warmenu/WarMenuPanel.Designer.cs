@@ -25,7 +25,6 @@ namespace DatabaseProject.view.panels.warmenu
         {
             BackButton = new Button();
             startWarButton = new Button();
-            showWarsButton = new Button();
             SuspendLayout();
             // 
             // BackButton
@@ -50,21 +49,8 @@ namespace DatabaseProject.view.panels.warmenu
             startWarButton.UseVisualStyleBackColor = true;
             startWarButton.Click += StartWar_Click;
             // 
-            // showWarsButton
-            // 
-            showWarsButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            showWarsButton.Font = new Font("Segoe UI", 15F);
-            showWarsButton.Location = new Point(88, 220);
-            showWarsButton.Name = "showWarsButton";
-            showWarsButton.Size = new Size(409, 77);
-            showWarsButton.TabIndex = 2;
-            showWarsButton.Text = "Visualizza guerre";
-            showWarsButton.UseVisualStyleBackColor = true;
-            showWarsButton.Click += ShowWarsButton_Click;
-            // 
             // WarMenuPanel
             // 
-            Controls.Add(showWarsButton);
             Controls.Add(startWarButton);
             Controls.Add(BackButton);
             Name = "WarMenuPanel";
@@ -74,6 +60,5 @@ namespace DatabaseProject.view.panels.warmenu
 
         private Button BackButton;
         private Button startWarButton;
-        private Button showWarsButton;
     }
 }

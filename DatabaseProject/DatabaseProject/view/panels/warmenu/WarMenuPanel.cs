@@ -22,6 +22,7 @@ namespace DatabaseProject.view.panels.warmenu
             mainForm.LoadPanel(new ClanSelectionPanel());
         }
 
+        // TODO: maybe in the next patches :)
         private void ShowWarsButton_Click(object sender, EventArgs e)
         {
             var mainForm = (ClashOfClansDatabaseApplication)this.Parent!;
